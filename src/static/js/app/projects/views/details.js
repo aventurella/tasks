@@ -16,7 +16,14 @@ var ProjectDetailView = marionette.ItemView.extend({
         backlog: '.swimlanes .lane.backlog',
         accepted: '.swimlanes .lane.accepted',
         inProgress: '.swimlanes .lane.in-progress',
-        completed: '.swimlanes .lane.completed'
+        completed: '.swimlanes .lane.completed',
+        toggleButton: '.project-name .pane-action'
+    },
+
+    events: {
+        'click .swimlanes .lane.backlog .heading .action': 'wantsAddToBacklog',
+        'click .project-name .pane-action': 'wantsToggleProjectPane'
+
     },
 
     onShow: function(){
@@ -24,28 +31,47 @@ var ProjectDetailView = marionette.ItemView.extend({
         this.initializeSwimlanes();
     },
 
+    wantsToggleProjectPane: function(){
+        var btn = this.ui.toggleButton;
+        var label = '>';
+        if(btn.text() == '>'){
+            label = '<';
+        }
+
+        this.trigger('projects:toggle', this);
+        btn.text(label);
+    },
+
+    wantsAddToBacklog: function(){
+        this.addToBacklog();
+    },
+
+    addToBacklog: function(){
+        var task = new Task({label: 'New Task'});
+        this.swimlaneBacklog.collection.add(task);
+    },
+
     initializeSwimlanes: function(){
-        var swimlanes = [
-        this.ui.backlog,
-        this.ui.accepted,
-        this.ui.inProgress,
-        this.ui.completed
-        ];
 
-        _.each(swimlanes, function(lane){
-            var dropElement = lane.find('ul');
+        this.swimlaneBacklog = new Swimlane({
+            el: this.ui.backlog.find('ul'),
+            collection: new backbone.Collection()
+        });
 
-            var obj = new Swimlane({
-                el: dropElement,
-                collection: new backbone.Collection()
-            });
+        this.swimlaneAccepted = new Swimlane({
+            el: this.ui.accepted.find('ul'),
+            collection: new backbone.Collection()
+        });
 
-            obj.collection.add(new Task({label: 'Lorem ipsum dolor sit amet...'}));
-            obj.collection.add(new Task({label: 'Lorem ipsum dolor sit amet...'}));
-            obj.collection.add(new Task({label: 'Lorem ipsum dolor sit amet...'}));
-            obj.collection.add(new Task({label: 'Lorem ipsum dolor sit amet...'}));
+        this.swimlaneInProgress = new Swimlane({
+            el: this.ui.inProgress.find('ul'),
+            collection: new backbone.Collection()
+        });
 
-        }, this);
+        this.swimlaneCompleted = new Swimlane({
+            el: this.ui.completed.find('ul'),
+            collection: new backbone.Collection()
+        });
     },
 
     modelDidChange: function(model){

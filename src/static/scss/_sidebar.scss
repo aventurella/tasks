@@ -1,6 +1,7 @@
 @import "sidebar-projects";
 @import "sidebar-footer";
 
+
 #sidebar{
     color: #fff;
 
@@ -10,6 +11,17 @@
     flex-direction: row;
     -webkit-flex-direction: row;
 
+    margin-left: 0px;
+
+    @include transform(translateZ(0));
+    @include backface-visibility(visible);
+    @include transition-property (margin-left);
+    @include transition-duration(0.2s);
+    @include transition-timing-function(ease-out);
+
+    &.hide{
+        margin-left: -200px;
+    }
 
     .view{
         -webkit-flex-grow: 0;

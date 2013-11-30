@@ -9,6 +9,12 @@
 
     .project-name{
         margin-bottom: 15px;
+
+        .pane-action{
+            float: left;
+            margin-right: 10px;
+            cursor: pointer;
+        }
     }
 }
 

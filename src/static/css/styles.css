@@ -65,7 +65,26 @@ body {
   flex-grow: 0;
   display: -webkit-flex;
   flex-direction: row;
-  -webkit-flex-direction: row; }
+  -webkit-flex-direction: row;
+  margin-left: 0px;
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: visible;
+  backface-visibility: visible;
+  -webkit-transition-property: margin-left;
+  -moz-transition-property: margin-left;
+  transition-property: margin-left;
+  -webkit-transition-duration: 0.2s;
+  -moz-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  -webkit-transition-timing-function: ease-out;
+  -moz-transition-timing-function: ease-out;
+  transition-timing-function: ease-out; }
+  #sidebar.hide {
+    margin-left: -200px; }
   #sidebar .view {
     -webkit-flex-grow: 0;
     flex-grow: 0;
@@ -95,6 +114,10 @@ body {
   height: 100%; }
   #project-detail .details .project-name {
     margin-bottom: 15px; }
+    #project-detail .details .project-name .pane-action {
+      float: left;
+      margin-right: 10px;
+      cursor: pointer; }
 
 #project-detail .details .project-name {
   -webkit-flex-grow: 0;
