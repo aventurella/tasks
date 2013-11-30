@@ -1,0 +1,21 @@
+html{
+    height: 100%;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: $lucida-grande;
+    font-size: 13px;
+}
+
+#window{
+    display: -webkit-flex;
+    -webkit-flex-flow: row;
+    -webkit-align-items: stretch;
+    height: 100%;
+}
+
+
+

@@ -1,0 +1,100 @@
+#project-detail .details .project-name {
+
+    -webkit-flex-grow: 0;
+    flex-grow: 0;
+
+    label{
+        font-weight: normal;
+        font-size: 16px;
+        color: $dark-gray;
+    }
+}
+
+#project-detail .details .swimlanes{
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+
+    .lane{
+        -webkit-flex-grow: 1;
+        flex-grow: 1;
+
+        padding-right: 30px;
+
+        .heading{
+            padding: 10px 0;
+            margin-bottom: 5px;
+            text-align: center;
+            background-color: $white;
+            color: $selected-project;
+            border: 1px solid $task-light-gray-border;
+
+            box-shadow:
+            rgba(255, 255, 255, 0.1) 0 1px 1px 1px inset,
+            rgba(255, 255, 255, 0.2) 0 1px inset,
+            rgba(40, 98, 122, 0.1) 0 0px 0px inset,
+            rgba(0, 0, 0, 0.1) 0 0 1px 1px;
+
+            label{
+                font-size: 14px;
+            }
+
+            .action{
+                float: right;
+                width: 30px;
+                cursor: pointer;
+            }
+
+        }
+
+        ul{
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        .task{
+            font-family: $georgia;
+            font-size: 13px;
+            padding: 10px 0 10px 10px;
+            margin-bottom: 3px;
+            position: relative;
+            background: -webkit-linear-gradient(top, rgba(255,255,255,1) 42%,rgba(252,252,252,1) 100%);
+
+            box-shadow:
+            rgba(255, 255, 255, 0.1) 0 1px 1px 1px inset,
+            rgba(255, 255, 255, 0.2) 0 1px inset,
+            rgba(40, 98, 122, 0.1) 0 0px 0px inset,
+            rgba(0, 0, 0, 0.1) 0 0 1px 1px;
+
+            .loe{
+                position: absolute;
+                width: 5px;
+                left: 1px;
+                top: 2px;
+                height: 31px;
+
+                &.low{
+                    border: 1px solid $task-light-gray-border;
+                    background-color: $task-light-gray-background;
+                    //border: 1px solid $task-blue-border;
+                    //background-color: $task-blue-background;
+                }
+
+                &.medium{
+                    border: 1px solid $task-yellow-border;
+                    background-color: $task-yellow-background;
+                }
+
+                &.high{
+                    border: 1px solid $task-red-border;
+                    background-color: $task-red-background;
+                }
+            }
+        }
+    }
+}

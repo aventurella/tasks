@@ -38,6 +38,7 @@ serve:
 
 .PHONY: watch
 watch:
+	@-mkdir -p src/static/css
 	sass --watch $(RESOURCE_PATH_SRC)/scss:$(RESOURCE_PATH_SRC)/css
 
 .PHONE: count-js

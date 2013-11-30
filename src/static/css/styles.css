@@ -1,0 +1,164 @@
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+html {
+  height: 100%; }
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Lucida Grande", Tahoma, Verdana, Arial, sans-serif;
+  font-size: 13px; }
+
+#window {
+  display: -webkit-flex;
+  -webkit-flex-flow: row;
+  -webkit-align-items: stretch;
+  height: 100%; }
+
+#sidebar .view .menu .projects {
+  margin: 0;
+  padding: 0;
+  list-style-type: none; }
+  #sidebar .view .menu .projects .project-cell {
+    margin-bottom: 1px;
+    background-color: #232a31;
+    padding: 15px 0 15px 10px; }
+    #sidebar .view .menu .projects .project-cell.selected {
+      background-color: #3e4752; }
+    #sidebar .view .menu .projects .project-cell .input-projectName {
+      display: none; }
+    #sidebar .view .menu .projects .project-cell input:focus {
+      outline: none; }
+    #sidebar .view .menu .projects .project-cell input[type="text"] {
+      background-color: transparent;
+      padding: 0;
+      margin: 0;
+      border: none;
+      line-height: 13px;
+      color: #cacaca;
+      font-size: 13px;
+      display: none;
+      width: 90%; }
+
+#sidebar .view .footer {
+  height: 40px;
+  background-color: #232a31; }
+  #sidebar .view .footer ul {
+    list-style-type: none;
+    height: 100%;
+    margin: 0;
+    padding: 0; }
+  #sidebar .view .footer .action {
+    float: left;
+    cursor: pointer;
+    width: 40px;
+    height: 100%;
+    margin-right: 1px; }
+
+#sidebar {
+  color: #fff;
+  -webkit-flex-grow: 0;
+  flex-grow: 0;
+  display: -webkit-flex;
+  flex-direction: row;
+  -webkit-flex-direction: row; }
+  #sidebar .view {
+    -webkit-flex-grow: 0;
+    flex-grow: 0;
+    width: 200px;
+    background-color: #191e24;
+    display: -webkit-flex;
+    flex-direction: column;
+    -webkit-flex-direction: column; }
+    #sidebar .view h2 {
+      font-weight: normal;
+      padding-left: 10px;
+      font-size: 16px; }
+    #sidebar .view .menu {
+      -webkit-flex-grow: 1;
+      flex-grow: 1; }
+    #sidebar .view .footer {
+      -webkit-flex-grow: 0;
+      flex-grow: 0; }
+
+#project-detail .details {
+  padding-left: 10px;
+  padding-top: 5px;
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+  -webkit-flex-direction: column;
+  height: 100%; }
+  #project-detail .details .project-name {
+    margin-bottom: 15px; }
+
+#project-detail .details .project-name {
+  -webkit-flex-grow: 0;
+  flex-grow: 0; }
+  #project-detail .details .project-name label {
+    font-weight: normal;
+    font-size: 16px;
+    color: #191e24; }
+
+#project-detail .details .swimlanes {
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  -webkit-flex-direction: row; }
+  #project-detail .details .swimlanes .lane {
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+    padding-right: 30px; }
+    #project-detail .details .swimlanes .lane .heading {
+      padding: 10px 0;
+      margin-bottom: 5px;
+      text-align: center;
+      background-color: white;
+      color: #3e4752;
+      border: 1px solid #b2b2b2;
+      box-shadow: rgba(255, 255, 255, 0.1) 0 1px 1px 1px inset, rgba(255, 255, 255, 0.2) 0 1px inset, rgba(40, 98, 122, 0.1) 0 0px 0px inset, rgba(0, 0, 0, 0.1) 0 0 1px 1px; }
+      #project-detail .details .swimlanes .lane .heading label {
+        font-size: 14px; }
+      #project-detail .details .swimlanes .lane .heading .action {
+        float: right;
+        width: 30px;
+        cursor: pointer; }
+    #project-detail .details .swimlanes .lane ul {
+      margin: 0;
+      padding: 0;
+      list-style-type: none; }
+    #project-detail .details .swimlanes .lane .task {
+      font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      font-size: 13px;
+      padding: 10px 0 10px 10px;
+      margin-bottom: 3px;
+      position: relative;
+      background: -webkit-linear-gradient(top, white 42%, #fcfcfc 100%);
+      box-shadow: rgba(255, 255, 255, 0.1) 0 1px 1px 1px inset, rgba(255, 255, 255, 0.2) 0 1px inset, rgba(40, 98, 122, 0.1) 0 0px 0px inset, rgba(0, 0, 0, 0.1) 0 0 1px 1px; }
+      #project-detail .details .swimlanes .lane .task .loe {
+        position: absolute;
+        width: 5px;
+        left: 1px;
+        top: 2px;
+        height: 31px; }
+        #project-detail .details .swimlanes .lane .task .loe.low {
+          border: 1px solid #b2b2b2;
+          background-color: rgba(248, 248, 248, 0.4); }
+        #project-detail .details .swimlanes .lane .task .loe.medium {
+          border: 1px solid #d39511;
+          background-color: rgba(240, 184, 64, 0.4); }
+        #project-detail .details .swimlanes .lane .task .loe.high {
+          border: 1px solid #cc2511;
+          background-color: rgba(239, 78, 58, 0.4); }
+
+#project-detail {
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+  background-color: #e1e3e6;
+  height: 100%; }
