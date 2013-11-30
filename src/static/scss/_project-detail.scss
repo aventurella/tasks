@@ -1,11 +1,11 @@
 #project-detail .details{
+    height: 100%;
     padding-left: 10px;
     padding-top: 5px;
     display: flex;
     display: -webkit-flex;
     flex-direction: column;
     -webkit-flex-direction: column;
-    height: 100%;
 
     .project-name{
         margin-bottom: 15px;

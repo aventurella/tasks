@@ -105,13 +105,13 @@ body {
       flex-grow: 0; }
 
 #project-detail .details {
+  height: 100%;
   padding-left: 10px;
   padding-top: 5px;
   display: flex;
   display: -webkit-flex;
   flex-direction: column;
-  -webkit-flex-direction: column;
-  height: 100%; }
+  -webkit-flex-direction: column; }
   #project-detail .details .project-name {
     margin-bottom: 15px; }
     #project-detail .details .project-name .pane-action {
