@@ -2,15 +2,11 @@ define(function(require, exports, module) {
 
 var marionette = require('marionette');
 var backbone = require('backbone');
-var DragAndDropCompositeView = require('built/ui/views/composite/drag-and-drop').DragAndDropCompositeView;
+var DragAndDropCollectionView = require('built/ui/views/collection/drag-and-drop').DragAndDropCollectionView;
 var TaskView = require('./cells/task').TaskView;
 
-var Swimlane = DragAndDropCompositeView.extend({
+var Swimlane = DragAndDropCollectionView.extend({
     itemView: TaskView,
-
-    onShow: function(){
-        this.collection = new backbone.Collection();
-    },
 
     getDragImage: function(){
         return false;

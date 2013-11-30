@@ -1,8 +1,10 @@
 define(function(require, exports, module) {
 
 var marionette = require('marionette');
+var backbone = require('backbone');
 var _ = require('underscore');
-var Swimlane = require('./swimlane').SwimLane;
+var Swimlane = require('./swimlane').Swimlane;
+var Task = require('../models/task').Task;
 var view = require('hbs!app/projects/templates/details');
 
 var ProjectDetailView = marionette.ItemView.extend({
@@ -32,10 +34,16 @@ var ProjectDetailView = marionette.ItemView.extend({
 
         _.each(swimlanes, function(lane){
             var dropElement = lane.find('ul');
-            var obj = new Swimlane();
 
-            obj.setDropElement(dropElement);
-            obj.reset(dropElement.find('li'));
+            var obj = new Swimlane({
+                el: dropElement,
+                collection: new backbone.Collection()
+            });
+
+            obj.collection.add(new Task({label: 'Lorem ipsum dolor sit amet...'}));
+            obj.collection.add(new Task({label: 'Lorem ipsum dolor sit amet...'}));
+            obj.collection.add(new Task({label: 'Lorem ipsum dolor sit amet...'}));
+            obj.collection.add(new Task({label: 'Lorem ipsum dolor sit amet...'}));
 
         }, this);
     },

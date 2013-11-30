@@ -10,7 +10,9 @@ var DragAndDropCompositeView = marionette.CompositeView.extend({
             this.on('composite:model:rendered', this.onCompositeModelRendered);
         }
     },
+
     onCompositeModelRendered: function(){
+        debugger;
         this.dragDropList.setDropElement(this.$el.find(this.itemViewContainer));
     },
 });

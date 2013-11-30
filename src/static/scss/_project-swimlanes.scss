@@ -48,13 +48,24 @@
                 width: 30px;
                 cursor: pointer;
             }
-
         }
 
         ul{
             margin: 0;
             padding: 0;
             list-style-type: none;
+            min-height: 50px;
+        }
+
+        .task-placeholder{
+            height: 25px;
+            background-color: $task-light-gray-background;
+            color: #fff;
+            border: 2px dashed $task-light-gray-border;
+            margin-bottom: 3px;
+
+            box-shadow:
+            rgba(0, 0, 0, 0.1) 0 0 1px 1px;
         }
 
         .task{

@@ -132,7 +132,15 @@ body {
     #project-detail .details .swimlanes .lane ul {
       margin: 0;
       padding: 0;
-      list-style-type: none; }
+      list-style-type: none;
+      min-height: 50px; }
+    #project-detail .details .swimlanes .lane .task-placeholder {
+      height: 25px;
+      background-color: rgba(248, 248, 248, 0.4);
+      color: #fff;
+      border: 2px dashed #b2b2b2;
+      margin-bottom: 3px;
+      box-shadow: rgba(0, 0, 0, 0.1) 0 0 1px 1px; }
     #project-detail .details .swimlanes .lane .task {
       font-family: Georgia, Cambria, "Times New Roman", Times, serif;
       font-size: 13px;

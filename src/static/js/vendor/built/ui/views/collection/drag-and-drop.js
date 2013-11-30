@@ -62,7 +62,7 @@ var DragAndDropCollectionView =  marionette.CollectionView.extend({
     getDragDataForElement: function($el){
         var view = this.getViewForEl($el);
         var model = view.model;
-        this.collection.remove(model,{silent:true});
+        this.collection.remove(model, {silent:true});
         return this.serializeModel(model);
     },
 
