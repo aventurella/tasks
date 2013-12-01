@@ -8,7 +8,6 @@ var app;
 function presentModal(modalView){
     app.modal.show(modalView);
     app.modal.$el.show();
-    modalView.triggerMethod('show');
 
     _.defer(function(){
         modalView.$el.addClass('show');

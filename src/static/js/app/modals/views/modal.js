@@ -15,7 +15,6 @@ var ModalView = marionette.ItemView.extend({
     onShow: function(){
         this.view.setElement(this.$el, true);
         this.view.render();
-        this.$el.show();
 
         this.view.once('application:modal:complete', this.modalComplete, this);
     },
