@@ -15,12 +15,23 @@ var TaskFormView = marionette.ItemView.extend({
     },
 
     onRender: function(){
-        _.bindAll(this, 'wantsCancelWithKeys');
+        _.bindAll(this, 'wantsCancelWithKeys', 'wantsCreateWithKeys');
 
         this.keyResponder = new KeyResponder({
             el: $(window),
-            cancelOperation: this.wantsCancelWithKeys
+            cancelOperation: this.wantsCancelWithKeys,
+            acceptKeyEquivalent: true
         });
+
+        this.keyResponder.registerKeyEquivalentWithString(
+            'command + enter',
+            this.wantsCreateWithKeys);
+    },
+
+    wantsCreateWithKeys: function(){
+        this.keyResponder.close();
+        this.keyResponder = null;
+        this.trigger('application:modal:complete');
     },
 
     wantsCancelWithKeys: function(){
