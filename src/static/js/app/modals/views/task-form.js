@@ -24,7 +24,7 @@ var TaskFormView = marionette.ItemView.extend({
         });
 
         this.keyResponder.registerKeyEquivalentWithString(
-            'command + enter',
+            'command + shift + p',
             this.wantsCreateWithKeys);
     },
 

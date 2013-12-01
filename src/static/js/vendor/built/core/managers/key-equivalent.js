@@ -36,7 +36,7 @@ var KeyMap = {
     'right':  39,
      'down':  40,
    'insert':  45,
-      'del':  46
+   'delete':  46
      // 'meta':  91,
      // 'meta':  93,
      // 'meta': 224
@@ -83,6 +83,11 @@ KeyEquivalentManager.prototype.registerWithString = function(string, action){
     if(lastChar.length > 1){
         charCode = KeyMap[lastChar];
     } else {
+
+        if(mask & KeyFlag.SHIFT){
+            lastChar = lastChar.toUpperCase();
+        }
+
         charCode = lastChar.charCodeAt();
     }
 
