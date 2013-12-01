@@ -19,6 +19,58 @@ body {
   -webkit-align-items: stretch;
   height: 100%; }
 
+#modal {
+  background-color: rgba(255, 255, 255, 0);
+  position: fixed;
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+  display: none; }
+  #modal .view {
+    *zoom: 1;
+    max-width: 68em;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    border-radius: 0 0 5px 5px;
+    border: 1px solid #d5d5d5;
+    border-top: none;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 0 7px 1px;
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible;
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    transition-property: transform;
+    -webkit-transition-duration: 0.2s;
+    -moz-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    -webkit-transition-timing-function: ease-out;
+    -moz-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+    -webkit-transform: translateY(-100%);
+    -moz-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
+    -o-transform: translateY(-100%);
+    transform: translateY(-100%); }
+    #modal .view:before, #modal .view:after {
+      content: " ";
+      display: table; }
+    #modal .view:after {
+      clear: both; }
+    #modal .view.show {
+      -webkit-transform: translateY(0);
+      -moz-transform: translateY(0);
+      -ms-transform: translateY(0);
+      -o-transform: translateY(0);
+      transform: translateY(0); }
+    #modal .view .task {
+      height: 300px; }
+
 #sidebar .view .menu .projects {
   margin: 0;
   padding: 0;

@@ -1,13 +1,37 @@
 define(function(require, exports, module) {
 
 var SidebarView = require('app/sidebar/views/sidebar').SidebarView;
+var _ = require('underscore');
+
+var app;
+
+function presentModal(modalView){
+    app.modal.show(modalView);
+    app.modal.$el.show();
+    modalView.triggerMethod('show');
+
+    _.defer(function(){
+        modalView.$el.addClass('show');
+    });
+}
+
+function dismissModal(modalView){
+    modalView.$el.removeClass('show');
+
+    setTimeout(function(){
+        app.modal.close();
+        app.modal.$el.hide();
+    }, 200);
+}
+
 
 function main(options){
-    var app = this;
+    app = this;
 
     app.addRegions({
         window: '#window',
         sidebar: '#sidebar',
+        modal: '#modal',
         projectDetail: '#project-detail'
     });
 
@@ -15,8 +39,10 @@ function main(options){
         projectDetailRegion: app.projectDetail
     });
 
-    //app.surface.show(surfaceView);
     app.sidebar.show(sidebarView);
+    app.modal.ensureEl();
+    app.listenTo(app.vent, 'application:modal:present', presentModal);
+    app.listenTo(app.vent, 'application:modal:dismiss', dismissModal);
 }
 
 exports.main = main;

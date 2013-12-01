@@ -3,8 +3,10 @@ define(function(require, exports, module) {
 var marionette = require('marionette');
 var backbone = require('backbone');
 var _ = require('underscore');
+var modals = require('app/modals/modals');
 var Swimlane = require('./swimlane').Swimlane;
 var Task = require('../models/task').Task;
+var TaskFormView = require('app/modals/views/task-form').TaskFormView;
 var view = require('hbs!app/projects/templates/details');
 
 var ProjectDetailView = marionette.ItemView.extend({
@@ -43,7 +45,17 @@ var ProjectDetailView = marionette.ItemView.extend({
     },
 
     wantsAddToBacklog: function(){
-        this.addToBacklog();
+        var taskForm = new TaskFormView();
+        var modalView = modals.presentModal(taskForm);
+
+        if(modalView){
+            modalView.once('complete', this.taskModalComplete, this);
+        }
+    },
+
+    taskModalComplete: function(modalView){
+        var data = modalView.getData();
+        modals.dismissModal();
     },
 
     addToBacklog: function(){
