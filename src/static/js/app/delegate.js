@@ -24,14 +24,6 @@ var ApplicationDelegate = marionette.Controller.extend({
 
     presentModal: function(modalView){
         this.app.modal.show(modalView);
-        // var modal = this.app.modal;
-
-        // modal.show(modalView);
-        // modal.$el.show();
-
-        // _.defer(function(){
-        //     modalView.$el.addClass('show');
-        // });
     },
 
     dismissModal: function(modalView){

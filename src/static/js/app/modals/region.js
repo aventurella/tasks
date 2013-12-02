@@ -10,9 +10,15 @@ var ModalRegion = marionette.Region.extend({
         marionette.Region.prototype.open.call(this, view);
         this.$el.show();
 
-        _.defer(function(){
+        // can't use _.defer here for Chrome.
+        // there is an issue where it appears as though
+        // the defer is not defered at all, but happens immediately.
+        // Though the call to _.defer does work in Safari.
+        // Anyway, the setTimeout here fixes the issue.
+
+        setTimeout(function(){
             view.$el.addClass('show');
-        });
+        }, 15);
     },
 
     // Close the current view, if there is one. If there is no
