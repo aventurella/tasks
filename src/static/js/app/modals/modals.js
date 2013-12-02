@@ -1,6 +1,7 @@
 define(function(require, exports, module) {
 
 var vent = require('app/vent').vent;
+var events = require('./events');
 var ModalView = require('./views/modal').ModalView;
 
 var currentModal = null;
@@ -12,13 +13,12 @@ function presentModal(view){
     if(currentModal) return;
 
     currentModal = new ModalView({itemView: view});
-
-    vent.trigger('application:modal:present', currentModal);
+    vent.trigger(events.PRESENT, currentModal);
     return currentModal;
 }
 
 function dismissModal(){
-    vent.trigger('application:modal:dismiss', currentModal);
+    vent.trigger(events.DISMISS, currentModal);
     currentModal = null;
 }
 

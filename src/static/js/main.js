@@ -3,9 +3,8 @@ define(function(require, exports, module){
 var marionette = require('marionette');
 var renderer = require('app/renderer');
 var main = require('app/main');
-var vent = require('app/vent').vent;
 
-var app = new marionette.Application({vent: vent});
+var app = new marionette.Application();
 app.addInitializer(main.main);
 app.start();
 
