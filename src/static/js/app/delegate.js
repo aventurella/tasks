@@ -10,7 +10,6 @@ var getSettings = require('app/settings/defaults').getSettings;
 
 
 var modals = require('app/modals/modals');
-var modalEvents = require('app/modals/events');
 var AccountFormView = require('app/modals/views/account').AccountFormView;
 
 var ApplicationDelegate = marionette.Controller.extend({
