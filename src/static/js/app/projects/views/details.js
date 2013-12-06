@@ -17,7 +17,6 @@ var ProjectDetailView = marionette.ItemView.extend({
     ui:{
         projectName: '.project-name label',
         backlog: '.swimlanes .lane.backlog',
-        accepted: '.swimlanes .lane.accepted',
         inProgress: '.swimlanes .lane.in-progress',
         completed: '.swimlanes .lane.completed',
         toggleButton: '.project-name .pane-action'
@@ -71,11 +70,6 @@ var ProjectDetailView = marionette.ItemView.extend({
 
         this.swimlaneBacklog = new Swimlane({
             el: this.ui.backlog.find('ul'),
-            collection: new backbone.Collection()
-        });
-
-        this.swimlaneAccepted = new Swimlane({
-            el: this.ui.accepted.find('ul'),
             collection: new backbone.Collection()
         });
 
