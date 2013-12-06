@@ -22,8 +22,8 @@ var TaskFormView = marionette.ItemView.extend({
     },
 
     bindings: {
-        'input[name="inputType"]': 'type',
-        'input[name="inputLOE"]': 'levelOfEffort',
+        'input[name="inputType"]': 'task_type',
+        'input[name="inputLOE"]': 'loe',
         '#inputLabel': 'label',
         '#inputDescription': 'description',
     },
@@ -52,6 +52,7 @@ var TaskFormView = marionette.ItemView.extend({
 
     wantsCreate: function(){
         console.log(this.model.attributes);
+        this.model.save();
         this._data = {ok: true, model: this.model};
         this.trigger(events.COMPLETE);
     },
