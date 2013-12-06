@@ -57,7 +57,7 @@ var SidebarView = marionette.ItemView.extend({
         var activeProject = this.projectListView.activeProject;
 
         if(activeProject){
-            this.projectListView.projects.collection.remove(activeProject.model);
+            this.projectListView.collection.remove(activeProject.model);
             this.projectListView.activeProject = null;
 
             this.stopListening(this.currentDetail, 'projects:toggle', this.wantsToggleProjects);
@@ -81,8 +81,7 @@ var SidebarView = marionette.ItemView.extend({
 
     addNewProject: function(){
         var obj = new Project();
-
-        this.projectListView.projects.collection.create(obj, {wait:true});
+        this.projectListView.collection.create(obj, {wait:true});
 
     },
 

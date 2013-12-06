@@ -5,36 +5,31 @@ var backbone = require('backbone');
 var ProjectCell = require('./cells/project-cell').ProjectCell;
 var Projects = require('../collections/projects').Projects;
 
-var ProjectListView = marionette.ItemView.extend({
+var ProjectListView = marionette.CompositeView.extend({
+    itemView : ProjectCell,
+    itemViewContainer : '.projects',
 
-    ui:{
-        projects: '.projects'
+    initialize: function(){
+        this.collection = new Projects();
+        this.collection.fetch();
     },
 
     onShow: function(){
-        // TODO adam, lets convert this to a compositeview instead of a collection in an itemview
-        this.projects = new marionette.CollectionView({
-            el: this.ui.projects,
-            itemView: ProjectCell,
-            collection: new Projects()
-        });
-        this.projects.collection.fetch();
-
-        this.listenTo(this.projects, 'itemview:select', this.projectWantsSelect);
-        this.listenToOnce(this.projects.collection, 'sync', this.onProjectsSynced);
+        this.on('itemview:select', this.projectWantsSelect);
+        this.listenToOnce(this.collection, 'sync', this.onProjectsSynced);
     },
 
     onProjectsSynced: function(){
-        this.listenTo(this.projects.collection, 'add', this.onProjectAdd);
+        this.listenTo(this.collection, 'add', this.onProjectAdd);
 
-        var child = this.projects.children.findByIndex(0);
+        var child = this.children.findByIndex(0);
         if(child){
             this.projectWantsSelect(child);
         }
     },
 
     onProjectAdd: function(model){
-        var obj = this.projects.children.findByModel(model);
+        var obj = this.children.findByModel(model);
         this.projectWantsSelect(obj);
         obj.wantsStartEditing();
     },
