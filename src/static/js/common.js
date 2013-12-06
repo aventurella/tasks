@@ -43,7 +43,11 @@ require.config({
     map: {
         '*': {
             'underscore': 'vendor/underscore/lodash',
-            'handlebars': 'Handlebars'
+            'handlebars': 'Handlebars',
+        },
+
+        'app/settings/defaults':{
+            'driver': 'app/settings/drivers/html-local-storage'
         },
 
         'hbs':{

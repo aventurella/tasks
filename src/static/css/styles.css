@@ -246,10 +246,10 @@ body {
           border: 1px solid #cc2511;
           background-color: #f8b7af; }
       #project-detail .details .swimlanes .lane .task .label, #project-detail .details .swimlanes .lane .bug .label {
-        font-size: 16px;
+        font-size: 13px;
         padding-bottom: 5px; }
       #project-detail .details .swimlanes .lane .task .description, #project-detail .details .swimlanes .lane .bug .description {
-        font-size: 13px; }
+        font-size: 11px; }
     #project-detail .details .swimlanes .lane .bug {
       background: -webkit-linear-gradient(top, white 0%, snow 100%);
       border: 1px solid #e79191; }

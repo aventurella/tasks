@@ -6,7 +6,7 @@ var vent = require('app/vent').vent;
 
 var modalEvents = require('app/modals/events');
 var SidebarView = require('app/sidebar/views/sidebar').SidebarView;
-
+var getSettings = require('app/settings/defaults').getSettings;
 
 var ApplicationDelegate = marionette.Controller.extend({
 
@@ -21,6 +21,8 @@ var ApplicationDelegate = marionette.Controller.extend({
 
         this.listenTo(vent, modalEvents.PRESENT, this.presentModal);
         this.listenTo(vent, modalEvents.DISMISS, this.dismissModal);
+        var currentSettings = getSettings();
+        console.log(currentSettings.getAccount());
     },
 
     presentModal: function(modalView){
