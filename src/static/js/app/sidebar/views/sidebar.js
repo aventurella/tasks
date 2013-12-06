@@ -57,7 +57,8 @@ var SidebarView = marionette.ItemView.extend({
         var activeProject = this.projectListView.activeProject;
 
         if(activeProject){
-            this.projectListView.collection.remove(activeProject.model);
+            activeProject.model.destroy();
+            // this.projectListView.collection.remove(activeProject.model);
             this.projectListView.activeProject = null;
 
             this.stopListening(this.currentDetail, 'projects:toggle', this.wantsToggleProjects);
