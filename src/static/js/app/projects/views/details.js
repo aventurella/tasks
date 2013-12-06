@@ -85,7 +85,7 @@ var ProjectDetailView = marionette.ItemView.extend({
     },
 
     modelDidChange: function(model){
-        this.ui.projectName.text(model.get('projectName'));
+        this.ui.projectName.text(model.get('label'));
     }
 
 });

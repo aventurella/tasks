@@ -91,7 +91,7 @@ var ProjectCell = marionette.ItemView.extend({
 
         if(!_.isEmpty(value)){
             label.text(value);
-            this.model.set('projectName', value);
+            this.model.save('label', value);
         }
 
         input.hide();

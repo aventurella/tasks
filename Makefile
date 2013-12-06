@@ -33,7 +33,7 @@ clean:
 
 .PHONY: serve
 serve:
-	cd $(SRC_PATH); python -m SimpleHTTPServer
+	cd $(SRC_PATH); python -m SimpleHTTPServer 8001
 
 
 .PHONY: watch

@@ -5,7 +5,7 @@ var backbone = require('backbone');
 var ProjectDetailView = require('app/projects/views/details').ProjectDetailView;
 var FooterView = require('./footer').FooterView;
 var ProjectListView = require('./projects').ProjectListView;
-var Project = require('../models/projects').Project;
+var Project = require('../models/project').Project;
 var view = require('hbs!app/sidebar/templates/sidebar');
 
 // this is probably better as a layout.
@@ -80,11 +80,9 @@ var SidebarView = marionette.ItemView.extend({
     },
 
     addNewProject: function(){
-        var obj = new Project({
-            projectName: 'New Project'
-        });
+        var obj = new Project();
 
-        this.projectListView.projects.collection.add(obj);
+        this.projectListView.projects.collection.create(obj);
     },
 
     initializeProjectList: function(){
