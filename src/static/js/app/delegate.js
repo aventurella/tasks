@@ -7,10 +7,11 @@ var vent = require('app/vent').vent;
 var modalEvents = require('app/modals/events');
 var SidebarView = require('app/sidebar/views/sidebar').SidebarView;
 var getSettings = require('app/settings/defaults').getSettings;
-
+var session     = require('app/session/session');
 
 var modals = require('app/modals/modals');
 var AccountFormView = require('app/modals/views/account').AccountFormView;
+var SessionInitializationView = require('app/modals/views/session').SessionInitializationView;
 
 var ApplicationDelegate = marionette.Controller.extend({
 
@@ -44,7 +45,18 @@ var ApplicationDelegate = marionette.Controller.extend({
     },
 
     startSession: function(){
+        // we can't let the user start interacting with the application until
+        // the session has actually started. AKA they have authenticated.
+        // probably want to pop a blocking modal
         var account = getSettings().getAccount();
+
+        modals.presentModal(new SessionInitializationView());
+        session.startSession(account).then(function(){
+            setTimeout(function(){
+                modals.dismissModal();
+            }, 1300);
+
+        });
     },
 
     presentModal: function(modalView){
@@ -52,7 +64,9 @@ var ApplicationDelegate = marionette.Controller.extend({
     },
 
     dismissModal: function(modalView){
-        this.app.modal.close();
+        this.app.modal.close().then(function(){
+            modals.nextModal();
+        });
     }
 });
 

@@ -24,7 +24,9 @@ var ModalRegion = marionette.Region.extend({
     // Close the current view, if there is one. If there is no
     // current view, it does nothing and returns immediately.
     close: function(){
+        var deferred = $.Deferred();
         var view = this.currentView;
+
         if (!view || view.isClosed){ return; }
 
         var self = this;
@@ -33,7 +35,10 @@ var ModalRegion = marionette.Region.extend({
         setTimeout(function(){
             marionette.Region.prototype.close.call(self);
             self.$el.hide();
+            deferred.resolve();
         }, 200);
+
+        return deferred.promise();
     }
 });
 

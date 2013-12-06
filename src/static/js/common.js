@@ -50,6 +50,10 @@ require.config({
             'driver': 'app/settings/drivers/html-local-storage'
         },
 
+        'app/session/session':{
+            'driver': 'app/session/drivers/xhr'
+        },
+
         'hbs':{
             'i18nprecompile' : 'vendor/require/hbs/i18nprecompile',
             'json2' : 'vendor/require/hbs/json2',

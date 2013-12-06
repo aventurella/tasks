@@ -6,22 +6,38 @@ var ModalView = require('./views/modal').ModalView;
 
 var currentModal = null;
 
+var queue = [];
 
 function presentModal(view){
 
-    // only 1 modal at a time please.
-    if(currentModal) return;
 
-    currentModal = new ModalView({itemView: view});
+    var modalView = new ModalView({itemView: view});
+    queue.push(modalView);
+
+    if(queue.length === 1){
+        triggerModal(modalView);
+    }
+
+    return modalView;
+}
+
+function triggerModal(modalView){
+    currentModal = modalView;
     vent.trigger(events.PRESENT, currentModal);
-    return currentModal;
+}
+
+function nextModal(){
+    if(queue.length > 0) queue.shift();
+    if(queue.length === 0) return;
+
+    triggerModal(queue[0]);
 }
 
 function dismissModal(){
     vent.trigger(events.DISMISS, currentModal);
-    currentModal = null;
 }
 
 exports.presentModal = presentModal;
 exports.dismissModal = dismissModal;
+exports.nextModal = nextModal;
 });
