@@ -83,18 +83,21 @@ var ProjectDetailView = marionette.ItemView.extend({
     initializeSwimlanes: function(){
         this.swimlaneBacklog = new Swimlane({
             el: this.ui.backlog.find('ul')[0],
+            status:status.BACKLOG,
             collection: new Tasks(this.collection.where({status:status.BACKLOG}))
         });
         this.swimlaneBacklog.render();
 
         this.swimlaneInProgress = new Swimlane({
             el: this.ui.inProgress.find('ul'),
+            status:status.IN_PROGRESS,
             collection: new Tasks(this.collection.where({status:status.IN_PROGRESS}))
         });
         this.swimlaneInProgress.render();
 
         this.swimlaneCompleted = new Swimlane({
             el: this.ui.completed.find('ul'),
+            status:status.COMPLETED,
             collection: new Tasks(this.collection.where({status:status.COMPLETED}))
         });
         this.swimlaneCompleted.render();
