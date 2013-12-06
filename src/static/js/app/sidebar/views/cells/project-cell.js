@@ -75,7 +75,7 @@ var ProjectCell = marionette.ItemView.extend({
 
         input.val(label.text());
         input.show();
-        input[0].focus();
+        input[0].select();
     },
 
     endEditing: function(value){
