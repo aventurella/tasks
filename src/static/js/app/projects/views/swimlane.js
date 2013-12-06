@@ -10,7 +10,6 @@ var Swimlane = DragAndDropCollectionView.extend({
 
     initialize: function(){
         DragAndDropCollectionView.prototype.initialize.apply(this, arguments);
-        this.listenTo(this.collection, 'add', this.onCollectionAdd)
     },
 
     getDragImage: function(){
@@ -32,10 +31,6 @@ var Swimlane = DragAndDropCollectionView.extend({
 
     renderPlaceholderForData: function(data){
         return $('<li class="task-placeholder"></li>');
-    },
-
-    onCollectionAdd: function(model){
-        model.save();
     },
 
 });
