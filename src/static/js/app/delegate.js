@@ -29,7 +29,6 @@ var ApplicationDelegate = marionette.Controller.extend({
         var currentSettings = getSettings();
         var account = currentSettings.getAccount();
 
-
         if (account.get('username') === null ||
             account.get('password') === null){
             var modalView = modals.presentModal(new AccountFormView());
