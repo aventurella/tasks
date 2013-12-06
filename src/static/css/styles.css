@@ -189,7 +189,12 @@ body {
   #project-detail .details .swimlanes .lane {
     -webkit-flex-grow: 1;
     flex-grow: 1;
-    padding-right: 30px; }
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    -webkit-flex-direction: column;
+    padding-right: 30px;
+    width: 300px; }
     #project-detail .details .swimlanes .lane .heading {
       padding: 10px 0;
       margin-bottom: 5px;
@@ -211,34 +216,43 @@ body {
       min-height: 50px; }
     #project-detail .details .swimlanes .lane .task-placeholder {
       height: 25px;
-      background-color: rgba(248, 248, 248, 0.4);
+      background-color: #f3f3f3;
       color: #fff;
       border: 2px dashed #b2b2b2;
       margin-bottom: 3px;
       box-shadow: rgba(0, 0, 0, 0.1) 0 0 1px 1px; }
-    #project-detail .details .swimlanes .lane .task {
-      font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+    #project-detail .details .swimlanes .lane .task, #project-detail .details .swimlanes .lane .bug {
+      -webkit-flex-grow: 1;
+      flex-grow: 1;
       font-size: 13px;
       padding: 10px 0 10px 10px;
       margin-bottom: 3px;
       position: relative;
       background: -webkit-linear-gradient(top, white 42%, #fcfcfc 100%);
       box-shadow: rgba(255, 255, 255, 0.1) 0 1px 1px 1px inset, rgba(255, 255, 255, 0.2) 0 1px inset, rgba(40, 98, 122, 0.1) 0 0px 0px inset, rgba(0, 0, 0, 0.1) 0 0 1px 1px; }
-      #project-detail .details .swimlanes .lane .task .loe {
+      #project-detail .details .swimlanes .lane .task .loe, #project-detail .details .swimlanes .lane .bug .loe {
         position: absolute;
         width: 5px;
         left: 1px;
-        top: 2px;
-        height: 31px; }
-        #project-detail .details .swimlanes .lane .task .loe.low {
+        top: 0;
+        height: 100%; }
+        #project-detail .details .swimlanes .lane .task .loe .low, #project-detail .details .swimlanes .lane .bug .loe .low {
           border: 1px solid #b2b2b2;
-          background-color: rgba(248, 248, 248, 0.4); }
-        #project-detail .details .swimlanes .lane .task .loe.medium {
+          background-color: #f3f3f3; }
+        #project-detail .details .swimlanes .lane .task .loe .medium, #project-detail .details .swimlanes .lane .bug .loe .medium {
           border: 1px solid #d39511;
-          background-color: rgba(240, 184, 64, 0.4); }
-        #project-detail .details .swimlanes .lane .task .loe.high {
+          background-color: #f9e3b2; }
+        #project-detail .details .swimlanes .lane .task .loe .high, #project-detail .details .swimlanes .lane .bug .loe .high {
           border: 1px solid #cc2511;
-          background-color: rgba(239, 78, 58, 0.4); }
+          background-color: #f8b7af; }
+      #project-detail .details .swimlanes .lane .task .label, #project-detail .details .swimlanes .lane .bug .label {
+        font-size: 16px;
+        padding-bottom: 5px; }
+      #project-detail .details .swimlanes .lane .task .description, #project-detail .details .swimlanes .lane .bug .description {
+        font-size: 13px; }
+    #project-detail .details .swimlanes .lane .bug {
+      background: -webkit-linear-gradient(top, white 0%, snow 100%);
+      border: 1px solid #e79191; }
 
 #project-detail {
   -webkit-flex-grow: 1;

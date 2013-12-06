@@ -1,5 +1,6 @@
 define(function(require, exports, module) {
 
+var stickit = require('backbone/stickit');
 var marionette = require('marionette');
 var vent = require('app/vent').vent;
 

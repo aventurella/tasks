@@ -4,23 +4,38 @@
         <div>
             <label>
                 Task
-                <input type="radio" name="type" checked>
+                <input value="task" type="radio" name="inputType" checked>
             </label>
             <label>
                 Bug
-                <input type="radio" name="type">
+                <input value="bug" type="radio" name="inputType">
+            </label>
+        </div>
+        <div>
+            <label>
+                Low
+                <input value="low" type="radio" name="inputLOE" >
+            </label>
+            <label>
+                Medium
+                <input value="medium" type="radio" name="inputLOE" checked>
+            </label>
+
+            <label>
+                High
+                <input value="high" type="radio" name="inputLOE">
             </label>
         </div>
         <div>
             <label>
                 Task:
-                <input type="text" name="label">
+                <input id="inputLabel" type="text" name="label">
             </label>
         </div>
         <div>
             <label>
                 Description:
-                <textarea name="description" cols="80", rows="10"></textarea>
+                <textarea id="inputDescription" name="description" cols="80", rows="10"></textarea>
             </label>
         </div>
         <div class="actions">

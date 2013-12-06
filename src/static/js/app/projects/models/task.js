@@ -6,7 +6,8 @@ var Task = backbone.Model.extend({
     defaults: {
         label: null,
         description: null,
-        levelofEffort: 'medium'
+        type: 'task',
+        levelOfEffort: 'medium'
     }
 });
 

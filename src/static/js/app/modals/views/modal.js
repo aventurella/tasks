@@ -1,10 +1,11 @@
 define(function(require, exports, module) {
 
 var marionette = require('marionette');
-var view = require('hbs!../templates/modal');
+var events = require('../events');
+var template = require('hbs!../templates/modal');
 
 var ModalView = marionette.ItemView.extend({
-    template: view,
+    template: template,
     className: 'view',
     itemView: null,
 
@@ -16,12 +17,12 @@ var ModalView = marionette.ItemView.extend({
         this.view.setElement(this.$el, true);
         this.view.render();
 
-        this.view.once('application:modal:complete', this.modalComplete, this);
+        this.view.once(events.COMPLETE, this.modalComplete, this);
     },
 
     modalComplete: function(){
         this._data = this.view.getData();
-        this.trigger('complete', this);
+        this.trigger(events.COMPLETE, this);
     },
 
     getData: function(){

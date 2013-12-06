@@ -2,8 +2,6 @@ require.config({
   baseUrl: 'static/js',
 
   paths : {
-    'jquery': 'vendor/jquery/jquery',
-    'backbone': 'vendor/backbone/backbone',
     'marionette': 'vendor/backbone/marionette',
     'hbs': 'vendor/require/hbs/hbs',
 
@@ -22,6 +20,18 @@ require.config({
         {
             location: 'app',
             name: 'app'
+        },
+
+        {
+            location: 'vendor/backbone',
+            name: 'backbone',
+            main:'backbone'
+        },
+
+        {
+            location: 'vendor/jquery',
+            name: 'jquery',
+            main:'jquery'
         },
 
         {
@@ -48,7 +58,7 @@ require.config({
         // if disableI18n is `true` it won't load locales and the i18n helper
         // won't work as well.
         disableI18n : true,
-        helperDirectory: 'app/hbs/'
+        helperDirectory: 'app/shared/hbs'
   },
 
   shim : {
@@ -56,6 +66,11 @@ require.config({
     'backbone': {
         'deps': ['jquery', 'underscore'],
         'exports': 'Backbone'
+    },
+
+    'backbone/stickit' : {
+      'deps' : ['backbone'],
+      'exports' : 'Stickit'
     },
 
     'marionette': {

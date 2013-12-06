@@ -12,6 +12,13 @@ var Swimlane = DragAndDropCollectionView.extend({
         return false;
     },
 
+    itemViewOptions: function(model, index) {
+
+        return {
+            className: model.get('type')
+        };
+    },
+
     renderPlaceholderForData: function(data){
         return $('<li class="task-placeholder"></li>');
     }

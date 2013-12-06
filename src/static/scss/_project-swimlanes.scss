@@ -22,8 +22,13 @@
     .lane{
         -webkit-flex-grow: 1;
         flex-grow: 1;
+        display: flex;
+        display: -webkit-flex;
+        flex-direction: column;
+        -webkit-flex-direction: column;
 
         padding-right: 30px;
+        width: 300px;
 
         .heading{
             padding: 10px 0;
@@ -68,8 +73,9 @@
             rgba(0, 0, 0, 0.1) 0 0 1px 1px;
         }
 
-        .task{
-            font-family: $georgia;
+        .task, .bug{
+            -webkit-flex-grow: 1;
+            flex-grow: 1;
             font-size: 13px;
             padding: 10px 0 10px 10px;
             margin-bottom: 3px;
@@ -86,26 +92,41 @@
                 position: absolute;
                 width: 5px;
                 left: 1px;
-                top: 2px;
-                height: 31px;
+                top: 0;
+                height: 100%;
 
-                &.low{
+
+                .low{
                     border: 1px solid $task-light-gray-border;
                     background-color: $task-light-gray-background;
                     //border: 1px solid $task-blue-border;
                     //background-color: $task-blue-background;
                 }
 
-                &.medium{
+                .medium{
                     border: 1px solid $task-yellow-border;
                     background-color: $task-yellow-background;
                 }
 
-                &.high{
+                .high{
                     border: 1px solid $task-red-border;
                     background-color: $task-red-background;
                 }
             }
+
+            .label{
+                font-size: 16px;
+                padding-bottom: 5px;
+            }
+
+            .description{
+                font-size: 13px;
+            }
+        }
+
+        .bug{
+            background: -webkit-linear-gradient(top, rgba(255 ,255, 255, 1) 0%, rgba(255, 250, 250, 1) 100%);
+            border: 1px solid #e79191;
         }
     }
 }

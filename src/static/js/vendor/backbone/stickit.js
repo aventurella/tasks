@@ -1,4 +1,4 @@
-(function($) {
+(function(Backbone) {
 
   // Backbone.Stickit Namespace
   // --------------------------
@@ -33,16 +33,16 @@
     // `this.$el`. If the optional `model` parameter is defined, then only
     // delete bindings for the given `model` and its corresponding view events.
     unstickit: function(model) {
-      var models = [], self = this;
+      var models = [];
       _.each(this._modelBindings, function(binding, i) {
         if (model && binding.model !== model) return false;
         binding.model.off(binding.event, binding.fn);
         models.push(binding.model);
-        delete self._modelBindings[i];
-      });
+        delete this._modelBindings[i];
+      }, this);
 
       // Trigger an event for each model that was unbound.
-      _.each(_.uniq(models), function(m) {m.trigger('stickit:unstuck', self.cid)});
+      _.invoke(_.uniq(models), 'trigger', 'stickit:unstuck', this.cid);
       // Cleanup the null values.
       this._modelBindings = _.compact(this._modelBindings);
 
@@ -52,8 +52,7 @@
     // Using `this.bindings` configuration or the `optionalBindingsConfig`, binds `this.model`
     // or the `optionalModel` to elements in the view.
     stickit: function(optionalModel, optionalBindingsConfig) {
-      var self = this,
-        model = optionalModel || this.model,
+      var model = optionalModel || this.model,
         namespace = '.stickit.' + model.cid,
         bindings = optionalBindingsConfig || this.bindings || {};
 
@@ -62,17 +61,13 @@
 
       // Iterate through the selectors in the bindings configuration and configure
       // the various options for each field.
-      _.each(_.keys(bindings), function(selector) {
+      _.each(bindings, function(v, selector) {
         var $el, options, modelAttr, config,
           binding = bindings[selector] || {},
           bindId = _.uniqueId();
 
         // Support ':el' selector - special case selector for the view managed delegate.
-        if (selector != ':el') $el = self.$(selector);
-        else {
-          $el = self.$el;
-          selector = '';
-        }
+        $el = selector === ':el' ? this.$el : this.$(selector);
 
         // Fail fast if the selector didn't match an element.
         if (!$el.length) return;
@@ -81,7 +76,7 @@
         if (_.isString(binding)) binding = {observe:binding};
 
         // Handle case where `observe` is in the form of a function.
-        if (_.isFunction(binding.observe)) binding.observe = binding.observe.call(self);
+        if (_.isFunction(binding.observe)) binding.observe = binding.observe.call(this);
 
         config = getConfiguration($el, binding);
 
@@ -91,55 +86,57 @@
         // can avoid double-binding in the `change:attribute` event handler.
         config.bindId = bindId;
         // Add a reference to the view for handlers of stickitChange events
-        config.view = self;
-        options = _.extend({stickitChange:config}, config.setOptions || {});
+        config.view = this;
+        options = _.extend({stickitChange:config}, config.setOptions);
 
-        initializeAttributes(self, $el, config, model, modelAttr);
+        initializeAttributes(this, $el, config, model, modelAttr);
 
-        initializeVisible(self, $el, config, model, modelAttr);
+        initializeVisible(this, $el, config, model, modelAttr);
 
         if (modelAttr) {
           // Setup one-way, form element to model, bindings.
-          _.each(config.events || [], function(type) {
+          _.each(config.events, function(type) {
             var event = type + namespace;
             var method = function(event) {
-              var val = config.getVal.call(self, $el, event, config);
+              var val = config.getVal.call(this, $el, event, config, _.rest(arguments));
               // Don't update the model if false is returned from the `updateModel` configuration.
-              if (evaluateBoolean(self, config.updateModel, val, config))
-                setAttr(model, modelAttr, val, options, self, config);
+              if (evaluateBoolean(this, config.updateModel, val, config))
+                setAttr(model, modelAttr, val, options, this, config);
             };
-            if (selector === '') self.$el.on(event, method);
-            else self.$el.on(event, selector, method);
-          });
+            method = _.bind(method, this);
+            if (selector === ':el') this.$el.on(event, method);
+            else this.$el.on(event, selector, method);
+          }, this);
 
           // Setup a `change:modelAttr` observer to keep the view element in sync.
           // `modelAttr` may be an array of attributes or a single string value.
           _.each(_.flatten([modelAttr]), function(attr) {
-            observeModelEvent(model, self, 'change:'+attr, function(model, val, options) {
+            observeModelEvent(model, this, 'change:'+attr, function(model, val, options) {
               var changeId = options && options.stickitChange && options.stickitChange.bindId || null;
-              if (changeId != bindId)
-                updateViewBindEl(self, $el, config, getAttr(model, modelAttr, config, self), model);
+              if (changeId !== bindId)
+                updateViewBindEl(this, $el, config, getAttr(model, modelAttr, config, this), model);
             });
-          });
+          }, this);
 
-          updateViewBindEl(self, $el, config, getAttr(model, modelAttr, config, self), model, true);
+          updateViewBindEl(this, $el, config, getAttr(model, modelAttr, config, this), model, true);
         }
 
-        model.on('stickit:unstuck', function(cid) {
-          if (cid == self.cid) applyViewFn(self, config.destroy, $el, model, config);
-        });
+        model.once('stickit:unstuck', function(cid) {
+          if (cid === this.cid) applyViewFn(this, config.destroy, $el, model, config);
+        }, this);
 
         // After each binding is setup, call the `initialize` callback.
-        applyViewFn(self, config.initialize, $el, model, config);
-      });
+        applyViewFn(this, config.initialize, $el, model, config);
+      }, this);
 
       // Wrap `view.remove` to unbind stickit model and dom events.
-      this.remove = _.wrap(this.remove, function(oldRemove) {
-        var ret = self;
-        self.unstickit();
-        if (oldRemove) ret = oldRemove.apply(self, _.rest(arguments));
+      var remove = this.remove;
+      this.remove = function() {
+        var ret = this;
+        this.unstickit();
+        if (remove) ret = remove.apply(this, _.rest(arguments));
         return ret;
-      });
+      };
     }
   });
 
@@ -157,7 +154,7 @@
   // If the given `fn` is a string, then view[fn] is called, otherwise it is
   // a function that should be executed.
   var applyViewFn = function(view, fn) {
-    if (fn) return (_.isString(fn) ? view[fn] : fn).apply(view, _.toArray(arguments).slice(2));
+    if (fn) return (_.isString(fn) ? view[fn] : fn).apply(view, _.rest(arguments, 2));
   };
 
   var getSelectedOption = function($select) { return $select.find('option').not(function(){ return !this.selected; }); };
@@ -167,7 +164,7 @@
   var evaluateBoolean = function(view, reference) {
     if (_.isBoolean(reference)) return reference;
     else if (_.isFunction(reference) || _.isString(reference))
-      return applyViewFn.apply(this, _.toArray(arguments));
+      return applyViewFn.apply(this, arguments);
     return false;
   };
 
@@ -188,12 +185,16 @@
   // formatting if necessary. If `attr` is an array, then an array of
   // respective values will be returned.
   var getAttr = function(model, attr, config, context) {
-    var val, retrieveVal = function(field) {
-      var retrieved = config.escape ? model.escape(field) : model.get(field);
-      return _.isUndefined(retrieved) || _.isNull(retrieved) ? '' : retrieved;
-    };
+    var val,
+      retrieveVal = function(field) {
+        return model[config.escape ? 'escape' : 'get'](field);
+      },
+      sanitizeVal = function(val) {
+        return val == null ? '' : val;
+      };
     val = _.isArray(attr) ? _.map(attr, retrieveVal) : retrieveVal(attr);
-    return config.onGet ? applyViewFn(context, config.onGet, val, config) : val;
+    if (config.onGet) val = applyViewFn(context, config.onGet, val, config);
+    return _.isArray(val) ? _.map(val, sanitizeVal) : sanitizeVal(val);
   };
 
   // Find handlers in `Backbone.Stickit._handlers` with selectors that match
@@ -206,9 +207,9 @@
       update: function($el, val, m, opts) { if ($el[opts.updateMethod]) $el[opts.updateMethod](val); },
       getVal: function($el, e, opts) { return $el[opts.updateMethod](); }
     }];
-    _.each(Backbone.Stickit._handlers, function(handler) {
-      if ($el.is(handler.selector)) handlers.push(handler);
-    });
+    handlers = handlers.concat(_.filter(Backbone.Stickit._handlers, function(handler) {
+      return $el.is(handler.selector);
+    }));
     handlers.push(binding);
     var config = _.extend.apply(_, handlers);
     // `updateView` is defaulted to false for configutrations with
@@ -230,7 +231,7 @@
   //     }, ...]
   //
   var initializeAttributes = function(view, $el, config, model, modelAttr) {
-    var props = ['autofocus', 'autoplay', 'async', 'checked', 'controls', 'defer', 'disabled', 'hidden', 'loop', 'multiple', 'open', 'readonly', 'required', 'scoped', 'selected'];
+    var props = ['autofocus', 'autoplay', 'async', 'checked', 'controls', 'defer', 'disabled', 'hidden', 'indeterminate', 'loop', 'multiple', 'open', 'readonly', 'required', 'scoped', 'selected'];
 
     _.each(config.attributes || [], function(attrConfig) {
       var lastClass = '', observed, updateAttr;
@@ -240,7 +241,7 @@
         var updateType = _.indexOf(props, attrConfig.name, true) > -1 ? 'prop' : 'attr',
           val = getAttr(model, observed, attrConfig, view);
         // If it is a class then we need to remove the last value and add the new.
-        if (attrConfig.name == 'class') {
+        if (attrConfig.name === 'class') {
           $el.removeClass(lastClass).addClass(val);
           lastClass = val;
         }
@@ -270,12 +271,11 @@
           val = getAttr(model, modelAttr, config, view),
           isVisible = !!val;
       // If `visible` is a function then it should return a boolean result to show/hide.
-      if (_.isFunction(visible) || _.isString(visible)) isVisible = applyViewFn(view, visible, val, config);
+      if (_.isFunction(visible) || _.isString(visible)) isVisible = !!applyViewFn(view, visible, val, config);
       // Either use the custom `visibleFn`, if provided, or execute the standard show/hide.
       if (visibleFn) applyViewFn(view, visibleFn, $el, isVisible, config);
       else {
-        if (isVisible) $el.show();
-        else $el.hide();
+        $el.toggle(isVisible);
       }
     };
     _.each(_.flatten([modelAttr]), function(attr) {
@@ -333,20 +333,22 @@
         // There are multiple checkboxes so we need to go through them and check
         // any that have value attributes that match what's in the array of `val`s.
         val || (val = []);
-        _.each($el, function(el) {
-          if (_.indexOf(val, $(el).val()) > -1) $(el).prop('checked', true);
-          else $(el).prop('checked', false);
+        $el.each(function(i, el) {
+          var checkbox = Backbone.$(el);
+          var checked = _.indexOf(val, checkbox.val()) > -1;
+          checkbox.prop('checked', checked);
         });
       } else {
-        if (_.isBoolean(val)) $el.prop('checked', val);
-        else $el.prop('checked', val == $el.val());
+        var checked = _.isBoolean(val) ? val : val === $el.val();
+        $el.prop('checked', checked);
       }
     },
     getVal: function($el) {
       var val;
       if ($el.length > 1) {
         val = _.reduce($el, function(memo, el) {
-          if ($(el).prop('checked')) memo.push($(el).val());
+          var checkbox = Backbone.$(el);
+          if (checkbox.prop('checked')) memo.push(checkbox.val());
           return memo;
         }, []);
       } else {
@@ -354,9 +356,8 @@
         // If the checkbox has a value attribute defined, then
         // use that value. Most browsers use "on" as a default.
         var boxval = $el.val();
-        if (boxval != 'on' && boxval != null) {
-          if (val) val = $el.val();
-          else val = null;
+        if (boxval !== 'on' && boxval != null) {
+          val = val ? $el.val() : null;
         }
       }
       return val;
@@ -385,13 +386,13 @@
           if ($el.find('> option').length) {
             list.opt_labels.push(undefined);
             _.each($el.find('> option'), function(el) {
-              list[undefined] = getList($(el));
+              list[undefined] = getList(Backbone.$(el));
             });
           }
           _.each($el.find('optgroup'), function(el) {
-            var label = $(el).attr('label');
+            var label = Backbone.$(el).attr('label');
             list.opt_labels.push(label);
-            list[label] = getList($(el).find('option'));
+            list[label] = getList(Backbone.$(el).find('option'));
           });
         } else {
           list = getList($el.find('option'));
@@ -404,7 +405,7 @@
 
       var addSelectOptions = function(optList, $el, fieldVal) {
         _.each(optList, function(obj) {
-          var option = $('<option/>'), optionVal = obj;
+          var option = Backbone.$('<option/>'), optionVal = obj;
 
           var fillOption = function(text, val) {
             option.text(text);
@@ -420,12 +421,12 @@
             fillOption(evaluatePath(obj, selectConfig.labelPath), evaluatePath(obj, selectConfig.valuePath));
 
           // Determine if this option is selected.
-          if (!isMultiple && optionVal != null && fieldVal != null && optionVal == fieldVal || (_.isObject(fieldVal) && _.isEqual(optionVal, fieldVal)))
+          if (!isMultiple && optionVal != null && fieldVal != null && optionVal === fieldVal || (_.isObject(fieldVal) && _.isEqual(optionVal, fieldVal)))
             option.prop('selected', true);
           else if (isMultiple && _.isArray(fieldVal)) {
             _.each(fieldVal, function(val) {
               if (_.isObject(val)) val = evaluatePath(val, selectConfig.valuePath);
-              if (val == optionVal || (_.isObject(val) && _.isEqual(optionVal, val)))
+              if (val === optionVal || (_.isObject(val) && _.isEqual(optionVal, val)))
                 option.prop('selected', true);
             });
           }
@@ -452,7 +453,7 @@
       if (optList instanceof Backbone.Collection) optList = optList.toJSON();
 
       if (selectConfig.defaultOption) {
-        addSelectOptions(["__default__"], $el)
+        addSelectOptions(["__default__"], $el);
       }
 
       if (_.isArray(optList)) {
@@ -468,7 +469,7 @@
         //     }
         //
         _.each(optList.opt_labels, function(label) {
-          var $group = $('<optgroup/>').attr('label', label);
+          var $group = Backbone.$('<optgroup/>').attr('label', label);
           addSelectOptions(optList[label], $group, val);
           $el.append($group);
         });
@@ -488,8 +489,8 @@
     getVal: function($el) {
       var val;
       if ($el.prop('multiple')) {
-        val = $(getSelectedOption($el).map(function() {
-          return $(this).data('stickit_bind_val');
+        val = Backbone.$(getSelectedOption($el).map(function() {
+          return Backbone.$(this).data('stickit_bind_val');
         })).get();
       } else {
         val = getSelectedOption($el).data('stickit_bind_val');
@@ -498,4 +499,4 @@
     }
   }]);
 
-})(window.jQuery || window.Zepto);
+})(Backbone);

@@ -4,6 +4,7 @@ var marionette = require('marionette');
 var backbone = require('backbone');
 var _ = require('underscore');
 var modals = require('app/modals/modals');
+var modalEvents = require('app/modals/events');
 var Swimlane = require('./swimlane').Swimlane;
 var Task = require('../models/task').Task;
 var TaskFormView = require('app/modals/views/task-form').TaskFormView;
@@ -49,13 +50,16 @@ var ProjectDetailView = marionette.ItemView.extend({
         var modalView = modals.presentModal(taskForm);
 
         if(modalView){
-            modalView.once('complete', this.taskModalComplete, this);
+            modalView.once(modalEvents.COMPLETE, this.taskModalComplete, this);
         }
     },
 
     taskModalComplete: function(modalView){
         var data = modalView.getData();
         modals.dismissModal();
+
+        if (data.ok === false) return;
+        this.swimlaneBacklog.collection.add(data.model);
     },
 
     addToBacklog: function(){
