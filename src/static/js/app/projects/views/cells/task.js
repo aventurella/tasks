@@ -9,7 +9,7 @@ var TaskView = marionette.ItemView.extend({
     tagName: 'li',
 
     onShow: function(){
-
+        console.log('called')
     }
 
 });

@@ -28,7 +28,6 @@ var Task = backbone.Model.extend({
     defaults: {
         label: null,
         description: null,
-        project:0,
         status:status.BACKLOG,
         loe:loe.LOW,
         task_type:task_type.TASK
