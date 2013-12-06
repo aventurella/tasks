@@ -17,6 +17,10 @@ var TaskFormView = marionette.ItemView.extend({
         'click .actions .btn.cancel': 'wantsCancel'
     },
 
+    ui: {
+        label: '#inputLabel'
+    },
+
     bindings: {
         'input[name="inputType"]': 'type',
         'input[name="inputLOE"]': 'levelOfEffort',
@@ -43,6 +47,7 @@ var TaskFormView = marionette.ItemView.extend({
             this.wantsCreateWithKeys);
 
         this.stickit();
+        this.ui.label.focus();
     },
 
     wantsCreate: function(){
