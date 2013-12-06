@@ -8,6 +8,10 @@ var TaskView = require('./cells/task').TaskView;
 var Swimlane = DragAndDropCollectionView.extend({
     itemView: TaskView,
 
+    onShow: function(){
+
+    },
+
     getDragImage: function(){
         return false;
     },

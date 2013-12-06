@@ -28,9 +28,9 @@ var TaskFormView = marionette.ItemView.extend({
         '#inputDescription': 'description',
     },
 
-    initialize: function(){
+    initialize: function(options){
         this._data = {ok: false};
-        this.model = new Task();
+        this.model = new Task({project:options.project.get('resource_uri')});
     },
 
     onRender: function(){

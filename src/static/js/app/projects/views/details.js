@@ -7,6 +7,8 @@ var modals = require('app/modals/modals');
 var modalEvents = require('app/modals/events');
 var Swimlane = require('./swimlane').Swimlane;
 var Task = require('../models/task').Task;
+var status = require('../models/task').status;
+var Tasks = require('../collections/tasks').Tasks;
 var TaskFormView = require('app/modals/views/task-form').TaskFormView;
 var view = require('hbs!app/projects/templates/details');
 
@@ -29,7 +31,19 @@ var ProjectDetailView = marionette.ItemView.extend({
     },
 
     onShow: function(){
+        this.collection = new Tasks();
+        this.collection.fetch({data:{project__id:this.model.get('id')}});
+        this.listenTo(this.collection, 'sync', this.onCollectionSync);
         this.listenTo(this.model, 'change', this.modelDidChange);
+    },
+
+    onClose: function(){
+        this.swimlaneBacklog.close();
+        this.swimlaneInProgress.close();
+        this.swimlaneCompleted.close();
+    },
+
+    onCollectionSync: function(){
         this.initializeSwimlanes();
     },
 
@@ -45,7 +59,7 @@ var ProjectDetailView = marionette.ItemView.extend({
     },
 
     wantsAddToBacklog: function(){
-        var taskForm = new TaskFormView();
+        var taskForm = new TaskFormView({project:this.model});
         var modalView = modals.presentModal(taskForm);
 
         if(modalView){
@@ -67,21 +81,23 @@ var ProjectDetailView = marionette.ItemView.extend({
     },
 
     initializeSwimlanes: function(){
-
         this.swimlaneBacklog = new Swimlane({
-            el: this.ui.backlog.find('ul'),
-            collection: new backbone.Collection()
+            el: this.ui.backlog.find('ul')[0],
+            collection: new Tasks(this.collection.where({status:status.BACKLOG}))
         });
+        this.swimlaneBacklog.render();
 
         this.swimlaneInProgress = new Swimlane({
             el: this.ui.inProgress.find('ul'),
-            collection: new backbone.Collection()
+            collection: new Tasks(this.collection.where({status:status.IN_PROGRESS}))
         });
+        this.swimlaneInProgress.render();
 
         this.swimlaneCompleted = new Swimlane({
             el: this.ui.completed.find('ul'),
-            collection: new backbone.Collection()
+            collection: new Tasks(this.collection.where({status:status.COMPLETED}))
         });
+        this.swimlaneCompleted.render();
     },
 
     modelDidChange: function(model){
