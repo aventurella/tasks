@@ -26,6 +26,11 @@ var ProjectListView = marionette.ItemView.extend({
 
     onProjectsSynced: function(){
         this.listenTo(this.projects.collection, 'add', this.onProjectAdd);
+
+        var child = this.projects.children.findByIndex(0);
+        if(child){
+            this.projectWantsSelect(child);
+        }
     },
 
     onProjectAdd: function(model){
