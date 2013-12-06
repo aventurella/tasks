@@ -6,7 +6,11 @@ var vent = require('app/vent').vent;
 
 var modalEvents = require('app/modals/events');
 var SidebarView = require('app/sidebar/views/sidebar').SidebarView;
+var getSettings = require('app/settings/defaults').getSettings;
 
+
+var modals = require('app/modals/modals');
+var AccountFormView = require('app/modals/views/account').AccountFormView;
 
 var ApplicationDelegate = marionette.Controller.extend({
 
@@ -21,6 +25,26 @@ var ApplicationDelegate = marionette.Controller.extend({
 
         this.listenTo(vent, modalEvents.PRESENT, this.presentModal);
         this.listenTo(vent, modalEvents.DISMISS, this.dismissModal);
+        var currentSettings = getSettings();
+        var account = currentSettings.getAccount();
+
+        if (account.get('username') === null ||
+            account.get('password') === null){
+            var modalView = modals.presentModal(new AccountFormView());
+
+            modalView.once(modalEvents.COMPLETE, function(){
+                modals.dismissModal();
+                this.startSession();
+            }, this);
+
+            return;
+        }
+
+        this.startSession();
+    },
+
+    startSession: function(){
+        var account = getSettings().getAccount();
     },
 
     presentModal: function(modalView){
