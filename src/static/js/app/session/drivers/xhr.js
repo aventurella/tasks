@@ -8,9 +8,6 @@ function authenticate(username, password){
     $.get('http://localhost:8000/api/v1/token/'+username+'/'+password+'/' )
     .then(function(data){
 
-        data.ok = true;
-        data.token = 'af7b4c1a';
-
         if(data.ok){
             deferred.resolve(data.token);
             return;
