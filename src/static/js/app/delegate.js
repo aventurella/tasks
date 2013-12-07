@@ -27,7 +27,6 @@ var ApplicationDelegate = marionette.Controller.extend({
         this.listenTo(vent, modalEvents.PRESENT, this.presentModal);
         this.listenTo(vent, modalEvents.DISMISS, this.dismissModal);
         var currentSettings = getSettings();
-
         var token = currentSettings.getToken();
 
         if (!token){
@@ -66,6 +65,7 @@ var ApplicationDelegate = marionette.Controller.extend({
                 self.beginLoginFlow();
             }, 1300);
         };
+
         session.startSession(account).then(success, fail);
     },
 

@@ -1,24 +1,12 @@
 define(function(require, exports, module) {
 
 
-var _ = require('underscore');
-var marionette = require('marionette');
-
+var $ = require('jquery');
 
 // see common.js -> maps for this defination
 var driver = require('driver');
 var session = null;
 
-var ApplicationSession = marionette.Controller.extend({
-
-    initialize: function(options){
-        this._token = options.token;
-    },
-
-    getToken: function(){
-        return this._token;
-    }
-});
 
 function startSession(account){
     var data = account.attributes;
@@ -38,11 +26,6 @@ function startSession(account){
     return deferred.promise();
 }
 
-function getSession(){
-    return session;
-}
-
-exports.getSession = getSession;
 exports.startSession = startSession;
 
 });
