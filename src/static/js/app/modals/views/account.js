@@ -42,7 +42,6 @@ var AccountFormView = marionette.ItemView.extend({
     },
 
     getData: function(){
-
         return {ok: true, model: this.model};
     },
 

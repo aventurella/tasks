@@ -31,7 +31,7 @@ var ProjectListView = marionette.CompositeView.extend({
     onProjectAdd: function(model){
         var obj = this.children.findByModel(model);
         this.projectWantsSelect(obj);
-        obj.wantsStartEditing();
+        //obj.wantsStartEditing();
     },
 
     projectWantsSelect: function(obj){

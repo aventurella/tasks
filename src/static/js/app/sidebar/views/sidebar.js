@@ -6,6 +6,9 @@ var ProjectDetailView = require('app/projects/views/details').ProjectDetailView;
 var FooterView = require('./footer').FooterView;
 var ProjectListView = require('./projects').ProjectListView;
 var Project = require('../models/project').Project;
+var modals = require('app/modals/modals');
+var modalEvents = require('app/modals/events');
+var NewProjectView = require('app/modals/views/new-project').NewProjectView;
 var view = require('hbs!app/sidebar/templates/sidebar');
 
 // this is probably better as a layout.
@@ -25,7 +28,15 @@ var SidebarView = marionette.ItemView.extend({
     },
 
     wantsAddProject: function(){
-        this.addNewProject();
+        var modalView = modals.presentModal(new NewProjectView());
+        var self = this;
+
+        modalView.once(modalEvents.COMPLETE, function(){
+            modals.dismissModal();
+            var data = modalView.getData();
+            if(data.ok === false) return;
+            self.addProject(data.model);
+        });
     },
 
     wantsRemoveProject: function(){
@@ -81,8 +92,11 @@ var SidebarView = marionette.ItemView.extend({
 
     addNewProject: function(){
         var obj = new Project();
-        this.projectListView.collection.create(obj, {wait:true});
+        this.addProject(obj);
+    },
 
+    addProject: function(project){
+        this.projectListView.collection.create(project, {wait:true});
     },
 
     initializeProjectList: function(){
