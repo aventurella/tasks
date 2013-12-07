@@ -1,5 +1,7 @@
 define(function(require, exports, module) {
 
+var $ = require('jquery');
+var $ = require('jquery');
 var stickit = require('backbone/stickit');
 var marionette = require('marionette');
 var vent = require('app/vent').vent;
@@ -30,15 +32,19 @@ var ApplicationDelegate = marionette.Controller.extend({
             return;
         }
 
-        this.beginApplication();
+        this.beginApplication(token);
     },
 
-    beginApplication: function(){
+    beginApplication: function(token){
         var sidebarView = new SidebarView({
             projectDetailRegion: this.app.projectDetail
         });
 
         this.app.sidebar.show(sidebarView);
+
+        $(document).ajaxSend(function(e, request){
+            request.setRequestHeader('Authorization', 'Bearer ' + token);
+        });
     },
 
     beginLoginFlow: function(){
@@ -59,7 +65,7 @@ var ApplicationDelegate = marionette.Controller.extend({
 
         var success = function(token){
             currentSettings.setToken(token);
-            self.beginApplication();
+            self.beginApplication(token);
             setTimeout(function(){
                 modals.dismissModal();
             }, 1300);
