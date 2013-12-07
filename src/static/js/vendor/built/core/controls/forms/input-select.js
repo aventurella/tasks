@@ -179,6 +179,7 @@ define(function(require, exports, module){
 
         initialize: function(options){
             _.defaults(options, this._defaults);
+            this.options = options;
 
             this.el = options.el || null;
             this.$el = helpers.registerElement(this.el);
@@ -193,7 +194,14 @@ define(function(require, exports, module){
         },
 
         _initializeKeyResponder: function(){
-            var actionEvent = _.debounce(this.receivedText, this.options.debounceDelay);
+            var actionEvent;
+
+            if (this.options.debounceDelay === 0){
+                actionEvent = this.receivedText;
+            } else {
+                actionEvent = _.debounce(this.receivedText, this.options.debounceDelay);
+            }
+
             this.inputResponder = new KeyResponder({
                 el: this.$el,
                 insertText: actionEvent,
@@ -205,7 +213,15 @@ define(function(require, exports, module){
             var $el = this.$el;
             var val = $el.is('input') ? $el.val() : $el.text();
 
-            if (val && val.length > this.options.minLength){
+            if (e.which == 8){
+                val = val.slice(0, -1);
+            } else {
+                var char = String.fromCharCode(e.which);
+                if(!e.shiftKey) char = char.toLowerCase();
+                val = val + char;
+            }
+
+            if (val.length >= this.options.minLength){
                 this._dispatchInput(this.$el, val);
             }
         },

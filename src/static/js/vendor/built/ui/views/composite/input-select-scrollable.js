@@ -6,9 +6,6 @@ var focus                = require('built/core/events/focus');
 var data                 = require('built/core/events/data');
 
 var InputSelectScrollableComposite =  InputSelectComposite.extend({
-    initialize : function(){
-
-    },
 
     onShow : function(){
         InputSelectComposite.prototype.onShow.apply(this, arguments);

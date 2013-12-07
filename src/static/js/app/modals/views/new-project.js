@@ -27,7 +27,7 @@ var NewProjectView = marionette.Layout.extend({
   },
 
   wantsComplete: function(obj){
-    this._data = obj.view.getData();
+    this._data = obj;
     this.trigger(modalEvents.COMPLETE);
   },
 
