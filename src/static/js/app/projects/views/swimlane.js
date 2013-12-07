@@ -4,6 +4,7 @@ var marionette = require('marionette');
 var backbone = require('backbone');
 var DragAndDropCollectionView = require('built/ui/views/collection/drag-and-drop').DragAndDropCollectionView;
 var TaskView = require('./cells/task').TaskView;
+var Task = require('../models/task').Task;
 
 var Swimlane = DragAndDropCollectionView.extend({
     itemView: TaskView,
@@ -31,6 +32,13 @@ var Swimlane = DragAndDropCollectionView.extend({
 
     renderPlaceholderForData: function(data){
         return $('<li class="task-placeholder"></li>');
+    },
+
+    dropResponderPerformDragOperation: function(responder, e){
+        var model = this.deserializeModel(responder.getData());
+        DragAndDropCollectionView.prototype.dropResponderPerformDragOperation.apply(this, arguments);
+        var task = new Task(model);
+        task.save();
     },
 
 });
