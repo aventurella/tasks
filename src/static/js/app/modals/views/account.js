@@ -7,7 +7,7 @@ var backbone = require('backbone');
 var events = require('../events');
 var getSettings = require('app/settings/defaults').getSettings;
 var template = require('hbs!../templates/account');
-
+var Account = require('app/settings/models/account').Account;
 
 var AccountFormView = marionette.ItemView.extend({
     template: template,
@@ -27,17 +27,9 @@ var AccountFormView = marionette.ItemView.extend({
         '#inputPassword': 'password'
     },
 
-    initialize: function(){
-        this.model = getSettings().getAccount();
-        this.listenTo(this.model, 'change', this.modelDidChange);
-    },
-
-    modelDidChange: function(e){
-        console.log('Model Did Change');
-        console.log(e);
-
-        var settings = getSettings();
-        settings.setAccount(this.model);
+    initialize: function(options){
+        options = options || {};
+        this.model = options.account || new Account();
     },
 
     onRender: function(){
@@ -50,7 +42,8 @@ var AccountFormView = marionette.ItemView.extend({
     },
 
     getData: function(){
-        return null;
+
+        return {ok: true, model: this.model};
     },
 
     onClose: function(){

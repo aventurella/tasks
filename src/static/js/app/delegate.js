@@ -27,36 +27,46 @@ var ApplicationDelegate = marionette.Controller.extend({
         this.listenTo(vent, modalEvents.PRESENT, this.presentModal);
         this.listenTo(vent, modalEvents.DISMISS, this.dismissModal);
         var currentSettings = getSettings();
-        var account = currentSettings.getAccount();
 
-        if (account.get('username') === null ||
-            account.get('password') === null){
-            var modalView = modals.presentModal(new AccountFormView());
+        var token = currentSettings.getToken();
 
-            modalView.once(modalEvents.COMPLETE, function(){
-                modals.dismissModal();
-                this.startSession();
-            }, this);
-
+        if (!token){
+            this.beginLoginFlow();
             return;
         }
-
-        this.startSession();
     },
 
-    startSession: function(){
-        // we can't let the user start interacting with the application until
-        // the session has actually started. AKA they have authenticated.
-        // probably want to pop a blocking modal
-        var account = getSettings().getAccount();
+    beginLoginFlow: function(){
+        var modalView = modals.presentModal(new AccountFormView());
+        modalView.once(modalEvents.COMPLETE, function(){
+                var account = modalView.getData().model;
+                modals.dismissModal();
+                this.startSession(account);
+            }, this);
+    },
+
+    startSession: function(account){
+
+        var currentSettings = getSettings();
 
         modals.presentModal(new SessionInitializationView());
-        session.startSession(account).then(function(){
+        var self = this;
+
+        var success = function(token){
+            currentSettings.setToken(token);
+
             setTimeout(function(){
                 modals.dismissModal();
             }, 1300);
+        };
 
-        });
+        var fail = function(){
+            setTimeout(function(){
+                modals.dismissModal();
+                self.beginLoginFlow();
+            }, 1300);
+        };
+        session.startSession(account).then(success, fail);
     },
 
     presentModal: function(modalView){

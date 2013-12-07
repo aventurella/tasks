@@ -24,11 +24,16 @@ function startSession(account){
     var data = account.attributes;
     var deferred = $.Deferred();
 
+    var success = function(token){
+        deferred.resolve(token);
+    };
+
+    var fail = function(){
+        deferred.reject();
+    };
+
     driver.authenticate(data.username, data.password)
-          .then(function(token){
-            session = new ApplicationSession({token: token});
-            deferred.resolve(session);
-          });
+          .then(success, fail);
 
     return deferred.promise();
 }

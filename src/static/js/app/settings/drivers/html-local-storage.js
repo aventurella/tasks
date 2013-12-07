@@ -1,17 +1,17 @@
 define(function(require, exports, module) {
-var Account = require('../models/account').Account;
 
-function getAccount(){
-    var account = JSON.parse(localStorage.getItem('account'));
-    return new Account(account);
+
+function getToken(){
+    var token = localStorage.getItem('token');
+    return token;
 }
 
-function setAccount(account){
-    localStorage.setItem('account', JSON.stringify(account.attributes));
+function setToken(value){
+    localStorage.setItem('token', value);
 }
 
-exports.getAccount = getAccount;
-exports.setAccount = setAccount;
+exports.getToken = getToken;
+exports.setToken = setToken;
 
 });
 

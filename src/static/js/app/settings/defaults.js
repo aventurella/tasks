@@ -9,12 +9,12 @@ var settings = null;
 
 var ApplicationSettings = marionette.Controller.extend({
 
-    getAccount: function(){
-        return driver.getAccount();
+    getToken: function(){
+        return driver.getToken();
     },
 
-    setAccount: function(account){
-        driver.setAccount(account);
+    setToken: function(value){
+        return driver.setToken(value);
     }
 });
 
