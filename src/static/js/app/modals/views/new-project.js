@@ -9,7 +9,7 @@ var template = require('hbs!../templates/new-project');
 
 var NewProjectView = marionette.Layout.extend({
     template: template,
-
+    id: 'testing',
     regions: {
         create: '#new-project-create',
         existing: '#new-project-existing'
@@ -27,7 +27,7 @@ var NewProjectView = marionette.Layout.extend({
   },
 
   wantsComplete: function(obj){
-    this._data = obj;
+    this._data = obj.view.getData();
     this.trigger(modalEvents.COMPLETE);
   },
 

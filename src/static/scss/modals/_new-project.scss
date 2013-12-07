@@ -1,0 +1,65 @@
+#modal-new-project{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    height: 280px;
+    position: relative;
+    @include row;
+
+    .panel{
+        @include span-columns(6);
+        background-color: #fff;
+        height: 100%;
+        padding-left: 20px;
+
+        &:first-child{
+            border-right: 1px solid #ddd;
+        }
+
+        input[type="text"]{
+            border-radius: 5px;
+            font-size: 13px;
+            line-height: 25px;
+            width: 70%;
+            border: 1px solid #ccc;
+            outline: none;
+            padding-left: 7px;
+        }
+
+
+        h2{
+            font-weight: 100;
+            margin-bottom: 3px;
+        }
+
+        h2+div{
+            font-size: 11px;
+            font-style: italic;
+            margin-bottom: 25px;
+        }
+
+        .action{
+            @include row;
+            padding-bottom: 20px;
+
+            .btn{
+                float: left;
+                padding-right: 15px;
+            }
+        }
+
+        .results{
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+
+    .action{
+        .btn {
+            cursor: pointer;
+            float: left;
+        }
+    }
+}
