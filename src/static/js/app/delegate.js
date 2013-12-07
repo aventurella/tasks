@@ -18,14 +18,10 @@ var ApplicationDelegate = marionette.Controller.extend({
     initialize: function(options){
         this.app = options.app;
 
-        var sidebarView = new SidebarView({
-            projectDetailRegion: this.app.projectDetail
-        });
-
-        this.app.sidebar.show(sidebarView);
 
         this.listenTo(vent, modalEvents.PRESENT, this.presentModal);
         this.listenTo(vent, modalEvents.DISMISS, this.dismissModal);
+
         var currentSettings = getSettings();
         var token = currentSettings.getToken();
 
@@ -33,6 +29,16 @@ var ApplicationDelegate = marionette.Controller.extend({
             this.beginLoginFlow();
             return;
         }
+
+        this.beginApplication();
+    },
+
+    beginApplication: function(){
+        var sidebarView = new SidebarView({
+            projectDetailRegion: this.app.projectDetail
+        });
+
+        this.app.sidebar.show(sidebarView);
     },
 
     beginLoginFlow: function(){
@@ -53,7 +59,7 @@ var ApplicationDelegate = marionette.Controller.extend({
 
         var success = function(token){
             currentSettings.setToken(token);
-
+            self.beginApplication();
             setTimeout(function(){
                 modals.dismissModal();
             }, 1300);
