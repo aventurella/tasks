@@ -9,8 +9,12 @@ var template = require('hbs!../templates/new-project-create');
 var NewProjectCreateView = marionette.ItemView.extend({
     template: template,
 
+    events: {
+        'click .btn.create': 'wantsComplete'
+    },
+
     triggers: {
-        'click .btn.create': events.COMPLETE
+        'click .btn.cancel': events.COMPLETE
     },
 
     ui: {
@@ -21,14 +25,23 @@ var NewProjectCreateView = marionette.ItemView.extend({
         'input': 'label'
     },
 
+    initialize: function(){
+        this._data = {ok: false};
+    },
+
     onShow: function(){
         this.model = new Project();
         this.ui.input.focus();
         this.stickit();
     },
 
+    wantsComplete: function(){
+        this._data = {ok: true, model: this.model};
+        this.trigger(events.COMPLETE, this.getData());
+    },
+
     getData: function(){
-        return {ok: true, model: this.model};
+        return this._data;
     },
 });
 

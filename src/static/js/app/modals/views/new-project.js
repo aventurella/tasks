@@ -27,14 +27,13 @@ var NewProjectView = marionette.Layout.extend({
   },
 
   wantsComplete: function(obj){
-    this.model = obj.model;
+    this._data = obj;
     this.trigger(modalEvents.COMPLETE);
   },
 
   getData: function(){
-    return {ok: true, model: this.model};
+    return this._data;
   },
-
 
 
 });
