@@ -18,16 +18,13 @@ var InProcessView = marionette.ItemView.extend({
     className: 'details',
 
     ui:{
-        projectName: '.project-name label',
         todo: '.swimlanes .lane.todo',
         inProgress: '.swimlanes .lane.in-progress',
         completed: '.swimlanes .lane.completed',
-        toggleButton: '.project-name .pane-action'
     },
 
     events: {
         'click .swimlanes .lane.backlog .heading .action': 'wantsAddToBacklog',
-        'click .project-name .pane-action': 'wantsToggleSidebar'
     },
 
     onShow: function(){
@@ -45,17 +42,6 @@ var InProcessView = marionette.ItemView.extend({
 
     onCollectionSync: function(){
         this.initializeSwimlanes();
-    },
-
-    wantsToggleSidebar: function(){
-        var btn = this.ui.toggleButton;
-        var label = '>';
-        if(btn.text() == '>'){
-            label = '<';
-        }
-
-        this.trigger(events.TOGGLE_SIDEBAR, this);
-        btn.text(label);
     },
 
     wantsAddToBacklog: function(){

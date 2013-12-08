@@ -1,19 +1,12 @@
 define(function(require, exports, module) {
 
-var ApplicationDelegate = require('./delegate').ApplicationDelegate;
-var ModalRegion = require('app/modals/region').ModalRegion;
+var marionette = require('marionette');
+var template = require('hbs!app/projects/templates/backlog');
 
-function main(options){
-    var app = this;
-    app.addRegions({
-        window: '#window',
-        sidebar: '#sidebar',
-        modal: ModalRegion,
-        projectDetail: '#project-detail'
-    });
+var BacklogView = marionette.ItemView.extend({
+    template: template
+});
 
-    new ApplicationDelegate({app: app});
-}
 
 exports.BacklogView = BacklogView;
 });

@@ -14,7 +14,7 @@ var session     = require('app/session/session');
 
 var modals = require('app/modals/modals');
 var AccountFormView = require('app/modals/views/account').AccountFormView;
-var InProcessView = require('app/projects/views/in-process').InProcessView;
+var ProjectDetailView = require('app/projects/views/detail').ProjectDetailView;
 var SessionInitializationView = require('app/modals/views/session').SessionInitializationView;
 
 var ApplicationDelegate = marionette.Controller.extend({
@@ -54,15 +54,15 @@ var ApplicationDelegate = marionette.Controller.extend({
     },
 
     showProject: function(project){
-        var inProcessView = new InProcessView({model: project});
+        var projectView = new ProjectDetailView({model: project});
 
         if (this.currentProjectView){
             this.stopListening(this.currentProjectView, projectEvents.TOGGLE_SIDEBAR, this.wantsToggleSidebar);
         }
 
-        this.app.projectDetail.show(inProcessView);
-        this.currentProjectView = inProcessView;
-        this.listenTo(inProcessView, projectEvents.TOGGLE_SIDEBAR, this.wantsToggleSidebar);
+        this.app.projectDetail.show(projectView);
+        this.listenTo(projectView, projectEvents.TOGGLE_SIDEBAR, this.wantsToggleSidebar);
+        this.currentProjectView = projectView;
     },
 
     wantsToggleSidebar: function(){
