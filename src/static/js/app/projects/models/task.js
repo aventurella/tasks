@@ -5,10 +5,11 @@ var url = require('app/shared/model-utils').url;
 
 var status = {
     BACKLOG: 0,
-    ACCEPTED: 1,
-    IN_PROGRESS: 2,
-    COMPLETED: 3,
-    ARCHIVED: 4
+    TODO: 1,
+    ACCEPTED: 2,
+    IN_PROGRESS: 3,
+    COMPLETED: 4,
+    ARCHIVED: 5
 };
 
 var loe = {

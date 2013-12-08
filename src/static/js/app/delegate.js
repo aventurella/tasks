@@ -1,6 +1,7 @@
 define(function(require, exports, module) {
 
 var $ = require('jquery');
+var _ = require('underscore');
 var stickit = require('backbone/stickit');
 var marionette = require('marionette');
 var vent = require('app/vent').vent;
@@ -76,12 +77,15 @@ var ApplicationDelegate = marionette.Controller.extend({
     },
 
     beginLoginFlow: function(){
-        var modalView = modals.presentModal(new AccountFormView());
-        modalView.once(modalEvents.COMPLETE, function(){
-                var account = modalView.getData().model;
-                modals.dismissModal();
-                this.startSession(account);
-            }, this);
+        var action = modals.presentModal(new AccountFormView());
+
+        var complete = _.bind(function(modalView){
+            var account = modalView.getData().model;
+            modals.dismissModal();
+            this.startSession(account);
+        }, this);
+
+        action.then(complete);
     },
 
     startSession: function(account){
@@ -93,9 +97,10 @@ var ApplicationDelegate = marionette.Controller.extend({
 
         var success = function(token){
             currentSettings.setToken(token);
-            self.beginApplication(token);
+
             setTimeout(function(){
                 modals.dismissModal();
+                self.beginApplication(token);
             }, 1300);
         };
 

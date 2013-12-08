@@ -10,15 +10,20 @@ var queue = [];
 
 function presentModal(view){
 
+    var deferred = $.Deferred();
 
     var modalView = new ModalView({itemView: view});
     queue.push(modalView);
+
+    modalView.once(events.COMPLETE, function(){
+        deferred.resolve(modalView);
+    });
 
     if(queue.length === 1){
         triggerModal(modalView);
     }
 
-    return modalView;
+    return deferred.promise();
 }
 
 function triggerModal(modalView){
@@ -27,9 +32,13 @@ function triggerModal(modalView){
 }
 
 function nextModal(){
-    if(queue.length > 0) queue.shift();
-    if(queue.length === 0) return;
 
+    if(queue.length > 0) {
+        queue.shift();
+        currentModal = null;
+    }
+
+    if(queue.length === 0) return;
     triggerModal(queue[0]);
 }
 

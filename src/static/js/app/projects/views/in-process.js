@@ -1,15 +1,15 @@
 define(function(require, exports, module) {
 
+var _ = require('underscore');
 var marionette = require('marionette');
 var backbone = require('backbone');
-var _ = require('underscore');
 var modals = require('app/modals/modals');
 var modalEvents = require('app/modals/events');
 var Swimlane = require('./swimlane').Swimlane;
 var Task = require('../models/task').Task;
 var status = require('../models/task').status;
 var Tasks = require('../collections/tasks').Tasks;
-var TaskFormView = require('app/modals/views/task-form').TaskFormView;
+
 var events = require('../events');
 var template = require('hbs!app/projects/templates/in-process');
 
@@ -27,21 +27,21 @@ var InProcessView = marionette.ItemView.extend({
         'click .swimlanes .lane.backlog .heading .action': 'wantsAddToBacklog',
     },
 
+    initialize: function(options){
+        _.bindAll(this, 'showSwimlanes');
+        this.options = options;
+    },
+
     onShow: function(){
-        this.collection = new Tasks();
-        this.collection.fetch({data:{project__id:this.model.get('id')}});
-        this.listenTo(this.collection, 'sync', this.onCollectionSync);
+
+        this.options.tasks.then(this.showSwimlanes);
         this.listenTo(this.model, 'change', this.modelDidChange);
     },
 
     onClose: function(){
-        this.swimlaneBacklog.close();
+        this.swimlaneTodo.close();
         this.swimlaneInProgress.close();
         this.swimlaneCompleted.close();
-    },
-
-    onCollectionSync: function(){
-        this.initializeSwimlanes();
     },
 
     wantsAddToBacklog: function(){
@@ -58,34 +58,36 @@ var InProcessView = marionette.ItemView.extend({
         modals.dismissModal();
 
         if (data.ok === false) return;
-        this.swimlaneBacklog.collection.add(data.model);
+        this.swimlaneTodo.collection.add(data.model);
     },
 
     addToBacklog: function(){
         var task = new Task({label: 'New Task'});
-        this.swimlaneBacklog.collection.add(task);
+        this.swimlaneTodo.collection.add(task);
     },
 
-    initializeSwimlanes: function(){
-        this.swimlaneBacklog = new Swimlane({
+    showSwimlanes: function(tasks){
+
+        this.swimlaneTodo = new Swimlane({
             el: this.ui.todo.find('ul')[0],
-            status:status.BACKLOG,
-            collection: new Tasks(this.collection.where({status:status.BACKLOG}))
+            status: status.TODO,
+            collection: new Tasks(tasks.where({status: status.TODO}))
         });
-        this.swimlaneBacklog.render();
 
         this.swimlaneInProgress = new Swimlane({
             el: this.ui.inProgress.find('ul'),
             status:status.IN_PROGRESS,
-            collection: new Tasks(this.collection.where({status:status.IN_PROGRESS}))
+            collection: new Tasks(tasks.where({status:status.IN_PROGRESS}))
         });
-        this.swimlaneInProgress.render();
 
         this.swimlaneCompleted = new Swimlane({
             el: this.ui.completed.find('ul'),
             status:status.COMPLETED,
-            collection: new Tasks(this.collection.where({status:status.COMPLETED}))
+            collection: new Tasks(tasks.where({status:status.COMPLETED}))
         });
+
+        this.swimlaneTodo.render();
+        this.swimlaneInProgress.render();
         this.swimlaneCompleted.render();
     },
 

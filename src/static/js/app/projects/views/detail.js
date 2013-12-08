@@ -1,9 +1,10 @@
 define(function(require, exports, module) {
 
 var marionette = require('marionette');
+var Tasks = require('../collections/tasks').Tasks;
 var InProcessView = require('./in-process').InProcessView;
 var BacklogView = require('./backlog').BacklogView;
-var AcceptedView = require('./accepted').AcceptedView;
+var ArchivedView = require('./archived').ArchivedView;
 var events = require('../events');
 var template = require('hbs!app/projects/templates/detail');
 
@@ -19,7 +20,7 @@ var ProjectDetailView = marionette.Layout.extend({
         'click .project-name .pane-action': 'wantsToggleSidebar',
         'click .tabbar .backlog': 'wantsShowBacklog',
         'click .tabbar .in-process': 'wantsShowInProcess',
-        'click .tabbar .accepted': 'wantsShowAccepted',
+        'click .tabbar .archived': 'wantsShowArchived',
 
     },
 
@@ -38,6 +39,7 @@ var ProjectDetailView = marionette.Layout.extend({
         btn.text(label);
     },
 
+
     wantsShowBacklog: function(){
         this.showBacklog();
     },
@@ -46,24 +48,43 @@ var ProjectDetailView = marionette.Layout.extend({
         this.showInProcess();
     },
 
-    wantsShowAccepted: function(){
-        this.showAccepted();
+    wantsShowArchived: function(){
+        this.showArchived();
     },
 
     showBacklog: function(){
-        this.section.show(new BacklogView({model: this.model}));
+        this.section.show(new BacklogView({
+            model: this.model,
+            tasks: this.tasks}));
     },
 
     showInProcess: function(){
-        this.section.show(new InProcessView({model: this.model}));
+        this.section.show(new InProcessView({
+            model: this.model,
+            tasks: this.tasks}));
     },
 
-    showAccepted: function(){
-        this.section.show(new AcceptedView({model: this.model}));
+    showArchived: function(){
+        this.section.show(new ArchivedView({
+            model: this.model,
+            tasks: this.tasks}));
     },
 
+    loadTasks: function(){
+        var deferred = $.Deferred();
+
+        tasks = new Tasks();
+        tasks.fetch({data: {project__id: this.model.get('id')}});
+
+        tasks.once('sync', function(){
+            deferred.resolve(tasks);
+        });
+
+        return deferred.promise();
+    },
 
     onRender: function(){
+        this.tasks = this.loadTasks();
         this.showInProcess();
     }
 

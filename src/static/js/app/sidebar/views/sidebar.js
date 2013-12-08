@@ -24,15 +24,18 @@ var SidebarView = marionette.ItemView.extend({
     },
 
     wantsAddProject: function(){
-        var modalView = modals.presentModal(new NewProjectView());
+        var action = modals.presentModal(new NewProjectView());
         var self = this;
 
-        modalView.once(modalEvents.COMPLETE, function(){
+        var complete = _.bind(function(modalView){
             modals.dismissModal();
             var data = modalView.getData();
             if(data.ok === false) return;
-            self.addProject(data.model);
-        });
+
+            this.addProject(data.model);
+        }, this);
+
+        action.then(complete);
     },
 
     wantsRemoveProject: function(){
@@ -66,8 +69,6 @@ var SidebarView = marionette.ItemView.extend({
         if(activeProject){
             activeProject.model.destroy();
             this.projectListView.activeProject = null;
-
-            this.stopListening(this.currentDetail, 'projects:toggle', this.wantsToggleProjects);
 
             this.projectDetailRegion.close();
             this.currentDetail = null;
