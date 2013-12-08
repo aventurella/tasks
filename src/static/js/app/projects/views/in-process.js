@@ -10,15 +10,16 @@ var Task = require('../models/task').Task;
 var status = require('../models/task').status;
 var Tasks = require('../collections/tasks').Tasks;
 var TaskFormView = require('app/modals/views/task-form').TaskFormView;
-var view = require('hbs!app/projects/templates/details');
+var events = require('../events');
+var template = require('hbs!app/projects/templates/in-process');
 
-var ProjectDetailView = marionette.ItemView.extend({
-    template: view,
+var InProcessView = marionette.ItemView.extend({
+    template: template,
     className: 'details',
 
     ui:{
         projectName: '.project-name label',
-        backlog: '.swimlanes .lane.backlog',
+        todo: '.swimlanes .lane.todo',
         inProgress: '.swimlanes .lane.in-progress',
         completed: '.swimlanes .lane.completed',
         toggleButton: '.project-name .pane-action'
@@ -26,8 +27,7 @@ var ProjectDetailView = marionette.ItemView.extend({
 
     events: {
         'click .swimlanes .lane.backlog .heading .action': 'wantsAddToBacklog',
-        'click .project-name .pane-action': 'wantsToggleProjectPane'
-
+        'click .project-name .pane-action': 'wantsToggleSidebar'
     },
 
     onShow: function(){
@@ -47,14 +47,14 @@ var ProjectDetailView = marionette.ItemView.extend({
         this.initializeSwimlanes();
     },
 
-    wantsToggleProjectPane: function(){
+    wantsToggleSidebar: function(){
         var btn = this.ui.toggleButton;
         var label = '>';
         if(btn.text() == '>'){
             label = '<';
         }
 
-        this.trigger('projects:toggle', this);
+        this.trigger(events.TOGGLE_SIDEBAR, this);
         btn.text(label);
     },
 
@@ -82,7 +82,7 @@ var ProjectDetailView = marionette.ItemView.extend({
 
     initializeSwimlanes: function(){
         this.swimlaneBacklog = new Swimlane({
-            el: this.ui.backlog.find('ul')[0],
+            el: this.ui.todo.find('ul')[0],
             status:status.BACKLOG,
             collection: new Tasks(this.collection.where({status:status.BACKLOG}))
         });
@@ -109,6 +109,6 @@ var ProjectDetailView = marionette.ItemView.extend({
 
 });
 
-exports.ProjectDetailView = ProjectDetailView;
+exports.InProcessView = InProcessView;
 
 });

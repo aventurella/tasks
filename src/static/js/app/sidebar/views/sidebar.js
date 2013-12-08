@@ -2,29 +2,25 @@ define(function(require, exports, module) {
 
 var marionette = require('marionette');
 var backbone = require('backbone');
-var ProjectDetailView = require('app/projects/views/details').ProjectDetailView;
 var FooterView = require('./footer').FooterView;
 var ProjectListView = require('./projects').ProjectListView;
 var Project = require('../models/project').Project;
 var modals = require('app/modals/modals');
 var modalEvents = require('app/modals/events');
 var NewProjectView = require('app/modals/views/new-project').NewProjectView;
-var view = require('hbs!app/sidebar/templates/sidebar');
+var events = require('../events');
+var template = require('hbs!app/sidebar/templates/sidebar');
 
 // this is probably better as a layout.
 
 var SidebarView = marionette.ItemView.extend({
-    template: view,
+    template: template,
     className: 'view',
     projectDetailRegion: null,
 
     ui: {
         projectListView: '.menu',
         footerView: '.footer'
-    },
-
-    initialize: function(options){
-        this.projectDetailRegion = options.projectDetailRegion;
     },
 
     wantsAddProject: function(){
@@ -44,7 +40,7 @@ var SidebarView = marionette.ItemView.extend({
     },
 
     wantsSelectProject: function(sender, projectView){
-        this.showProject(projectView.model);
+        this.trigger(events.SELECT_PROJECT, projectView.model);
     },
 
     wantsToggleProjects: function(){
@@ -78,25 +74,13 @@ var SidebarView = marionette.ItemView.extend({
         }
     },
 
-    showProject: function(model){
-        var projectDetailView = new ProjectDetailView({model: model});
-
-        if (this.currentDetail){
-            this.stopListening(this.currentDetail, 'projects:toggle', this.wantsToggleProjects);
-        }
-
-        this.projectDetailRegion.show(projectDetailView);
-        this.currentDetail = projectDetailView;
-        this.listenTo(projectDetailView, 'projects:toggle', this.wantsToggleProjects);
-    },
-
     addNewProject: function(){
         var obj = new Project();
         this.addProject(obj);
     },
 
     addProject: function(project){
-        this.projectListView.collection.create(project, {wait:true});
+        this.projectListView.collection.create(project, {wait: true});
     },
 
     initializeProjectList: function(){
@@ -107,7 +91,7 @@ var SidebarView = marionette.ItemView.extend({
         this.projectListView.bindUIElements();
         this.projectListView.triggerMethod('show', this.projectListView);
 
-        this.listenTo(this.projectListView, 'project:select', this.wantsSelectProject);
+        this.listenTo(this.projectListView, events.SELECT_PROJECT, this.wantsSelectProject);
     },
 
     initializeFooter: function(){

@@ -1,18 +1,20 @@
 define(function(require, exports, module) {
 
 var $ = require('jquery');
-var $ = require('jquery');
 var stickit = require('backbone/stickit');
 var marionette = require('marionette');
 var vent = require('app/vent').vent;
 
 var modalEvents = require('app/modals/events');
+var sidebarEvents = require('app/sidebar/events');
+var projectEvents = require('app/projects/events');
 var SidebarView = require('app/sidebar/views/sidebar').SidebarView;
 var getSettings = require('app/settings/defaults').getSettings;
 var session     = require('app/session/session');
 
 var modals = require('app/modals/modals');
 var AccountFormView = require('app/modals/views/account').AccountFormView;
+var InProcessView = require('app/projects/views/in-process').InProcessView;
 var SessionInitializationView = require('app/modals/views/session').SessionInitializationView;
 
 var ApplicationDelegate = marionette.Controller.extend({
@@ -41,11 +43,36 @@ var ApplicationDelegate = marionette.Controller.extend({
             request.setRequestHeader('Authorization', 'Bearer ' + token);
         });
 
-        var sidebarView = new SidebarView({
-            projectDetailRegion: this.app.projectDetail
-        });
+        this.sidebarView = new SidebarView({});
 
-        this.app.sidebar.show(sidebarView);
+        this.listenTo(this.sidebarView, sidebarEvents.SELECT_PROJECT, this.wantsChangeProject);
+        this.app.sidebar.show(this.sidebarView);
+    },
+
+    wantsChangeProject: function(project){
+        this.showProject(project);
+    },
+
+    showProject: function(project){
+        var inProcessView = new InProcessView({model: project});
+
+        if (this.currentProjectView){
+            this.stopListening(this.currentProjectView, projectEvents.TOGGLE_SIDEBAR, this.wantsToggleSidebar);
+        }
+
+        this.app.projectDetail.show(inProcessView);
+        this.currentProjectView = inProcessView;
+        this.listenTo(inProcessView, projectEvents.TOGGLE_SIDEBAR, this.wantsToggleSidebar);
+    },
+
+    wantsToggleSidebar: function(){
+        var $el = this.sidebarView.$el;
+
+        if($el.parent().hasClass('hide')){
+            this.sidebarView.showProjectsPane(true);
+        } else {
+            this.sidebarView.showProjectsPane(false);
+        }
     },
 
     beginLoginFlow: function(){

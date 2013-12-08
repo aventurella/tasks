@@ -4,6 +4,7 @@ var marionette = require('marionette');
 var backbone = require('backbone');
 var ProjectCell = require('./cells/project-cell').ProjectCell;
 var Projects = require('../collections/projects').Projects;
+var events = require('../events');
 
 var ProjectListView = marionette.CompositeView.extend({
     itemView : ProjectCell,
@@ -31,7 +32,6 @@ var ProjectListView = marionette.CompositeView.extend({
     onProjectAdd: function(model){
         var obj = this.children.findByModel(model);
         this.projectWantsSelect(obj);
-        //obj.wantsStartEditing();
     },
 
     projectWantsSelect: function(obj){
@@ -44,7 +44,7 @@ var ProjectListView = marionette.CompositeView.extend({
         obj.setSelected(true);
         this.activeProject = obj;
 
-        this.trigger('project:select', this, obj);
+        this.trigger(events.SELECT_PROJECT, this, obj);
     }
 
 });
