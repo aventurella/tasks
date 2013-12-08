@@ -36,15 +36,16 @@ var ApplicationDelegate = marionette.Controller.extend({
     },
 
     beginApplication: function(token){
+
+        $(document).ajaxSend(function(e, request){
+            request.setRequestHeader('Authorization', 'Bearer ' + token);
+        });
+
         var sidebarView = new SidebarView({
             projectDetailRegion: this.app.projectDetail
         });
 
         this.app.sidebar.show(sidebarView);
-
-        $(document).ajaxSend(function(e, request){
-            request.setRequestHeader('Authorization', 'Bearer ' + token);
-        });
     },
 
     beginLoginFlow: function(){
