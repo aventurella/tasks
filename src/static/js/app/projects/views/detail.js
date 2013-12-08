@@ -16,7 +16,11 @@ var ProjectDetailView = marionette.Layout.extend({
     },
 
     events: {
-        'click .project-name .pane-action': 'wantsToggleSidebar'
+        'click .project-name .pane-action': 'wantsToggleSidebar',
+        'click .tabbar .backlog': 'wantsShowBacklog',
+        'click .tabbar .in-process': 'wantsShowInProcess',
+        'click .tabbar .accepted': 'wantsShowAccepted',
+
     },
 
     regions: {
@@ -34,8 +38,33 @@ var ProjectDetailView = marionette.Layout.extend({
         btn.text(label);
     },
 
-    onRender: function(){
+    wantsShowBacklog: function(){
+        this.showBacklog();
+    },
+
+    wantsShowInProcess: function(){
+        this.showInProcess();
+    },
+
+    wantsShowAccepted: function(){
+        this.showAccepted();
+    },
+
+    showBacklog: function(){
+        this.section.show(new BacklogView({model: this.model}));
+    },
+
+    showInProcess: function(){
         this.section.show(new InProcessView({model: this.model}));
+    },
+
+    showAccepted: function(){
+        this.section.show(new AcceptedView({model: this.model}));
+    },
+
+
+    onRender: function(){
+        this.showInProcess();
     }
 
 
