@@ -171,6 +171,33 @@ body {
       margin-right: 10px;
       cursor: pointer; }
 
+#backlog-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  margin-top: 20px; }
+
+.task.backlog:hover .action {
+  visibility: visible; }
+.task.backlog .action {
+  font-size: 11px;
+  margin-left: 10px;
+  visibility: hidden;
+  border-left: 1px dotted #b8b8b8;
+  padding-left: 10px; }
+  .task.backlog .action .btn {
+    border-radius: 3px;
+    background-color: #3e4752;
+    color: white;
+    padding: 2px 5px;
+    cursor: pointer; }
+    .task.backlog .action .btn.todo {
+      background-color: #3e4752; }
+    .task.backlog .action .btn.in-progress {
+      background-color: #3e4752; }
+    .task.backlog .action .btn.completed {
+      background-color: #3e4752; }
+
 #project-detail .details .project-name {
   -webkit-flex-grow: 0;
   flex-grow: 0; }
@@ -259,6 +286,38 @@ body {
   flex-grow: 1;
   background-color: #e1e3e6;
   height: 100%; }
+
+.task {
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+  font-size: 13px;
+  padding: 10px 0 10px 10px;
+  margin-bottom: 3px;
+  position: relative;
+  background: -webkit-linear-gradient(top, white 42%, #fcfcfc 100%);
+  box-shadow: rgba(255, 255, 255, 0.1) 0 1px 1px 1px inset, rgba(255, 255, 255, 0.2) 0 1px inset, rgba(40, 98, 122, 0.1) 0 0px 0px inset, rgba(0, 0, 0, 0.1) 0 0 1px 1px; }
+  .task .loe {
+    position: absolute;
+    width: 5px;
+    left: 1px;
+    top: 0;
+    height: 100%; }
+    .task .loe .low {
+      border: 1px solid #b2b2b2;
+      background-color: #f3f3f3; }
+    .task .loe .medium {
+      border: 1px solid #d39511;
+      background-color: #f9e3b2; }
+    .task .loe .high {
+      border: 1px solid #cc2511;
+      background-color: #f8b7af; }
+  .task .label {
+    font-size: 13px;
+    padding-bottom: 5px;
+    border-bottom: 1px #dddddd dotted;
+    margin-bottom: 5px; }
+  .task .description {
+    font-size: 11px; }
 
 #modal-new-project {
   list-style-type: none;

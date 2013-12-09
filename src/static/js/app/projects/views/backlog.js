@@ -2,14 +2,14 @@ define(function(require, exports, module) {
 
 var _ = require('underscore');
 var marionette = require('marionette');
-var TaskView = require('./cells/task').TaskView;
+var BacklogTaskView = require('./cells/backlog').BacklogTaskView;
+var events = require('../events');
 var Tasks = require('../collections/tasks').Tasks;
 var status = require('../models/task').status;
 
 var TaskFormView = require('app/modals/views/task-form').TaskFormView;
 var modals = require('app/modals/modals');
 var modalEvents = require('app/modals/events');
-
 var template = require('hbs!app/projects/templates/backlog');
 
 var BacklogView = marionette.ItemView.extend({
@@ -58,12 +58,45 @@ var BacklogView = marionette.ItemView.extend({
     showCollection: function(collection){
         this.backlog = new marionette.CollectionView({
             el: this.ui.list,
-            itemView: TaskView,
+            itemView: BacklogTaskView,
             collection: collection
         });
 
         this.backlog.render();
+        this.listenTo(
+            this.backlog,
+            'itemview:' + events.TODO,
+            this.wantsSendToTodo);
+
+        this.listenTo(
+            this.backlog,
+            'itemview:' + events.IN_PROGRESS,
+            this.wantsSendToInProgress);
+
+        this.listenTo(
+            this.backlog,
+            'itemview:' + events.COMPLETED,
+            this.wantsSendToCompleted);
     },
+
+    wantsSendToTodo: function(cell){
+        var task = cell.model;
+        task.set('status', status.TODO);
+        this.removeFromBacklog(task);
+    },
+
+    wantsSendToInProgress: function(cell){
+        var task = cell.model;
+        task.set('status', status.IN_PROGRESS);
+        this.removeFromBacklog(task);
+    },
+
+    wantsSendToCompleted: function(cell){
+        var task = cell.model;
+        task.set('status', status.COMPLETED);
+        this.removeFromBacklog(task);
+    },
+
 
     wantsAddToBacklog: function(){
         var taskForm = new TaskFormView({project: this.model});
@@ -78,6 +111,10 @@ var BacklogView = marionette.ItemView.extend({
 
         if (data.ok === false) return;
         this.addToBacklog(data.model);
+    },
+
+    removeFromBacklog: function(task){
+        this.backlog.collection.remove(task);
     },
 
     addToBacklog: function(task){

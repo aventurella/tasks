@@ -1,4 +1,7 @@
 @import "project-detail";
+@import "project-backlog";
+@import "project-in-process";
+@import "project-archived";
 @import "project-swimlanes";
 
 #project-detail{
@@ -6,4 +9,57 @@
     flex-grow: 1;
     background-color: $middle-white;
     height: 100%;
+}
+
+.task{
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+    font-size: 13px;
+    padding: 10px 0 10px 10px;
+    margin-bottom: 3px;
+    position: relative;
+    background: -webkit-linear-gradient(top, rgba(255,255,255,1) 42%,rgba(252,252,252,1) 100%);
+
+    box-shadow:
+    rgba(255, 255, 255, 0.1) 0 1px 1px 1px inset,
+    rgba(255, 255, 255, 0.2) 0 1px inset,
+    rgba(40, 98, 122, 0.1) 0 0px 0px inset,
+    rgba(0, 0, 0, 0.1) 0 0 1px 1px;
+
+    .loe{
+        position: absolute;
+        width: 5px;
+        left: 1px;
+        top: 0;
+        height: 100%;
+
+
+        .low{
+            border: 1px solid $task-light-gray-border;
+            background-color: $task-light-gray-background;
+            //border: 1px solid $task-blue-border;
+            //background-color: $task-blue-background;
+        }
+
+        .medium{
+            border: 1px solid $task-yellow-border;
+            background-color: $task-yellow-background;
+        }
+
+        .high{
+            border: 1px solid $task-red-border;
+            background-color: $task-red-background;
+        }
+    }
+
+    .label{
+        font-size: 13px;
+        padding-bottom: 5px;
+        border-bottom: 1px #ddd dotted;
+        margin-bottom: 5px;
+    }
+
+    .description{
+        font-size: 11px;
+    }
 }
