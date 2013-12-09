@@ -82,21 +82,23 @@ var BacklogView = marionette.ItemView.extend({
     wantsSendToTodo: function(cell){
         var task = cell.model;
         task.set('status', status.TODO);
+        task.save();
         this.removeFromBacklog(task);
     },
 
     wantsSendToInProgress: function(cell){
         var task = cell.model;
         task.set('status', status.IN_PROGRESS);
+        task.save();
         this.removeFromBacklog(task);
     },
 
     wantsSendToCompleted: function(cell){
         var task = cell.model;
         task.set('status', status.COMPLETED);
+        task.save();
         this.removeFromBacklog(task);
     },
-
 
     wantsAddToBacklog: function(){
         var taskForm = new TaskFormView({project: this.model});
