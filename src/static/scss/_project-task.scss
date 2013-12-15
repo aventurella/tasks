@@ -83,6 +83,10 @@
             padding: 2px 5px;
             cursor: pointer;
 
+            &.backlog{
+                background-color: #3e4752;
+            }
+
             &.todo{
                 background-color: #3e4752;
             }

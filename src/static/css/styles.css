@@ -68,7 +68,7 @@ body {
       -ms-transform: translateY(0);
       -o-transform: translateY(0);
       transform: translateY(0); }
-    #modal .view .task, #modal .view #project-detail .bug, #project-detail #modal .view .bug {
+    #modal .view .task {
       height: 300px; }
 
 #sidebar .view .menu .projects {
@@ -179,7 +179,7 @@ body {
   margin-bottom: 3px;
   box-shadow: rgba(0, 0, 0, 0.1) 0 0 1px 1px; }
 
-#project-detail .task, #project-detail .bug {
+#project-detail .task {
   -webkit-flex-grow: 1;
   flex-grow: 1;
   font-size: 13px;
@@ -188,52 +188,54 @@ body {
   position: relative;
   background: -webkit-linear-gradient(top, white 42%, #fcfcfc 100%);
   box-shadow: rgba(255, 255, 255, 0.1) 0 1px 1px 1px inset, rgba(255, 255, 255, 0.2) 0 1px inset, rgba(40, 98, 122, 0.1) 0 0px 0px inset, rgba(0, 0, 0, 0.1) 0 0 1px 1px; }
-  #project-detail .task .label, #project-detail .bug .label {
+  #project-detail .task .label {
     font-size: 13px;
     padding-bottom: 5px;
     border-bottom: 1px #ddd dotted;
     margin-bottom: 5px; }
-  #project-detail .task .description, #project-detail .bug .description {
+  #project-detail .task .description {
     font-size: 11px; }
-  #project-detail .task .loe, #project-detail .bug .loe {
+  #project-detail .task .loe {
     position: absolute;
     width: 5px;
     left: 1px;
     top: 0;
     height: 100%; }
-    #project-detail .task .loe .low, #project-detail .bug .loe .low {
+    #project-detail .task .loe .low {
       border: 1px solid #b2b2b2;
       background-color: #f3f3f3; }
-    #project-detail .task .loe .medium, #project-detail .bug .loe .medium {
+    #project-detail .task .loe .medium {
       border: 1px solid #d39511;
       background-color: #f9e3b2; }
-    #project-detail .task .loe .high, #project-detail .bug .loe .high {
+    #project-detail .task .loe .high {
       border: 1px solid #cc2511;
       background-color: #f8b7af; }
-  #project-detail .task:hover .action, #project-detail .bug:hover .action {
+  #project-detail .task:hover .action {
     visibility: visible; }
-  #project-detail .task .action, #project-detail .bug .action {
+  #project-detail .task .action {
     font-size: 11px;
     margin-left: 10px;
     visibility: hidden;
     border-left: 1px dotted #b8b8b8;
     padding-left: 10px; }
-    #project-detail .task .action .btn, #project-detail .bug .action .btn {
+    #project-detail .task .action .btn {
       border-radius: 3px;
       background-color: #3e4752;
       color: white;
       padding: 2px 5px;
       cursor: pointer; }
-      #project-detail .task .action .btn.todo, #project-detail .bug .action .btn.todo {
+      #project-detail .task .action .btn.backlog {
         background-color: #3e4752; }
-      #project-detail .task .action .btn.in-progress, #project-detail .bug .action .btn.in-progress {
+      #project-detail .task .action .btn.todo {
         background-color: #3e4752; }
-      #project-detail .task .action .btn.completed, #project-detail .bug .action .btn.completed {
+      #project-detail .task .action .btn.in-progress {
+        background-color: #3e4752; }
+      #project-detail .task .action .btn.completed {
         background-color: #428037; }
-      #project-detail .task .action .btn.archive, #project-detail .bug .action .btn.archive {
+      #project-detail .task .action .btn.archive {
         background-color: #b83b3b; }
 
-#project-detail .bug {
+#project-detail .task.bug {
   background: -webkit-linear-gradient(top, white 0%, snow 100%);
   border: 1px solid #e79191; }
 
