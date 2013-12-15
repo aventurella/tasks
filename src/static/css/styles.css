@@ -188,11 +188,23 @@ body {
   position: relative;
   background: -webkit-linear-gradient(top, white 42%, #fcfcfc 100%);
   box-shadow: rgba(255, 255, 255, 0.1) 0 1px 1px 1px inset, rgba(255, 255, 255, 0.2) 0 1px inset, rgba(40, 98, 122, 0.1) 0 0px 0px inset, rgba(0, 0, 0, 0.1) 0 0 1px 1px; }
+  #project-detail .task .icon {
+    width: 20px;
+    height: 20px;
+    background-color: #ddd;
+    border-radius: 3px;
+    border: 1px dotted #ababab;
+    float: left;
+    margin-right: 5px; }
+    #project-detail .task .icon img {
+      width: inherit;
+      height: inherit; }
   #project-detail .task .label {
     font-size: 13px;
     padding-bottom: 5px;
     border-bottom: 1px #ddd dotted;
-    margin-bottom: 5px; }
+    margin-bottom: 5px;
+    line-height: 20px; }
   #project-detail .task .description {
     font-size: 11px; }
   #project-detail .task .loe {

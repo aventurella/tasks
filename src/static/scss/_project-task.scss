@@ -25,12 +25,30 @@
     rgba(40, 98, 122, 0.1) 0 0px 0px inset,
     rgba(0, 0, 0, 0.1) 0 0 1px 1px;
 
+    .icon{
+        width: 20px;
+        height: 20px;
+        background-color: #ddd;
+        border-radius: 3px;
+        border: 1px dotted #ababab;
+        float: left;
+        margin-right: 5px;
+
+        img{
+            width: inherit;
+            height: inherit;
+        }
+    }
+
+    .icon +.label{
+    }
 
     .label{
         font-size: 13px;
         padding-bottom: 5px;
         border-bottom: 1px #ddd dotted;
         margin-bottom: 5px;
+        line-height: 20px;
     }
 
     .description{
