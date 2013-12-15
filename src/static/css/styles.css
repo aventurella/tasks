@@ -171,32 +171,34 @@ body {
       margin-right: 10px;
       cursor: pointer; }
 
-#backlog-list {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  margin-top: 20px; }
-
-.task.backlog:hover .action {
+#project-detail .task:hover .action {
   visibility: visible; }
-.task.backlog .action {
+#project-detail .task .action {
   font-size: 11px;
   margin-left: 10px;
   visibility: hidden;
   border-left: 1px dotted #b8b8b8;
   padding-left: 10px; }
-  .task.backlog .action .btn {
+  #project-detail .task .action .btn {
     border-radius: 3px;
     background-color: #3e4752;
     color: white;
     padding: 2px 5px;
     cursor: pointer; }
-    .task.backlog .action .btn.todo {
+    #project-detail .task .action .btn.todo {
       background-color: #3e4752; }
-    .task.backlog .action .btn.in-progress {
+    #project-detail .task .action .btn.in-progress {
       background-color: #3e4752; }
-    .task.backlog .action .btn.completed {
-      background-color: #3e4752; }
+    #project-detail .task .action .btn.completed {
+      background-color: #428037; }
+    #project-detail .task .action .btn.archive {
+      background-color: #b83b3b; }
+
+#backlog-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  margin-top: 20px; }
 
 #project-detail .details .project-name {
   -webkit-flex-grow: 0;
@@ -314,7 +316,7 @@ body {
   .task .label {
     font-size: 13px;
     padding-bottom: 5px;
-    border-bottom: 1px #dddddd dotted;
+    border-bottom: 1px #ddd dotted;
     margin-bottom: 5px; }
   .task .description {
     font-size: 11px; }
@@ -343,13 +345,13 @@ body {
     #modal-new-project .panel:last-child {
       margin-right: 0; }
     #modal-new-project .panel:first-child {
-      border-right: 1px solid #dddddd; }
+      border-right: 1px solid #ddd; }
     #modal-new-project .panel input[type="text"] {
       border-radius: 5px;
       font-size: 13px;
       line-height: 25px;
       width: 70%;
-      border: 1px solid #cccccc;
+      border: 1px solid #ccc;
       outline: none;
       padding-left: 7px; }
     #modal-new-project .panel h2 {

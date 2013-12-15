@@ -3,11 +3,9 @@ define(function(require, exports, module) {
 var marionette = require('marionette');
 var backbone = require('backbone');
 var DragAndDropCollectionView = require('built/ui/views/collection/drag-and-drop').DragAndDropCollectionView;
-var TaskView = require('./cells/task').TaskView;
 var Task = require('../models/task').Task;
 
 var Swimlane = DragAndDropCollectionView.extend({
-    itemView: TaskView,
 
     initialize: function(){
         DragAndDropCollectionView.prototype.initialize.apply(this, arguments);
@@ -15,13 +13,6 @@ var Swimlane = DragAndDropCollectionView.extend({
 
     getDragImage: function(){
         return false;
-    },
-
-    itemViewOptions: function(model, index) {
-
-        return {
-            className: model.get('type')
-        };
     },
 
     deserializeModel: function(data){

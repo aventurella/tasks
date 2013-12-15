@@ -2,7 +2,7 @@ define(function(require, exports, module) {
 
 var _ = require('underscore');
 var marionette = require('marionette');
-var BacklogTaskView = require('./cells/backlog').BacklogTaskView;
+var CellBacklogView = require('./cells/backlog').CellBacklogView;
 var events = require('../events');
 var Tasks = require('../collections/tasks').Tasks;
 var status = require('../models/task').status;
@@ -58,7 +58,7 @@ var BacklogView = marionette.ItemView.extend({
     showCollection: function(collection){
         this.backlog = new marionette.CollectionView({
             el: this.ui.list,
-            itemView: BacklogTaskView,
+            itemView: CellBacklogView,
             collection: collection
         });
 

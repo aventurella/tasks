@@ -1,0 +1,40 @@
+#project-detail .task{
+
+    &:hover{
+        .action{
+            visibility: visible;
+        }
+    }
+
+    .action{
+        font-size: 11px;
+        margin-left: 10px;
+        visibility: hidden;
+        border-left: 1px dotted #b8b8b8;
+        padding-left: 10px;
+
+        .btn{
+            border-radius: 3px;
+            background-color: #3e4752;
+            color: white;
+            padding: 2px 5px;
+            cursor: pointer;
+
+            &.todo{
+                background-color: #3e4752;
+            }
+
+            &.in-progress{
+                background-color: #3e4752;
+            }
+
+            &.completed{
+                background-color: #428037;
+            }
+
+            &.archive{
+                background-color: #b83b3b;
+            }
+        }
+    }
+}

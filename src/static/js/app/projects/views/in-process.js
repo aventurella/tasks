@@ -5,10 +5,13 @@ var marionette = require('marionette');
 var backbone = require('backbone');
 var modals = require('app/modals/modals');
 var modalEvents = require('app/modals/events');
+var status = require('../models/task').status;
 var Swimlane = require('./swimlane').Swimlane;
 var Task = require('../models/task').Task;
-var status = require('../models/task').status;
 var Tasks = require('../collections/tasks').Tasks;
+var CellTodoView = require('./cells/todo').CellTodoView;
+var CellInProgressView = require('./cells/in-progress').CellInProgressView;
+var CellCompletedView = require('./cells/completed').CellCompletedView;
 
 var events = require('../events');
 var template = require('hbs!app/projects/templates/in-process');
@@ -70,18 +73,21 @@ var InProcessView = marionette.ItemView.extend({
 
         this.swimlaneTodo = new Swimlane({
             el: this.ui.todo.find('ul')[0],
+            itemView: CellTodoView,
             status: status.TODO,
             collection: new Tasks(tasks.where({status: status.TODO}))
         });
 
         this.swimlaneInProgress = new Swimlane({
             el: this.ui.inProgress.find('ul'),
+            itemView: CellInProgressView,
             status:status.IN_PROGRESS,
             collection: new Tasks(tasks.where({status:status.IN_PROGRESS}))
         });
 
         this.swimlaneCompleted = new Swimlane({
             el: this.ui.completed.find('ul'),
+            itemView: CellCompletedView,
             status:status.COMPLETED,
             collection: new Tasks(tasks.where({status:status.COMPLETED}))
         });

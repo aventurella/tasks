@@ -1,12 +1,12 @@
 define(function(require, exports, module) {
 
 var marionette = require('marionette');
-var template = require('hbs!app/projects/templates/cell-backlog');
+var template = require('hbs!app/projects/templates/cell-todo');
 var events = require('../../events');
 
-var CellBacklogView = marionette.ItemView.extend({
+var CellTodoView = marionette.ItemView.extend({
     template: template,
-    className: 'task backlog',
+    className: 'task todo',
     tagName: 'li',
 
     events: {
@@ -25,6 +25,6 @@ var CellBacklogView = marionette.ItemView.extend({
 
 });
 
-exports.CellBacklogView = CellBacklogView;
+exports.CellTodoView = CellTodoView;
 
 });
