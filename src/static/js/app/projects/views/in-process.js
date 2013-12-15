@@ -95,6 +95,28 @@ var InProcessView = marionette.ItemView.extend({
         this.swimlaneTodo.render();
         this.swimlaneInProgress.render();
         this.swimlaneCompleted.render();
+
+        this.listenTo(
+            this.swimlaneTodo,
+            'itemview:' + events.BACKLOG,
+            this.wantsSendToBacklog);
+
+        this.listenTo(
+            this.swimlaneTodo,
+            'itemview:' + events.IN_PROGRESS,
+            this.wantsSendToInprogress);
+    },
+
+    wantsSendToBacklog: function(view, obj){
+        debugger;
+        var collection = view.model.collection;
+        var model = view.model;
+        collection.remove(model);
+        model.set('status', status.BACKLOG);
+    },
+
+    wantsSendToInprogress: function(){
+        console.log('IN_PROGRESS');
     },
 
     modelDidChange: function(model){
