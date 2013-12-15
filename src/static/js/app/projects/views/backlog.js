@@ -5,8 +5,7 @@ var marionette = require('marionette');
 var CellBacklogView = require('./cells/backlog').CellBacklogView;
 var events = require('../events');
 var Tasks = require('../collections/tasks').Tasks;
-var status = require('../models/task').status;
-
+var tasks = require('../models/task');
 var TaskFormView = require('app/modals/views/task-form').TaskFormView;
 var modals = require('app/modals/modals');
 var modalEvents = require('app/modals/events');
@@ -42,16 +41,16 @@ var BacklogView = marionette.ItemView.extend({
                     .then(this.showCollection);
     },
 
-    setTasks: function(tasks){
-        this._tasks = tasks;
+    setTasks: function(collection){
+        this._tasks = collection;
     },
 
     getTasks: function(){
         return this._tasks;
     },
 
-    filterTasks: function(tasks){
-        var result = new Tasks(tasks.where({status: status.BACKLOG}));
+    filterTasks: function(collection){
+        var result = new Tasks(collection.where({status: tasks.status.BACKLOG}));
         return result;
     },
 
@@ -59,7 +58,16 @@ var BacklogView = marionette.ItemView.extend({
         this.backlog = new marionette.CollectionView({
             el: this.ui.list,
             itemView: CellBacklogView,
-            collection: collection
+            collection: collection,
+
+            itemViewOptions: function(model, index) {
+                if(model.get('task_type') == tasks.task_type.BUG){
+                    var ItemView = this.getItemView();
+                    return {
+                        className: ItemView.prototype.className + ' bug'
+                    };
+                }
+            }
         });
 
         this.backlog.render();
@@ -81,21 +89,21 @@ var BacklogView = marionette.ItemView.extend({
 
     wantsSendToTodo: function(cell){
         var task = cell.model;
-        task.set('status', status.TODO);
+        task.set('status', tasks.status.TODO);
         task.save();
         this.removeFromBacklog(task);
     },
 
     wantsSendToInProgress: function(cell){
         var task = cell.model;
-        task.set('status', status.IN_PROGRESS);
+        task.set('status', tasks.status.IN_PROGRESS);
         task.save();
         this.removeFromBacklog(task);
     },
 
     wantsSendToCompleted: function(cell){
         var task = cell.model;
-        task.set('status', status.COMPLETED);
+        task.set('status', tasks.status.COMPLETED);
         task.save();
         this.removeFromBacklog(task);
     },
