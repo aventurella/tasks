@@ -24,9 +24,20 @@ var Swimlane = DragAndDropCollectionView.extend({
             var ItemView = this.getItemView();
 
             return {
-                className: ItemView.prototype.className + ' bug'
+                className: ItemView.prototype.className + ' bug',
+                swimlane: this
             };
         }
+    },
+
+    buildItemView: function(item, ItemView, itemViewOptions){
+        var itemView = DragAndDropCollectionView
+                       .prototype
+                       .buildItemView
+                       .call(this, item, ItemView, itemViewOptions);
+
+        itemView.swimlane = this;
+        return itemView;
     },
 
     deserializeModel: function(data){

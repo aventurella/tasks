@@ -96,27 +96,68 @@ var InProcessView = marionette.ItemView.extend({
         this.swimlaneInProgress.render();
         this.swimlaneCompleted.render();
 
-        this.listenTo(
-            this.swimlaneTodo,
-            'itemview:' + events.BACKLOG,
-            this.wantsSendToBacklog);
+        var actions = {
+            'todo': {
+                swimlane: this.swimlaneTodo,
+                events: {}
+            },
 
-        this.listenTo(
-            this.swimlaneTodo,
-            'itemview:' + events.IN_PROGRESS,
-            this.wantsSendToInprogress);
+            'inProgress': {
+                swimlane: this.swimlaneInProgress,
+                events: {}
+            },
+
+            'completed': {
+                swimlane: this.swimlaneCompleted,
+                events: {}
+            }
+        };
+
+        actions.todo.events[events.BACKLOG] = this.wantsSendToBacklog;
+        actions.todo.events[events.IN_PROGRESS] = this.wantsSendToInProgress;
+
+        actions.inProgress.events[events.TODO] = this.wantsSendToTodo;
+        actions.inProgress.events[events.COMPLETED] = this.wantsSendToCompleted;
+
+        actions.completed.events[events.TODO] = this.wantsSendToTodo;
+        actions.completed.events[events.ARCHIVED] = this.wantsSendToArchived;
+
+        _.each(actions, function(value){
+
+            _.each(value.events, function(handler, eventName){
+                console.log('itemview:' + eventName);
+                this.listenTo(value.swimlane, 'itemview:' + eventName, handler);
+            }, this);
+
+        }, this);
     },
 
     wantsSendToBacklog: function(view, obj){
-        debugger;
-        var collection = view.model.collection;
-        var model = view.model;
-        collection.remove(model);
-        model.set('status', status.BACKLOG);
+        view.swimlane.collection.remove(view.model);
+        view.model.set('status', status.BACKLOG);
     },
 
-    wantsSendToInprogress: function(){
-        console.log('IN_PROGRESS');
+    wantsSendToTodo: function(view, obj){
+        view.swimlane.collection.remove(view.model);
+        view.model.set('status', status.TODO);
+        this.swimlaneTodo.collection.add(view.model);
+    },
+
+    wantsSendToInProgress: function(view){
+        view.swimlane.collection.remove(view.model);
+        view.model.set('status', status.IN_PROGRESS);
+        this.swimlaneInProgress.collection.add(view.model);
+    },
+
+    wantsSendToCompleted: function(view){
+        view.swimlane.collection.remove(view.model);
+        view.model.set('status', status.COMPLETED);
+        this.swimlaneCompleted.collection.add(view.model);
+    },
+
+    wantsSendToArchived: function(view){
+        view.swimlane.collection.remove(view.model);
+        view.model.set('status', status.ARCHIVED);
     },
 
     modelDidChange: function(model){
