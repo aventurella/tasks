@@ -9,10 +9,6 @@ var CellBacklogView = marionette.ItemView.extend({
     className: 'task backlog',
     tagName: 'li',
 
-    events: {
-        'click': 'wantsClick'
-    },
-
     triggers: {
         'click .action .btn.todo': events.TODO,
         'click .action .btn.in-progress': events.IN_PROGRESS,

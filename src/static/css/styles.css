@@ -257,6 +257,12 @@ body {
   padding: 0;
   margin-top: 20px; }
 
+#archived-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  margin-top: 20px; }
+
 #project-detail .details .project-name {
   -webkit-flex-grow: 0;
   flex-grow: 0; }

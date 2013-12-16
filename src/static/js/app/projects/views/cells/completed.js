@@ -15,8 +15,7 @@ var CellCompletedView = marionette.ItemView.extend({
 
     triggers: {
         'click .action .btn.todo': events.TODO,
-        'click .action .btn.in-progress': events.IN_PROGRESS,
-        'click .action .btn.completed': events.COMPLETED
+        'click .action .btn.archive': events.ARCHIVED
     },
 
     onShow: function(){
