@@ -135,29 +135,34 @@ var InProcessView = marionette.ItemView.extend({
     wantsSendToBacklog: function(view, obj){
         view.swimlane.collection.remove(view.model);
         view.model.set('status', status.BACKLOG);
+        view.model.save();
     },
 
     wantsSendToTodo: function(view, obj){
         view.swimlane.collection.remove(view.model);
         view.model.set('status', status.TODO);
         this.swimlaneTodo.collection.add(view.model);
+        view.model.save();
     },
 
     wantsSendToInProgress: function(view){
         view.swimlane.collection.remove(view.model);
         view.model.set('status', status.IN_PROGRESS);
         this.swimlaneInProgress.collection.add(view.model);
+        view.model.save();
     },
 
     wantsSendToCompleted: function(view){
         view.swimlane.collection.remove(view.model);
         view.model.set('status', status.COMPLETED);
         this.swimlaneCompleted.collection.add(view.model);
+        view.model.save();
     },
 
     wantsSendToArchived: function(view){
         view.swimlane.collection.remove(view.model);
         view.model.set('status', status.ARCHIVED);
+        view.model.save();
     },
 
     modelDidChange: function(model){
