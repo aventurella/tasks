@@ -24,7 +24,7 @@ var ApplicationDelegate = marionette.Controller.extend({
 
     initialize: function(options){
         this.app = options.app;
-        new SockController();
+        this.socketController = new SockController();
 
         this.listenTo(vent, modalEvents.PRESENT, this.presentModal);
         this.listenTo(vent, modalEvents.DISMISS, this.dismissModal);
@@ -48,6 +48,7 @@ var ApplicationDelegate = marionette.Controller.extend({
 
         this.sidebarView = new SidebarView({});
 
+
         this.listenTo(this.sidebarView, sidebarEvents.SELECT_PROJECT, this.wantsChangeProject);
         this.app.sidebar.show(this.sidebarView);
     },
@@ -58,7 +59,7 @@ var ApplicationDelegate = marionette.Controller.extend({
 
     showProject: function(project){
         var projectView = new ProjectDetailView({model: project});
-
+        this.socketController.setActiveProjectId(project.get('id'));
         if (this.currentProjectView){
             this.stopListening(this.currentProjectView, projectEvents.TOGGLE_SIDEBAR, this.wantsToggleSidebar);
         }

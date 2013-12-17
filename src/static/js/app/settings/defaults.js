@@ -15,7 +15,15 @@ var ApplicationSettings = marionette.Controller.extend({
 
     setToken: function(value){
         return driver.setToken(value);
-    }
+    },
+
+    setUser: function(user){
+        this._user = user;
+    },
+
+    getUser: function(){
+        return this._user;
+    },
 });
 
 function getSettings(){
