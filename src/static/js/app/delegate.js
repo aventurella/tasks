@@ -17,12 +17,14 @@ var modals = require('app/modals/modals');
 var AccountFormView = require('app/modals/views/account').AccountFormView;
 var ProjectDetailView = require('app/projects/views/detail').ProjectDetailView;
 var SessionInitializationView = require('app/modals/views/session').SessionInitializationView;
+var SockController = require('app/sock').SockController;
+
 
 var ApplicationDelegate = marionette.Controller.extend({
 
     initialize: function(options){
         this.app = options.app;
-
+        new SockController();
 
         this.listenTo(vent, modalEvents.PRESENT, this.presentModal);
         this.listenTo(vent, modalEvents.DISMISS, this.dismissModal);

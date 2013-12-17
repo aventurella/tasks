@@ -125,7 +125,7 @@ var InProcessView = marionette.ItemView.extend({
         _.each(actions, function(value){
 
             _.each(value.events, function(handler, eventName){
-                console.log('itemview:' + eventName);
+                // console.log('itemview:' + eventName);
                 this.listenTo(value.swimlane, 'itemview:' + eventName, handler);
             }, this);
 

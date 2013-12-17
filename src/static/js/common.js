@@ -34,6 +34,12 @@ require.config({
             main:'jquery'
         },
 
+         {
+            location: 'vendor/sockjs',
+            name: 'sockjs',
+            main:'sockjs'
+        },
+
         {
             location: 'vendor/built',
             name: 'built'
