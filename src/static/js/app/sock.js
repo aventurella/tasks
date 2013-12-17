@@ -2,6 +2,8 @@ define(function (require, exports, module) {
 
 var marionette = require('marionette');
 var getSettings = require('app/settings/defaults').getSettings;
+var vent = require('app/vent').vent;
+
 require('sockjs');
 
 var SockController = marionette.Controller.extend({
@@ -31,7 +33,9 @@ var SockController = marionette.Controller.extend({
    },
    ventDispatchMessage: function(e){
        var data = JSON.parse(e.data);
-       console.log(data)
+       var event = 'model:update:'+ data.type + ':' + data.id;
+       console.log(event)
+       vent.trigger(event, data);
    },
 
    setActiveProjectId: function(id){

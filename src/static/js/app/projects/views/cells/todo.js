@@ -8,13 +8,17 @@ var CellTodoView = marionette.ItemView.extend({
     template: template,
     className: 'task todo',
     tagName: 'li',
+    bindings:{
+        '.lbl':'label'
+    },
 
     triggers: {
         'click .action .btn.backlog': events.BACKLOG,
         'click .action .btn.in-progress': events.IN_PROGRESS,
     },
 
-    onShow: function(){
+    onRender: function(){
+        this.stickit();
     },
 
 
