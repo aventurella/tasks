@@ -6,26 +6,22 @@
     position: relative;
     @include row;
 
+    .panel > div{
+        margin:20px;
+    }
+
     .panel{
         @include span-columns(6);
+        @include omega;
+        position: relative;
+
         background-color: #fff;
         height: 100%;
-        padding-left: 20px;
+
 
         &:first-child{
-            border-right: 1px solid #ddd;
+            border-right: 1px dotted #ddd;
         }
-
-        input[type="text"]{
-            border-radius: 5px;
-            font-size: 13px;
-            line-height: 25px;
-            width: 70%;
-            border: 1px solid #ccc;
-            outline: none;
-            padding-left: 7px;
-        }
-
 
         h2{
             font-weight: 100;
@@ -38,28 +34,55 @@
             margin-bottom: 25px;
         }
 
-        .action{
-            @include row;
-            padding-bottom: 20px;
-
-            .btn{
-                float: left;
-                padding-right: 15px;
-            }
-        }
-
         .results{
             list-style-type: none;
             margin: 0;
             padding: 0;
+            position: absolute;
+            width: 315px;
+            box-shadow: rgba(0,0,0,0.1) 0px 4px 9px -3px;
+
+            .project{
+                border-bottom: 1px dotted #ddd;
+                padding: 7px;
+                color: #525252;
+                cursor: pointer;
+            }
         }
     }
 
+    input{
+        width: 83%;
+    }
 
     .action{
-        .btn {
+        @include row;
+
+        position: absolute;
+        top: 95px;
+        right: 20px;
+        white-space: nowrap;
+        background: #fff;
+
+        .btn{
+            border-radius: 10px;
+            width: 30px;
+            height: 25px;
+            text-align: center;
+            line-height: 22px;
+            display: inline-block;
+            color: #fff;
             cursor: pointer;
-            float: left;
+
+            &.yes{
+                background-color: #66cc33;
+                border-color: #478f24;
+            }
+
+            &.no{
+                background-color: #ef4e3a;
+                border-color: #cc2511;
+            }
         }
     }
 }

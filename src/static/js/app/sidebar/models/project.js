@@ -6,7 +6,7 @@ var url = require('app/shared/model-utils').url;
 var Project = backbone.Model.extend({
     url: url,
     defaults: {
-        label:'New Project'
+        label: null
     }
 });
 
