@@ -10,25 +10,27 @@ var SockController = marionette.Controller.extend({
 
    initialize : function(){
         _.bindAll(this, 'onopen', 'onAuthComplete', 'onclose', 'ventDispatchMessage');
-        this.sock = new SockJS('http://127.0.0.1:8888');
-        this.sock.onopen = this.onopen;
-        this.sock.onmessage = this.onAuthComplete;
-        this.sock.onclose = this.onclose;
-        this._connected = false;
+        this._connection = $.Deferred();
+        this._login = $.Deferred();
    },
 
    onopen: function(){
-        this._connected = true;
+        this._connection.resolve();
         this.trigger('connected');
    },
 
-   login: function(){
-        if(!this._connected){
-            this.once('connected', this.login);
-            return;
+   connect: function(){
+        if(!this.sock){
+            this.sock = new SockJS('http://127.0.0.1:8888');
+            this.sock.onopen = this.onopen;
+            this.sock.onmessage = this.onAuthComplete;
+            this.sock.onclose = this.onclose;
         }
-       this.currentSettings = getSettings();
-        var token = this.currentSettings.getToken();
+
+        return this._connection.promise();
+   },
+
+   login: function(token){
         var connectionData = {
             action:'authorize',
             data:{
@@ -37,16 +39,23 @@ var SockController = marionette.Controller.extend({
         };
 
         this.sock.send(JSON.stringify(connectionData));
+        return this._login.promise();
    },
 
    onAuthComplete: function(e){
         var data = JSON.parse(e.data);
-        var success = this.currentSettings.setUser(data);
-        if(!success){
+        var currentSettings;
+
+        if(!data.ok){
             this.trigger('login:fail');
-            return
+            this._login.reject();
+            return;
         }
+
+        getSettings().setUser(data);
         this.trigger('login:success');
+        this._login.resolve();
+
         this.sock.onmessage = this.ventDispatchMessage;
    },
 

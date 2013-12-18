@@ -31,24 +31,26 @@ var ApplicationDelegate = marionette.Controller.extend({
         var currentSettings = getSettings();
         var token = currentSettings.getToken();
 
+        var deferred = $.Deferred();
+        deferred.then(this.beginApplication);
 
         if (!token){
-            this.beginLoginFlow();
+            this.promptForCredentials(deferred);
             return;
         }
 
-        // this.socketController = new SockController();
-        // this.socketController.login();
+        this.verifyToken(token, deferred);
 
         // this.listenTo(this.socketController, 'login:fail', this.beginLoginFlow)
         // this.listenTo(this.socketController, 'login:success', this.onLoginSuccess)
     },
 
-    onLoginSuccess: function(){
-        this.beginApplication(token);
-    },
+    // onLoginSuccess: function(){
+    //     this.beginApplication(token);
+    // },
 
     beginApplication: function(token){
+        debugger;
 
         $(document).ajaxSend(function(e, request){
             request.setRequestHeader('Authorization', 'Bearer ' + token);
@@ -88,42 +90,65 @@ var ApplicationDelegate = marionette.Controller.extend({
         }
     },
 
-    beginLoginFlow: function(){
+    promptForCredentials: function(deferred){
         var action = modals.presentModal(new AccountFormView());
 
         var complete = _.bind(function(modalView){
             var account = modalView.getData().model;
             modals.dismissModal();
-            this.startSession(account);
+            this.acquireTokenForAccount(account, deferred);
         }, this);
 
         action.then(complete);
     },
 
-    startSession: function(account){
-
-        var currentSettings = getSettings();
+    acquireTokenForAccount: function(account, deferred){
 
         modals.presentModal(new SessionInitializationView());
         var self = this;
 
         var success = function(token){
-            currentSettings.setToken(token);
-
             setTimeout(function(){
                 modals.dismissModal();
-                self.beginApplication(token);
+                self.verifyToken(token, deferred);
             }, 1300);
         };
 
         var fail = function(){
             setTimeout(function(){
                 modals.dismissModal();
-                self.beginLoginFlow();
+                self.promptForCredentials(deferred);
             }, 1300);
         };
 
         session.startSession(account).then(success, fail);
+    },
+
+    verifyToken: function(token, deferred){
+        var self = this;
+
+        var success = function(token){
+            var currentSettings = getSettings();
+            currentSettings.setToken(token);
+
+            // end of the line
+            deferred.resolve();
+        };
+
+        var fail = function(){
+            // what are we doing here?
+            // this means they successfully logged in
+            // but their token was invalid.
+            // probably want a message:
+            //
+            // "Something really bad happened, please contact someone."
+        };
+
+        this.socketController = new SockController();
+        this.socketController.connect().then(function(){
+            self.socketController.login(token).then(success, fail);
+        });
+
     },
 
     presentModal: function(modalView){
