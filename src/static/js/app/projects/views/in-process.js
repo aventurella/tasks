@@ -33,6 +33,7 @@ var InProcessView = marionette.ItemView.extend({
     initialize: function(options){
         _.bindAll(this, 'showSwimlanes');
         this.options = options;
+        this.swimlanes = {};
     },
 
     onShow: function(){
@@ -42,9 +43,10 @@ var InProcessView = marionette.ItemView.extend({
     },
 
     onClose: function(){
-        this.swimlaneTodo.close();
-        this.swimlaneInProgress.close();
-        this.swimlaneCompleted.close();
+
+        _.each(this.swimlanes, function(value){
+            value.close();
+        });
     },
 
     wantsAddToBacklog: function(){
@@ -70,99 +72,52 @@ var InProcessView = marionette.ItemView.extend({
     },
 
     showSwimlanes: function(tasks){
+        // the various cells set their models status
+        // though user interaction. We listen for that change
+        // here and adjust the swimlanes accordingly.
+        this.listenTo(tasks, 'change:status', this.taskStatusDidChange);
 
-        this.swimlaneTodo = new Swimlane({
+        var todo = new Swimlane({
             el: this.ui.todo.find('ul')[0],
             itemView: CellTodoView,
             status: status.TODO,
             collection: new Tasks(tasks.where({status: status.TODO}))
         });
 
-        this.swimlaneInProgress = new Swimlane({
+        var inProgress = new Swimlane({
             el: this.ui.inProgress.find('ul'),
             itemView: CellInProgressView,
             status:status.IN_PROGRESS,
             collection: new Tasks(tasks.where({status:status.IN_PROGRESS}))
         });
 
-        this.swimlaneCompleted = new Swimlane({
+        var completed = new Swimlane({
             el: this.ui.completed.find('ul'),
             itemView: CellCompletedView,
             status:status.COMPLETED,
             collection: new Tasks(tasks.where({status:status.COMPLETED}))
         });
 
-        this.swimlaneTodo.render();
-        this.swimlaneInProgress.render();
-        this.swimlaneCompleted.render();
+        todo.render();
+        inProgress.render();
+        completed.render();
 
-        var actions = {
-            'todo': {
-                swimlane: this.swimlaneTodo,
-                events: {}
-            },
-
-            'inProgress': {
-                swimlane: this.swimlaneInProgress,
-                events: {}
-            },
-
-            'completed': {
-                swimlane: this.swimlaneCompleted,
-                events: {}
-            }
-        };
-
-        actions.todo.events[events.BACKLOG] = this.wantsSendToBacklog;
-        actions.todo.events[events.IN_PROGRESS] = this.wantsSendToInProgress;
-
-        actions.inProgress.events[events.TODO] = this.wantsSendToTodo;
-        actions.inProgress.events[events.COMPLETED] = this.wantsSendToCompleted;
-
-        actions.completed.events[events.TODO] = this.wantsSendToTodo;
-        actions.completed.events[events.ARCHIVED] = this.wantsSendToArchived;
-
-        _.each(actions, function(value){
-
-            _.each(value.events, function(handler, eventName){
-                // console.log('itemview:' + eventName);
-                this.listenTo(value.swimlane, 'itemview:' + eventName, handler);
-            }, this);
-
-        }, this);
+        this.swimlanes[status.TODO] = todo;
+        this.swimlanes[status.IN_PROGRESS] = inProgress;
+        this.swimlanes[status.COMPLETED] = completed;
     },
 
-    wantsSendToBacklog: function(view, obj){
-        view.swimlane.collection.remove(view.model);
-        view.model.set('status', status.BACKLOG);
-        view.model.save();
-    },
+    taskStatusDidChange: function(model){
+        var target = this.swimlanes[model.previous('status')];
+        var destination = this.swimlanes[model.get('status')];
 
-    wantsSendToTodo: function(view, obj){
-        view.swimlane.collection.remove(view.model);
-        view.model.set('status', status.TODO);
-        this.swimlaneTodo.collection.add(view.model);
-        view.model.save();
-    },
+        target.collection.remove(model);
 
-    wantsSendToInProgress: function(view){
-        view.swimlane.collection.remove(view.model);
-        view.model.set('status', status.IN_PROGRESS);
-        this.swimlaneInProgress.collection.add(view.model);
-        view.model.save();
-    },
+        if(destination){
+            destination.collection.add(model);
+        }
 
-    wantsSendToCompleted: function(view){
-        view.swimlane.collection.remove(view.model);
-        view.model.set('status', status.COMPLETED);
-        this.swimlaneCompleted.collection.add(view.model);
-        view.model.save();
-    },
-
-    wantsSendToArchived: function(view){
-        view.swimlane.collection.remove(view.model);
-        view.model.set('status', status.ARCHIVED);
-        view.model.save();
+        model.save();
     },
 
     modelDidChange: function(model){

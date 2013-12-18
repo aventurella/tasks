@@ -8,17 +8,10 @@ var TaskView = marionette.ItemView.extend({
     className: 'task',
     tagName: 'li',
 
-    events: {
-        'click': 'wantsClick'
-    },
-
     onShow: function(){
         console.log('called');
     },
 
-    wantsClick: function(){
-        console.log('CLICKITY CLACK');
-    }
 
 });
 

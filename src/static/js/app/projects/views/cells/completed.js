@@ -1,8 +1,9 @@
 define(function(require, exports, module) {
 
 var marionette = require('marionette');
-var template = require('hbs!app/projects/templates/cell-completed');
 var events = require('../../events');
+var status = require('../../models/task').status;
+var template = require('hbs!app/projects/templates/cell-completed');
 
 var CellCompletedView = marionette.ItemView.extend({
     template: template,
@@ -10,17 +11,17 @@ var CellCompletedView = marionette.ItemView.extend({
     tagName: 'li',
 
     events: {
-        'click': 'wantsClick'
+        'click .action .btn.todo': 'wantsSetTodo',
+        'click .action .btn.archive': 'wantsSetArchived'
     },
 
-    triggers: {
-        'click .action .btn.todo': events.TODO,
-        'click .action .btn.archive': events.ARCHIVED
+    wantsSetTodo: function(){
+        this.model.set('status', status.TODO);
     },
 
-    onShow: function(){
-    },
-
+    wantsSetArchived: function(){
+        this.model.set('status', status.ARCHIVED);
+    }
 
 });
 

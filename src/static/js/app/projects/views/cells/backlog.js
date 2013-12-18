@@ -1,8 +1,8 @@
 define(function(require, exports, module) {
 
 var marionette = require('marionette');
-var template = require('hbs!app/projects/templates/cell-backlog');
 var events = require('../../events');
+var template = require('hbs!app/projects/templates/cell-backlog');
 
 var CellBacklogView = marionette.ItemView.extend({
     template: template,
