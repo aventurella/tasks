@@ -14,10 +14,20 @@ var SockController = marionette.Controller.extend({
         this.sock.onopen = this.onopen;
         this.sock.onmessage = this.onAuthComplete;
         this.sock.onclose = this.onclose;
+        this._connected = false;
    },
 
    onopen: function(){
-        this.currentSettings = getSettings();
+        this._connected = true;
+        this.trigger('connected');
+   },
+
+   login: function(){
+        if(!this._connected){
+            this.once('connected', this.login);
+            return;
+        }
+       this.currentSettings = getSettings();
         var token = this.currentSettings.getToken();
         var connectionData = {
             action:'authorize',
@@ -31,7 +41,12 @@ var SockController = marionette.Controller.extend({
 
    onAuthComplete: function(e){
         var data = JSON.parse(e.data);
-        this.currentSettings.setUser(data);
+        var success = this.currentSettings.setUser(data);
+        if(!success){
+            this.trigger('login:fail');
+            return
+        }
+        this.trigger('login:success');
         this.sock.onmessage = this.ventDispatchMessage;
    },
 
@@ -60,5 +75,6 @@ var SockController = marionette.Controller.extend({
 });
 
 exports.SockController = SockController;
+
 
 });
