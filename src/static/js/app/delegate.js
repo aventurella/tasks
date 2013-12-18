@@ -31,11 +31,20 @@ var ApplicationDelegate = marionette.Controller.extend({
         var currentSettings = getSettings();
         var token = currentSettings.getToken();
 
+
         if (!token){
             this.beginLoginFlow();
             return;
         }
 
+        // this.socketController = new SockController();
+        // this.socketController.login();
+
+        // this.listenTo(this.socketController, 'login:fail', this.beginLoginFlow)
+        // this.listenTo(this.socketController, 'login:success', this.onLoginSuccess)
+    },
+
+    onLoginSuccess: function(){
         this.beginApplication(token);
     },
 
@@ -45,7 +54,7 @@ var ApplicationDelegate = marionette.Controller.extend({
             request.setRequestHeader('Authorization', 'Bearer ' + token);
         });
 
-        this.socketController = new SockController();
+
         this.sidebarView = new SidebarView({});
 
 

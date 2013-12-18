@@ -38,6 +38,7 @@ var NewProjectExistingView = InputSelectScrollableComposite.extend({
     wantsComplete: function(){
         this._data = {ok: true, model: this.model};
         this.trigger(events.COMPLETE, this.getData());
+
     },
 
      wantsCancel: function(){

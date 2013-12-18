@@ -14,6 +14,8 @@ var AccountFormView = marionette.ItemView.extend({
 
     events: {
         'click .actions .btn.close': 'wantsClose',
+        'keypress #inputUsername':'checkForEnter',
+        'keypress #inputPassword':'checkForEnter'
     },
 
     ui: {
@@ -43,6 +45,12 @@ var AccountFormView = marionette.ItemView.extend({
 
     getData: function(){
         return {ok: true, model: this.model};
+    },
+
+    checkForEnter: function(e){
+        if(e.keyCode == 13){
+            this.wantsClose();
+        }
     },
 
     onClose: function(){
