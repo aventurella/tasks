@@ -96,7 +96,9 @@ var ApplicationDelegate = marionette.Controller.extend({
         var complete = _.bind(function(modalView){
             var account = modalView.getData().model;
             modals.dismissModal();
+
             this.acquireTokenForAccount(account, deferred);
+
         }, this);
 
         action.then(complete);
