@@ -43,6 +43,7 @@ var BacklogView = marionette.ItemView.extend({
 
     setTasks: function(collection){
         this._tasks = collection;
+        this.listenTo(collection, 'change:status', this.taskStatusDidChange);
     },
 
     getTasks: function(){
@@ -71,41 +72,24 @@ var BacklogView = marionette.ItemView.extend({
         });
 
         this.backlog.render();
-        this.listenTo(
-            this.backlog,
-            'itemview:' + events.TODO,
-            this.wantsSendToTodo);
-
-        this.listenTo(
-            this.backlog,
-            'itemview:' + events.IN_PROGRESS,
-            this.wantsSendToInProgress);
-
-        this.listenTo(
-            this.backlog,
-            'itemview:' + events.COMPLETED,
-            this.wantsSendToCompleted);
     },
 
-    wantsSendToTodo: function(cell){
-        var task = cell.model;
-        task.set('status', tasks.status.TODO);
-        task.save();
-        this.removeFromBacklog(task);
-    },
+    taskStatusDidChange: function(model){
+        // changed TO backlog
+        // we don't need to call save here
+        // because the only way this can happen is
+        // if it's pushed to us, which means it was
+        // already saved.
+        if(model.get('status') === tasks.status.BACKLOG){
+            this.backlog.collection.add(model);
+            return;
+        }
 
-    wantsSendToInProgress: function(cell){
-        var task = cell.model;
-        task.set('status', tasks.status.IN_PROGRESS);
-        task.save();
-        this.removeFromBacklog(task);
-    },
-
-    wantsSendToCompleted: function(cell){
-        var task = cell.model;
-        task.set('status', tasks.status.COMPLETED);
-        task.save();
-        this.removeFromBacklog(task);
+        // changed FROM backlog
+        if(model.previous('status') === tasks.status.BACKLOG){
+            this.backlog.collection.remove(model);
+            model.save();
+        }
     },
 
     wantsAddToBacklog: function(){

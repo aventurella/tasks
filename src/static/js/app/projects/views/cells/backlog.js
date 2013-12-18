@@ -2,6 +2,7 @@ define(function(require, exports, module) {
 
 var marionette = require('marionette');
 var events = require('../../events');
+var status = require('../../models/task').status;
 var template = require('hbs!app/projects/templates/cell-backlog');
 
 var CellBacklogView = marionette.ItemView.extend({
@@ -9,15 +10,23 @@ var CellBacklogView = marionette.ItemView.extend({
     className: 'task backlog',
     tagName: 'li',
 
-    triggers: {
-        'click .action .btn.todo': events.TODO,
-        'click .action .btn.in-progress': events.IN_PROGRESS,
-        'click .action .btn.completed': events.COMPLETED
+    events: {
+        'click .action .btn.todo': 'wantsSetTodo',
+        'click .action .btn.in-progress': 'wantsSetInProgress',
+        'click .action .btn.completed': 'wantsSetCompleted'
     },
 
-    onShow: function(){
+    wantsSetTodo: function(){
+        this.model.set('status', status.TODO);
     },
 
+    wantsSetInProgress: function(){
+        this.model.set('status', status.IN_PROGRESS);
+    },
+
+    wantsSetCompleted: function(){
+        this.model.set('status', status.COMPLETED);
+    }
 
 });
 

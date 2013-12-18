@@ -118,6 +118,7 @@ var InProcessView = marionette.ItemView.extend({
         }
 
         model.save();
+
     },
 
     modelDidChange: function(model){
