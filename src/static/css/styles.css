@@ -220,6 +220,7 @@ body {
     *zoom: 1;
     display: block;
     border: 1px solid #fff;
+    border-radius: 7px;
     width: 350px;
     margin-bottom: 20px; }
     #project-detail .tabbar:before, #project-detail .tabbar:after {
