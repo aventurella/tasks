@@ -70,7 +70,10 @@ var SidebarView = marionette.ItemView.extend({
             activeProject.model.destroy();
             this.projectListView.activeProject = null;
 
-            this.projectDetailRegion.close();
+            if(this.projectDetailRegion){
+                this.projectDetailRegion.close();
+            }
+
             this.currentDetail = null;
         }
     },

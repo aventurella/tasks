@@ -30,7 +30,7 @@ var NewProjectExistingView = InputSelectScrollableComposite.extend({
         this._data = {ok: false};
         this.collection = new Projects();
 
-        this.collection.fetch().then(function(){
+        this.collection.fetch({data:{all:1}}).then(function(){
             self.projects = self.collection.toArray();
         });
     },

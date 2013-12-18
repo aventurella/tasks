@@ -31,7 +31,7 @@ var InProcessView = marionette.ItemView.extend({
     },
 
     initialize: function(options){
-        _.bindAll(this, 'showSwimlanes');
+        _.bindAll(this, 'showSwimlanes', 'modelDidChange');
         this.options = options;
         this.swimlanes = {};
     },
@@ -122,7 +122,8 @@ var InProcessView = marionette.ItemView.extend({
     },
 
     modelDidChange: function(model){
-        this.ui.projectName.text(model.get('label'));
+
+        // this.ui.projectName.text(model.get('label'));
     }
 
 });
