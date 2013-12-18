@@ -80,6 +80,7 @@ var BacklogView = marionette.ItemView.extend({
         // because the only way this can happen is
         // if it's pushed to us, which means it was
         // already saved.
+        console.log('GOT A CHANGE');
         if(model.get('status') === tasks.status.BACKLOG){
             this.backlog.collection.add(model);
             return;

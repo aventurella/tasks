@@ -24,7 +24,6 @@ var ApplicationDelegate = marionette.Controller.extend({
 
     initialize: function(options){
         this.app = options.app;
-        this.socketController = new SockController();
 
         this.listenTo(vent, modalEvents.PRESENT, this.presentModal);
         this.listenTo(vent, modalEvents.DISMISS, this.dismissModal);
@@ -46,6 +45,7 @@ var ApplicationDelegate = marionette.Controller.extend({
             request.setRequestHeader('Authorization', 'Bearer ' + token);
         });
 
+        this.socketController = new SockController();
         this.sidebarView = new SidebarView({});
 
 
