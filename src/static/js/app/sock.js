@@ -37,6 +37,8 @@ var SockController = marionette.Controller.extend({
 
    ventDispatchMessage: function(e){
        var data = JSON.parse(e.data);
+       var token = this.currentSettings.getToken();
+       if(data.token == token)return;
        var event = 'model:update:'+ data.type + ':' + data.id;
        console.log(event);
        vent.trigger(event, data);
