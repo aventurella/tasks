@@ -202,7 +202,7 @@ body {
       -webkit-flex-grow: 0;
       flex-grow: 0; }
 
-#project-detail .details {
+#project-detail {
   height: 100%;
   padding-left: 10px;
   padding-top: 5px;
@@ -210,12 +210,35 @@ body {
   display: -webkit-flex;
   flex-direction: column;
   -webkit-flex-direction: column; }
-  #project-detail .details .project-name {
+  #project-detail .project-name {
     margin-bottom: 15px; }
-    #project-detail .details .project-name .pane-action {
+    #project-detail .project-name .pane-action {
       float: left;
       margin-right: 10px;
       cursor: pointer; }
+  #project-detail .tabbar {
+    *zoom: 1;
+    display: block;
+    border: 1px solid #fff;
+    width: 350px;
+    margin-bottom: 20px; }
+    #project-detail .tabbar:before, #project-detail .tabbar:after {
+      content: " ";
+      display: table; }
+    #project-detail .tabbar:after {
+      clear: both; }
+    #project-detail .tabbar .buttons {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      margin-bottom: 10px; }
+      #project-detail .tabbar .buttons .btn {
+        float: left;
+        padding: 0 30px 15px 30px;
+        height: 40px;
+        line-height: 40px;
+        cursor: pointer;
+        color: #3e4752; }
 
 #project-detail .task-placeholder {
   height: 25px;
@@ -422,7 +445,7 @@ body {
     #modal-new-project .action:after {
       clear: both; }
     #modal-new-project .action .btn {
-      border-radius: 10px;
+      border-radius: 20px;
       width: 30px;
       height: 25px;
       text-align: center;
