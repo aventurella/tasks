@@ -49,6 +49,7 @@ var Task = backbone.Model.extend({
                 self.set(key, value);
             }
         })
+        this.set('project', "/api/v1/project/"+obj.project+"/")
     },
 
     defaults: {
