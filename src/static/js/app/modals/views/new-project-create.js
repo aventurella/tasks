@@ -31,6 +31,7 @@ var NewProjectCreateView = marionette.ItemView.extend({
 
     onShow: function(){
         this.model = new Project();
+
         this.ui.input.focus();
         this.stickit();
     },

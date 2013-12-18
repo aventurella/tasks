@@ -7,6 +7,7 @@ var focus        = require('built/core/events/focus');
 var ProjectSearchCell = marionette.ItemView.extend({
     template: template,
     tagName: 'li',
+    className: 'project',
     initialize: function(){
         this.listenTo(this, focus.FOCUS, this.onFocus);
         this.listenTo(this, focus.BLUR, this.onBlur);
@@ -19,7 +20,6 @@ var ProjectSearchCell = marionette.ItemView.extend({
     onBlur: function(){
         this.$el.removeClass('active');
     }
-
 });
 
 exports.ProjectSearchCell = ProjectSearchCell;

@@ -3,6 +3,52 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
 
+button, input, select, textarea {
+  margin: 0;
+  font-size: 100%;
+  font-family: inherit;
+  outline-offset: 0;
+  outline-style: none;
+  outline-width: 0;
+  -webkit-font-smoothing: inherit; }
+
+.input-field {
+  padding: 6px 8px 5px;
+  border-bottom: 1px solid #ddd;
+  font-size: 16px; }
+
+input {
+  border-radius: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+  background-color: transparent;
+  width: 100%; }
+
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"] {
+  display: block;
+  height: 34px;
+  color: #111111;
+  vertical-align: middle;
+  font-size: 14px;
+  line-height: 20px;
+  border: 0; }
+
 html {
   height: 100%; }
 
@@ -326,26 +372,21 @@ body {
     display: table; }
   #modal-new-project:after {
     clear: both; }
+  #modal-new-project .panel > div {
+    margin: 20px; }
   #modal-new-project .panel {
     float: left;
     display: block;
     margin-right: 2.35765%;
     width: 48.82117%;
+    margin-right: 0;
+    position: relative;
     background-color: #fff;
-    height: 100%;
-    padding-left: 20px; }
+    height: 100%; }
     #modal-new-project .panel:last-child {
       margin-right: 0; }
     #modal-new-project .panel:first-child {
-      border-right: 1px solid #ddd; }
-    #modal-new-project .panel input[type="text"] {
-      border-radius: 5px;
-      font-size: 13px;
-      line-height: 25px;
-      width: 70%;
-      border: 1px solid #ccc;
-      outline: none;
-      padding-left: 7px; }
+      border-right: 1px dotted #ddd; }
     #modal-new-project .panel h2 {
       font-weight: 100;
       margin-bottom: 3px; }
@@ -353,22 +394,45 @@ body {
       font-size: 11px;
       font-style: italic;
       margin-bottom: 25px; }
-    #modal-new-project .panel .action {
-      *zoom: 1;
-      display: block;
-      padding-bottom: 20px; }
-      #modal-new-project .panel .action:before, #modal-new-project .panel .action:after {
-        content: " ";
-        display: table; }
-      #modal-new-project .panel .action:after {
-        clear: both; }
-      #modal-new-project .panel .action .btn {
-        float: left;
-        padding-right: 15px; }
     #modal-new-project .panel .results {
       list-style-type: none;
       margin: 0;
-      padding: 0; }
-  #modal-new-project .action .btn {
-    cursor: pointer;
-    float: left; }
+      padding: 0;
+      position: absolute;
+      width: 315px;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 9px -3px; }
+      #modal-new-project .panel .results .project {
+        border-bottom: 1px dotted #ddd;
+        padding: 7px;
+        color: #525252;
+        cursor: pointer; }
+  #modal-new-project input {
+    width: 83%; }
+  #modal-new-project .action {
+    *zoom: 1;
+    display: block;
+    position: absolute;
+    top: 95px;
+    right: 20px;
+    white-space: nowrap;
+    background: #fff; }
+    #modal-new-project .action:before, #modal-new-project .action:after {
+      content: " ";
+      display: table; }
+    #modal-new-project .action:after {
+      clear: both; }
+    #modal-new-project .action .btn {
+      border-radius: 10px;
+      width: 30px;
+      height: 25px;
+      text-align: center;
+      line-height: 22px;
+      display: inline-block;
+      color: #fff;
+      cursor: pointer; }
+      #modal-new-project .action .btn.yes {
+        background-color: #66cc33;
+        border-color: #478f24; }
+      #modal-new-project .action .btn.no {
+        background-color: #ef4e3a;
+        border-color: #cc2511; }
