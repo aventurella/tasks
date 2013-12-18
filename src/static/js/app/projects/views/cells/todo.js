@@ -9,7 +9,8 @@ var CellTodoView = marionette.ItemView.extend({
     className: 'task todo',
     tagName: 'li',
     bindings:{
-        '.lbl':'label'
+        '.lbl':'label',
+        '.description':'description',
     },
 
     triggers: {
