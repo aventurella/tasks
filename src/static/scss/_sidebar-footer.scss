@@ -11,12 +11,13 @@
     }
 
     .action{
-        float: left;
+        float: right;
         cursor: pointer;
-        width:40px;
+        width: 40px;
         height: 100%;
-        //background-color: red;
         margin-right: 1px;
+        font-size: 15px;
+        margin-top: 7px;
     }
 
 }
