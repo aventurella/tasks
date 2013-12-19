@@ -26,6 +26,7 @@ var TaskFormView = marionette.ItemView.extend({
         'input[name="inputLOE"]': 'loe',
         '#inputLabel': 'label',
         '#inputDescription': 'description',
+        'input[name="inputStatus"]': 'status'
     },
 
     initialize: function(options){

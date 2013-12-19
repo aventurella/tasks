@@ -31,8 +31,13 @@
             border-right: 1px dotted #ddd;
         }
 
+        .status{
+            @include span-columns(3);
+        }
+
         .loe{
             @include span-columns(6);
+            border-right: 1px dotted #ddd;
 
             .green.radio input:before{
                 border-color: $green-border;
