@@ -1,3 +1,7 @@
+#sidebar.hide #project-detail .project-name .pane-action{
+    @include transform(rotate(-135deg));
+}
+
 #project-detail {
     height: 100%;
     padding-left: 10px;
@@ -8,12 +12,40 @@
     -webkit-flex-direction: column;
 
     .project-name{
-        margin-bottom: 35px;
+        margin-bottom: 15px;
+        border-bottom: 1px dotted #c0c0c0;
+        padding-top: 8px;
+        padding-bottom: 18px;
 
         .pane-action{
             float: left;
             margin-right: 10px;
             cursor: pointer;
+            position: relative;
+            width: 30px;
+            height: 25px;
+            border-radius: 20px;
+            border: 1px solid $blue-border;
+            background: $blue-fill;
+
+
+            .arrow{
+                @include transform(rotate(45deg));
+                position: absolute;
+                top: 7px;
+                left: 37%;
+                display: table;
+                border: 3px solid #fff;
+                border-top: 0;
+                border-right: 0;
+                content: ' ';
+                padding: 3px;
+            }
+        }
+
+        label{
+            font-size: 16px;
+            padding-left: 20px;
         }
     }
 
