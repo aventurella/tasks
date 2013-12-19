@@ -272,14 +272,6 @@ body {
       -webkit-flex-grow: 0;
       flex-grow: 0; }
 
-#sidebar.hide .pane-action {
-  -webkit-transform: rotate(-135deg);
-  -moz-transform: rotate(-135deg);
-  -ms-transform: rotate(-135deg);
-  -o-transform: rotate(-135deg);
-  transform: rotate(-135deg);
-  background: #4a87ee; }
-
 #project-detail {
   height: 100%;
   padding-left: 10px;
@@ -351,6 +343,17 @@ body {
         display: inline-block; }
         #project-detail .tabbar .buttons .btn.active {
           background-color: rgba(255, 255, 255, 0.8); }
+
+#sidebar.hide + #project-detail .project-name .pane-action {
+  background: #4a87ee; }
+  #sidebar.hide + #project-detail .project-name .pane-action .arrow {
+    -webkit-transform: rotate(-135deg);
+    -moz-transform: rotate(-135deg);
+    -ms-transform: rotate(-135deg);
+    -o-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+    border-color: white;
+    left: 30%; }
 
 #project-detail .task-placeholder {
   height: 25px;
