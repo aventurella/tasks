@@ -31,7 +31,7 @@ var ProjectDetailView = marionette.Layout.extend({
     },
 
     bindings: {
-        'label': 'label'
+        '.project-name label': 'label'
     },
 
     wantsToggleSidebar: function(){
