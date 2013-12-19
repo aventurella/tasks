@@ -105,7 +105,13 @@ var BacklogView = marionette.ItemView.extend({
         modals.dismissModal();
 
         if (data.ok === false) return;
-        this.addToBacklog(data.model);
+
+        if(data.model.get('status') === tasks.status.BACKLOG ){
+            this.addToBacklog(data.model);
+        } else {
+            this.getTasks().add(data.model);
+        }
+
     },
 
     removeFromBacklog: function(task){
