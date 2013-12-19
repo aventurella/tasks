@@ -13,7 +13,6 @@ var ProjectDetailView = marionette.Layout.extend({
     template: template,
 
     ui:{
-        projectName: '.project-name label',
         toggleButton: '.project-name .pane-action',
         btnBacklog: '.tabbar .backlog',
         btnInProcess: '.tabbar .in-process',
@@ -32,10 +31,7 @@ var ProjectDetailView = marionette.Layout.extend({
     },
 
     wantsToggleSidebar: function(){
-        var btn = this.ui.toggleButton;
-
         this.trigger(events.TOGGLE_SIDEBAR, this);
-        btn.text(label);
     },
 
 

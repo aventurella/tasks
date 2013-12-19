@@ -1,5 +1,6 @@
-#sidebar.hide #project-detail .project-name .pane-action{
+#sidebar.hide .pane-action{
     @include transform(rotate(-135deg));
+    background: $blue-fill;
 }
 
 #project-detail {
@@ -14,19 +15,20 @@
     .project-name{
         margin-bottom: 15px;
         border-bottom: 1px dotted #c0c0c0;
-        padding-top: 8px;
+        padding-top: 10px;
         padding-bottom: 18px;
+        position: relative;
 
         .pane-action{
-            float: left;
             margin-right: 10px;
             cursor: pointer;
-            position: relative;
+            position: absolute;
+            top: 8px;
             width: 30px;
             height: 25px;
             border-radius: 20px;
             border: 1px solid $blue-border;
-            background: $blue-fill;
+
 
 
             .arrow{
@@ -35,7 +37,7 @@
                 top: 7px;
                 left: 37%;
                 display: table;
-                border: 3px solid #fff;
+                border: 3px solid $blue-border;
                 border-top: 0;
                 border-right: 0;
                 content: ' ';
@@ -44,8 +46,8 @@
         }
 
         label{
-            font-size: 16px;
-            padding-left: 20px;
+            font-size: 18px;
+            padding-left: 35px;
         }
     }
 
