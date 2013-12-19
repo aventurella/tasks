@@ -35,7 +35,7 @@ var ApplicationDelegate = marionette.Controller.extend({
         var deferred = $.Deferred();
         deferred.then(this.beginApplication);
 
-        if (!token){
+        if (token){
             this.promptForCredentials(deferred);
             return;
         }
