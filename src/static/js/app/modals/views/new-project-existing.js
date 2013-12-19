@@ -5,6 +5,7 @@ var marionette = require('marionette');
 var events = require('../events');
 var InputSelectScrollableComposite = require('built/ui/views/composite/input-select-scrollable').InputSelectScrollableComposite;
 var Projects = require('app/sidebar/collections/projects').Projects;
+var Project = require('app/sidebar/models/project').Project;
 var ProjectSearchCell = require('./project-search-cell').ProjectSearchCell;
 var template = require('hbs!../templates/new-project-existing');
 
@@ -33,6 +34,7 @@ var NewProjectExistingView = InputSelectScrollableComposite.extend({
         var self = this;
         this._data = {ok: false};
         this.collection = new Projects();
+        this.model = new Project();
 
         this.collection.fetch({data:{all:1}}).then(function(){
             if(self.collection.length === 0 ){
@@ -65,6 +67,7 @@ var NewProjectExistingView = InputSelectScrollableComposite.extend({
     },
 
     inputDidReceiveData: function(data){
+        this.model.clear();
         if(data.length === 0){
             this.collection.reset(this.projects);
             return;
@@ -92,9 +95,16 @@ var NewProjectExistingView = InputSelectScrollableComposite.extend({
     },
 
     collectionViewDidSelect: function(view){
-        this._data = {ok: true, model: view.model.toJSON()};
-        view.model.save('user', 'add')
-        this.trigger(events.COMPLETE, this.getData());
+        if(_.isEqual(this.model.toJSON(),  view.model.toJSON())){
+            this._data = {ok: true, model: this.model.toJSON()};
+            // this needs to be here so that the server knows to save this user
+            // to this project
+            view.model.set('user', 'add')
+            this.trigger(events.COMPLETE, this.getData());
+            return
+        }
+        this.model.set(view.model.toJSON());
+        this.ui.input.val(this.model.get('label'));
     },
 
     onClose: function(){
