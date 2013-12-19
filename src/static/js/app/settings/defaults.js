@@ -6,9 +6,7 @@ var marionette = require('marionette');
 var driver = require('driver');
 var settings = null;
 
-
 var ApplicationSettings = marionette.Controller.extend({
-
     getToken: function(){
         return driver.getToken();
     },
@@ -18,11 +16,11 @@ var ApplicationSettings = marionette.Controller.extend({
     },
 
     setUser: function(data){
-        this._user = data.data;
+        return driver.setUser(data.data);
     },
 
     getUser: function(){
-        return this._user;
+        return driver.getUser();
     },
 });
 
@@ -37,4 +35,8 @@ function getSettings(){
 exports.getSettings = getSettings;
 
 });
+
+
+
+
 

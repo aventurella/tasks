@@ -10,9 +10,11 @@ var ProjectListView = marionette.CompositeView.extend({
     itemView : ProjectCell,
     itemViewContainer : '.projects',
 
-    initialize: function(){
+    initialize: function(options){
         this.collection = new Projects();
         this.collection.fetch();
+        this.user = options.user;
+
     },
 
     onShow: function(){
@@ -23,7 +25,9 @@ var ProjectListView = marionette.CompositeView.extend({
     onProjectsSynced: function(){
         this.listenTo(this.collection, 'add', this.onProjectAdd);
 
-        var child = this.children.findByIndex(0);
+        var id = this.user.get('project_id');
+        var model = this.collection.get(id);
+        var child = this.children.findByModel(model) || this.children.findByIndex(0);
         if(child){
             this.projectWantsSelect(child);
         }
@@ -45,6 +49,8 @@ var ProjectListView = marionette.CompositeView.extend({
         this.activeProject = obj;
 
         this.trigger(events.SELECT_PROJECT, this, obj);
+
+        this.user.set('project_id', obj.model.get('id'));
     }
 
 });
