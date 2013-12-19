@@ -211,7 +211,7 @@ body {
   flex-direction: column;
   -webkit-flex-direction: column; }
   #project-detail .project-name {
-    margin-bottom: 15px; }
+    margin-bottom: 35px; }
     #project-detail .project-name .pane-action {
       float: left;
       margin-right: 10px;
@@ -219,10 +219,13 @@ body {
   #project-detail .tabbar {
     *zoom: 1;
     display: block;
+    overflow: hidden;
     border: 1px solid #fff;
     border-radius: 7px;
-    width: 350px;
-    margin-bottom: 20px; }
+    width: 349px;
+    position: absolute;
+    top: 10px;
+    right: 30px; }
     #project-detail .tabbar:before, #project-detail .tabbar:after {
       content: " ";
       display: table; }
@@ -232,14 +235,17 @@ body {
       list-style-type: none;
       margin: 0;
       padding: 0;
-      margin-bottom: 10px; }
+      width: 350px; }
       #project-detail .tabbar .buttons .btn {
         float: left;
         padding: 0 30px 15px 30px;
-        height: 40px;
-        line-height: 40px;
+        height: 30px;
+        line-height: 30px;
         cursor: pointer;
-        color: #3e4752; }
+        color: #3e4752;
+        display: inline-block; }
+        #project-detail .tabbar .buttons .btn.active {
+          background-color: rgba(255, 255, 255, 0.8); }
 
 #project-detail .task-placeholder {
   height: 25px;
@@ -460,3 +466,6 @@ body {
       #modal-new-project .action .btn.no {
         background-color: #ef4e3a;
         border-color: #cc2511; }
+
+#modal .view .task {
+  background: red; }

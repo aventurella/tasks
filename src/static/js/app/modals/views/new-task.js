@@ -6,7 +6,7 @@ var marionette = require('marionette');
 var backbone = require('backbone');
 var events = require('../events');
 var KeyResponder = require('built/core/responders/keys').KeyResponder;
-var template = require('hbs!../templates/task-form');
+var template = require('hbs!../templates/new-task');
 var Task = require('app/projects/models/task').Task;
 
 var TaskFormView = marionette.ItemView.extend({

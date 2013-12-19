@@ -2,10 +2,9 @@ define(function(require, exports, module){
 
 // Imports
 
-var marionette   = require('marionette');
 var _            = require('underscore');
+var marionette   = require('marionette');
 var events = require('built/core/events/event');
-
 
 // Module
 
