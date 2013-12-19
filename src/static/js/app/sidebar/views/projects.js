@@ -26,8 +26,7 @@ var ProjectListView = marionette.CompositeView.extend({
         var child;
         this.listenTo(this.collection, 'add', this.onProjectAdd);
 
-
-        if(this.user.get('project_id')){
+        if(this.collection.length && this.user.get('project_id')){
             var id = this.user.get('project_id');
             var model = this.collection.get(id);
             child = this.children.findByModel(model);
@@ -54,6 +53,7 @@ var ProjectListView = marionette.CompositeView.extend({
 
         obj.setSelected(true);
         this.activeProject = obj;
+
 
         this.trigger(events.SELECT_PROJECT, this, obj);
 
