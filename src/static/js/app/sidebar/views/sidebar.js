@@ -106,10 +106,12 @@ var SidebarView = marionette.ItemView.extend({
             user: this.user
         });
 
+
         this.projectListView.bindUIElements();
         this.projectListView.triggerMethod('show', this.projectListView);
 
         this.listenTo(this.projectListView, events.SELECT_PROJECT, this.wantsSelectProject);
+        this.listenToOnce(this.projectListView.collection, 'sync', this.doCheckIfNoProjects);
     },
 
     initializeFooter: function(){
@@ -122,6 +124,13 @@ var SidebarView = marionette.ItemView.extend({
 
         this.listenTo(this.footerView, 'project:add', this.wantsAddProject);
         this.listenTo(this.footerView, 'project:remove', this.wantsRemoveProject);
+    },
+
+    doCheckIfNoProjects: function(){
+        // if they were focused, but then the project was deleted in the cms, need to allow access to side again
+        if(!this.projectListView.collection.length){
+            this.showProjectsPane(true);
+        }
     },
 
     onShow: function(){
