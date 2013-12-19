@@ -78,7 +78,9 @@ var NewProjectExistingView = InputSelectScrollableComposite.extend({
     },
 
     collectionViewDidSelect: function(view){
+        view.model.save('user', 'add')
         this._data = {ok: true, model: view.model};
+        this.trigger(events.COMPLETE, this.getData());
     },
 
     onClose: function(){
