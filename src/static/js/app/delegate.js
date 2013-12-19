@@ -42,13 +42,7 @@ var ApplicationDelegate = marionette.Controller.extend({
 
         this.verifyToken(token, deferred);
 
-        // this.listenTo(this.socketController, 'login:fail', this.beginLoginFlow)
-        // this.listenTo(this.socketController, 'login:success', this.onLoginSuccess)
     },
-
-    // onLoginSuccess: function(){
-    //     this.beginApplication(token);
-    // },
 
     beginApplication: function(token){
 
@@ -61,12 +55,17 @@ var ApplicationDelegate = marionette.Controller.extend({
 
 
         this.listenTo(this.sidebarView, sidebarEvents.SELECT_PROJECT, this.wantsChangeProject);
+        this.listenTo(this.sidebarView, sidebarEvents.DESELECT_PROJECT, this.wantsClearProject);
         this.app.sidebar.show(this.sidebarView);
 
     },
 
     wantsChangeProject: function(project){
         this.showProject(project);
+    },
+
+    wantsClearProject: function(){
+        this.clearProject();
     },
 
     showProject: function(project){
@@ -79,6 +78,12 @@ var ApplicationDelegate = marionette.Controller.extend({
         this.app.projectDetail.show(projectView);
         this.listenTo(projectView, projectEvents.TOGGLE_SIDEBAR, this.wantsToggleSidebar);
         this.currentProjectView = projectView;
+    },
+
+    clearProject: function(){
+        this.socketController.setActiveProjectId(null);
+        this.currentProjectView = null;
+        this.app.projectDetail.reset();
     },
 
     wantsToggleSidebar: function(){

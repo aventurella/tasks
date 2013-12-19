@@ -80,10 +80,15 @@ var SidebarView = marionette.ItemView.extend({
             if(this.projectDetailRegion){
                 this.projectDetailRegion.close();
             }
-
             this.currentDetail = null;
         }
-        this.projectListView.trigger('itemview:select', this.projectListView.children.first());
+        if(this.projectListView.children.first()){
+            this.projectListView.trigger('itemview:select', this.projectListView.children.first());
+        }else{
+            this.trigger(events.DESELECT_PROJECT);
+        }
+
+
     },
 
     addNewProject: function(){
