@@ -31,11 +31,16 @@ var ProjectDetailView = marionette.Layout.extend({
         section: '#section'
     },
 
+    initialize: function(){
+
+    },
+
     wantsToggleSidebar: function(){
+
         var btn = this.ui.toggleButton;
 
         this.trigger(events.TOGGLE_SIDEBAR, this);
-        btn.text(label);
+        // btn.text(label);
     },
 
 

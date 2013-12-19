@@ -57,13 +57,16 @@ var SidebarView = marionette.ItemView.extend({
         } else {
             this.showProjectsPane(false);
         }
+
     },
 
     showProjectsPane: function(bool){
+        this.user.set('hideSidebar', !bool);
         if(bool){
             this.$el.parent().removeClass('hide');
             return;
         }
+
 
         this.$el.parent().addClass('hide');
     },
@@ -119,6 +122,16 @@ var SidebarView = marionette.ItemView.extend({
     onShow: function(){
         this.initializeFooter();
         this.initializeProjectList();
+
+
+        if(this.user.get('hideSidebar')){
+            var $parent = this.$el.parent();
+            $parent.hide();
+            this.showProjectsPane(false);
+            _.delay(function(){
+                $parent.show();
+            }, 200);
+        }
     }
 
 });

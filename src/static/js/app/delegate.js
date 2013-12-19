@@ -62,6 +62,7 @@ var ApplicationDelegate = marionette.Controller.extend({
 
         this.listenTo(this.sidebarView, sidebarEvents.SELECT_PROJECT, this.wantsChangeProject);
         this.app.sidebar.show(this.sidebarView);
+
     },
 
     wantsChangeProject: function(project){
