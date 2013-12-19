@@ -13,7 +13,7 @@ var AccountFormView = marionette.ItemView.extend({
     template: template,
 
     events: {
-        'click .actions .btn.close': 'wantsClose',
+        'click .action .btn.login': 'wantsClose',
         'keypress #inputUsername':'checkForEnter',
         'keypress #inputPassword':'checkForEnter'
     },

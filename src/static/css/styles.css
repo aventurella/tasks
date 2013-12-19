@@ -621,3 +621,28 @@ body {
     #modal .view .task .action .btn.no {
       background-color: #ef4e3a;
       border-color: #cc2511; }
+
+#modal .view .account .heading {
+  padding: 10px; }
+  #modal .view .account .heading h2 {
+    font-weight: 200;
+    margin: 0 0 5px 0;
+    padding: 0; }
+  #modal .view .account .heading h2 + p {
+    font-style: italic;
+    margin: 0;
+    padding: 0;
+    font-size: 11px; }
+#modal .view .account .action .btn {
+  color: white;
+  background: #4a87ee;
+  border: 1px solid #145dd7;
+  padding: 13px;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer; }
+
+#modal .view .session {
+  padding: 10px; }
+  #modal .view .session h2 {
+    font-weight: 200; }
