@@ -11,7 +11,8 @@ var task_type = require('../models/task').task_type;
 
 var Swimlane = DragAndDropCollectionView.extend({
 
-    initialize: function(){
+    initialize: function(options){
+        this.masterList = options.masterList;
         DragAndDropCollectionView.prototype.initialize.apply(this, arguments);
     },
 
@@ -42,7 +43,8 @@ var Swimlane = DragAndDropCollectionView.extend({
 
     deserializeModel: function(data){
         var model = $.parseJSON(data);
-        model.status = this.options.status;
+        model = this.masterList.get(model.id);
+        model.set('status', this.options.status, {silent:true});
         return model;
     },
 

@@ -12,6 +12,7 @@ var Tasks = require('../collections/tasks').Tasks;
 var CellTodoView = require('./cells/todo').CellTodoView;
 var CellInProgressView = require('./cells/in-progress').CellInProgressView;
 var CellCompletedView = require('./cells/completed').CellCompletedView;
+var vent = require('app/vent');
 
 var events = require('../events');
 var template = require('hbs!app/projects/templates/in-process');
@@ -38,6 +39,7 @@ var InProcessView = marionette.ItemView.extend({
         _.bindAll(this, 'showSwimlanes', 'modelDidChange');
         this.options = options;
         this.swimlanes = {};
+        console.log(vent)
     },
 
     onShow: function(){
@@ -85,6 +87,7 @@ var InProcessView = marionette.ItemView.extend({
             el: this.ui.todo.find('ul')[0],
             itemView: CellTodoView,
             status: status.TODO,
+            masterList:tasks,
             collection: new Tasks(tasks.where({status: status.TODO}))
         });
 
@@ -92,6 +95,7 @@ var InProcessView = marionette.ItemView.extend({
             el: this.ui.inProgress.find('ul'),
             itemView: CellInProgressView,
             status:status.IN_PROGRESS,
+            masterList:tasks,
             collection: new Tasks(tasks.where({status:status.IN_PROGRESS}))
         });
 
@@ -99,6 +103,7 @@ var InProcessView = marionette.ItemView.extend({
             el: this.ui.completed.find('ul'),
             itemView: CellCompletedView,
             status:status.COMPLETED,
+            masterList:tasks,
             collection: new Tasks(tasks.where({status:status.COMPLETED}))
         });
 
