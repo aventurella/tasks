@@ -23,6 +23,7 @@ var SockController = require('app/sock').SockController;
 var ApplicationDelegate = marionette.Controller.extend({
 
     initialize: function(options){
+        _.bindAll(this,'beginApplication')
         this.app = options.app;
 
         this.listenTo(vent, modalEvents.PRESENT, this.presentModal);
@@ -50,7 +51,6 @@ var ApplicationDelegate = marionette.Controller.extend({
     // },
 
     beginApplication: function(token){
-        debugger;
 
         $(document).ajaxSend(function(e, request){
             request.setRequestHeader('Authorization', 'Bearer ' + token);
@@ -138,6 +138,11 @@ var ApplicationDelegate = marionette.Controller.extend({
         };
 
         var fail = function(){
+
+            var currentSettings = getSettings();
+            currentSettings.setToken('');
+            deferred.then(self.beginApplication);
+            self.promptForCredentials(deferred);
             // what are we doing here?
             // this means they successfully logged in
             // but their token was invalid.

@@ -20,7 +20,7 @@ var ApplicationSettings = marionette.Controller.extend({
     setUser: function(data){
         console.log(data)
         if(data.ok){
-            this._user = user;
+            this._user = data.data;
         }else{
             driver.setToken('')
         }
