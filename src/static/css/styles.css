@@ -436,6 +436,9 @@ body {
         padding: 7px;
         color: #525252;
         cursor: pointer; }
+        #modal-new-project .panel .results .project.active {
+          background-color: #4a87ee;
+          color: #fff; }
   #modal-new-project input {
     width: 83%; }
   #modal-new-project .action {
