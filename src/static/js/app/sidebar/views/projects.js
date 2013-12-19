@@ -23,11 +23,18 @@ var ProjectListView = marionette.CompositeView.extend({
     },
 
     onProjectsSynced: function(){
+        var child;
         this.listenTo(this.collection, 'add', this.onProjectAdd);
 
-        var id = this.user.get('project_id');
-        var model = this.collection.get(id);
-        var child = this.children.findByModel(model) || this.children.findByIndex(0);
+
+        if(this.user.get('project_id')){
+            var id = this.user.get('project_id');
+            var model = this.collection.get(id);
+            child = this.children.findByModel(model);
+        }else{
+            child = this.children.findByIndex(0);
+        }
+
         if(child){
             this.projectWantsSelect(child);
         }
