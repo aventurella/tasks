@@ -11,11 +11,12 @@ var NewProjectCreateView = marionette.ItemView.extend({
 
     events: {
         'click .btn.create': 'wantsComplete',
-        'keypress input':'onKeypress'
+        'keypress input':'onKeypress',
+        'click .btn.cancel': 'wantsCancel'
     },
 
     triggers: {
-        'click .btn.cancel': events.COMPLETE
+
     },
 
     ui: {
@@ -35,6 +36,10 @@ var NewProjectCreateView = marionette.ItemView.extend({
 
         this.ui.input.focus();
         this.stickit();
+    },
+
+    wantsCancel: function(){
+        this.trigger(events.COMPLETE, this.getData());
     },
 
     wantsComplete: function(){
