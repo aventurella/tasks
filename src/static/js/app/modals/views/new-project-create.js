@@ -10,7 +10,8 @@ var NewProjectCreateView = marionette.ItemView.extend({
     template: template,
 
     events: {
-        'click .btn.create': 'wantsComplete'
+        'click .btn.create': 'wantsComplete',
+        'keypress input':'onKeypress'
     },
 
     triggers: {
@@ -43,6 +44,11 @@ var NewProjectCreateView = marionette.ItemView.extend({
 
     getData: function(){
         return this._data;
+    },
+    onKeypress: function(e){
+        if(e.keyCode == 13){
+            this.wantsComplete();
+        }
     },
 });
 

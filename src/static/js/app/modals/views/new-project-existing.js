@@ -78,6 +78,7 @@ var NewProjectExistingView = InputSelectScrollableComposite.extend({
     },
 
     collectionViewDidSelect: function(view){
+        console.log('called')
         this._data = {ok: true, model: view.model};
     },
 
