@@ -536,7 +536,8 @@ body {
 #modal .view .task textarea {
   height: 65px;
   width: 100%;
-  color: #808080; }
+  color: #808080;
+  resize: none; }
 #modal .view .task h2 {
   font-weight: 200;
   margin-left: 7px; }
