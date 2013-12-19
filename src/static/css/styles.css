@@ -485,7 +485,7 @@ body {
       margin: 0;
       padding: 0;
       list-style-type: none;
-      min-height: 50px; }
+      min-height: 500px; }
 
 #project-detail {
   -webkit-flex-grow: 1;

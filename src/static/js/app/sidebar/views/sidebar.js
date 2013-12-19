@@ -23,6 +23,10 @@ var SidebarView = marionette.ItemView.extend({
         footerView: '.footer'
     },
 
+    initialize: function(options){
+        this.user = options.settings.getUser();
+    },
+
     wantsAddProject: function(){
         var action = modals.presentModal(new NewProjectView());
         var self = this;
@@ -90,7 +94,8 @@ var SidebarView = marionette.ItemView.extend({
 
     initializeProjectList: function(){
         this.projectListView = new ProjectListView({
-            el: this.ui.projectListView
+            el: this.ui.projectListView,
+            user: this.user
         });
 
         this.projectListView.bindUIElements();

@@ -56,8 +56,8 @@ var ApplicationDelegate = marionette.Controller.extend({
             request.setRequestHeader('Authorization', 'Bearer ' + token);
         });
 
-
-        this.sidebarView = new SidebarView({});
+        var currentSettings = getSettings();
+        this.sidebarView = new SidebarView({settings:currentSettings});
 
 
         this.listenTo(this.sidebarView, sidebarEvents.SELECT_PROJECT, this.wantsChangeProject);
