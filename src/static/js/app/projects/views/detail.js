@@ -33,10 +33,6 @@ var ProjectDetailView = marionette.Layout.extend({
 
     wantsToggleSidebar: function(){
         var btn = this.ui.toggleButton;
-        var label = '>';
-        if(btn.text() == '>'){
-            label = '<';
-        }
 
         this.trigger(events.TOGGLE_SIDEBAR, this);
         btn.text(label);
