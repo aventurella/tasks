@@ -1,3 +1,94 @@
 #modal .view .task{
-    background: red;
+
+    textarea{
+        height: 65px;
+        width: 100%;
+        color: #808080;
+    }
+
+    h2{
+        font-weight: 200;
+        margin-left: 7px;
+    }
+    .choices{
+        @include row;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 16px;
+
+        .choice label{
+            @include row;
+
+        }
+
+        .item-radio{
+            float: left;
+            margin-right: 15px;
+        }
+
+        .type{
+            @include span-columns(3);
+            border-right: 1px dotted #ddd;
+        }
+
+        .loe{
+            @include span-columns(6);
+
+            .green.radio input:before{
+                border-color: $green-border;
+            }
+
+            .green.radio input:checked:before {
+                background: $green-fill;
+            }
+
+            .yellow.radio input:before{
+                border-color: $yellow-border;
+            }
+
+            .yellow.radio input:checked:before {
+                background: $yellow-fill;
+            }
+
+            .red.radio input:before{
+                border-color: $red-border;
+            }
+
+            .red.radio input:checked:before {
+                background: $red-fill;
+            }
+        }
+    }
+
+
+    .action{
+        @include row;
+
+        position: absolute;
+        top: 255px;
+        right: 20px;
+        white-space: nowrap;
+        background: $white-fill;
+
+        .btn{
+            border-radius: 20px;
+            width: 30px;
+            height: 25px;
+            text-align: center;
+            line-height: 22px;
+            display: inline-block;
+            color: $white-fill;
+            cursor: pointer;
+            border: 1px solid;
+
+            &.yes{
+                background-color: $green-fill;
+                border-color: $green-border;
+            }
+
+            &.no{
+                background-color: $red-fill;
+                border-color: $red-border;
+            }
+        }
+    }
 }

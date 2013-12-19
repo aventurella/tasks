@@ -49,6 +49,72 @@ input[type="color"] {
   line-height: 20px;
   border: 0; }
 
+.radio {
+  position: relative;
+  display: inline-block;
+  padding: 4px;
+  cursor: pointer;
+  height: 100%; }
+
+.radio input {
+  position: relative;
+  float: left;
+  margin: 0;
+  line-height: normal;
+  width: 30px;
+  height: 25px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  -webkit-appearance: none; }
+  .radio input:before {
+    /* what the checkbox looks like when its not checked */
+    display: table;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #145dd7;
+    border-radius: 20px;
+    background: transparent;
+    content: ' '; }
+
+.item-radio {
+  padding-left: 40px;
+  position: relative;
+  font-size: 14px;
+  line-height: 34px; }
+  .item-radio .radio {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1; }
+
+/* the checkmark within the box */
+.radio input:after {
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  position: absolute;
+  top: 26%;
+  left: 33%;
+  display: table;
+  width: 10px;
+  height: 4px;
+  border: 3px solid #fff;
+  border-top: 0;
+  border-right: 0;
+  content: ' ';
+  opacity: 0; }
+
+/* what the background looks like when its checked */
+.radio input:checked:before {
+  background: #4a87ee; }
+
+/* what the checkmark looks like when its checked */
+.radio input:checked:after {
+  opacity: 1; }
+
 html {
   height: 100%; }
 
@@ -470,5 +536,87 @@ body {
         background-color: #ef4e3a;
         border-color: #cc2511; }
 
-#modal .view .task {
-  background: red; }
+#modal .view .task textarea {
+  height: 65px;
+  width: 100%;
+  color: #808080; }
+#modal .view .task h2 {
+  font-weight: 200;
+  margin-left: 7px; }
+#modal .view .task .choices {
+  *zoom: 1;
+  display: block;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 16px; }
+  #modal .view .task .choices:before, #modal .view .task .choices:after {
+    content: " ";
+    display: table; }
+  #modal .view .task .choices:after {
+    clear: both; }
+  #modal .view .task .choices .choice label {
+    *zoom: 1;
+    display: block; }
+    #modal .view .task .choices .choice label:before, #modal .view .task .choices .choice label:after {
+      content: " ";
+      display: table; }
+    #modal .view .task .choices .choice label:after {
+      clear: both; }
+  #modal .view .task .choices .item-radio {
+    float: left;
+    margin-right: 15px; }
+  #modal .view .task .choices .type {
+    float: left;
+    display: block;
+    margin-right: 2.35765%;
+    width: 23.23176%;
+    border-right: 1px dotted #ddd; }
+    #modal .view .task .choices .type:last-child {
+      margin-right: 0; }
+  #modal .view .task .choices .loe {
+    float: left;
+    display: block;
+    margin-right: 2.35765%;
+    width: 48.82117%; }
+    #modal .view .task .choices .loe:last-child {
+      margin-right: 0; }
+    #modal .view .task .choices .loe .green.radio input:before {
+      border-color: #478f24; }
+    #modal .view .task .choices .loe .green.radio input:checked:before {
+      background: #66cc33; }
+    #modal .view .task .choices .loe .yellow.radio input:before {
+      border-color: #d39511; }
+    #modal .view .task .choices .loe .yellow.radio input:checked:before {
+      background: #f0b840; }
+    #modal .view .task .choices .loe .red.radio input:before {
+      border-color: #cc2511; }
+    #modal .view .task .choices .loe .red.radio input:checked:before {
+      background: #ef4e3a; }
+#modal .view .task .action {
+  *zoom: 1;
+  display: block;
+  position: absolute;
+  top: 255px;
+  right: 20px;
+  white-space: nowrap;
+  background: white; }
+  #modal .view .task .action:before, #modal .view .task .action:after {
+    content: " ";
+    display: table; }
+  #modal .view .task .action:after {
+    clear: both; }
+  #modal .view .task .action .btn {
+    border-radius: 20px;
+    width: 30px;
+    height: 25px;
+    text-align: center;
+    line-height: 22px;
+    display: inline-block;
+    color: white;
+    cursor: pointer;
+    border: 1px solid; }
+    #modal .view .task .action .btn.yes {
+      background-color: #66cc33;
+      border-color: #478f24; }
+    #modal .view .task .action .btn.no {
+      background-color: #ef4e3a;
+      border-color: #cc2511; }
