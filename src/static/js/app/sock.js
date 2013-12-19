@@ -62,9 +62,16 @@ var SockController = marionette.Controller.extend({
    ventDispatchMessage: function(e){
        var data = JSON.parse(e.data);
        // if(data.token == token)return;
-       var event = 'model:update:'+ data.type + ':' + data.id;
-       console.log(event);
+       var event;
+
+       if(data.action === 'create' && data.type === 'task'){
+            event =  'model:'+data.action+':'+ data.type +':'+data.status+ ':' + data.id;
+       }else if(data.action == 'update'){
+            event = 'model:'+data.action+':'+ data.type + ':' + data.id;
+       }
        vent.trigger(event, data);
+       console.log(event);
+
    },
 
    setActiveProjectId: function(id){
