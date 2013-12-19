@@ -532,7 +532,8 @@ body {
       line-height: 22px;
       display: inline-block;
       color: #fff;
-      cursor: pointer; }
+      cursor: pointer;
+      border: 1px solid; }
       #modal-new-project .action .btn.yes {
         background-color: #66cc33;
         border-color: #478f24; }
