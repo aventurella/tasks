@@ -2,7 +2,7 @@ define(function(require, exports, module) {
 
 var backbone = require('backbone');
 var url = require('app/shared/model-utils').url;
-var vent = require('app/vent').vent;
+
 
 var status = {
     BACKLOG: 0,
@@ -28,13 +28,7 @@ var task_type = {
 var Task = backbone.Model.extend({
     urlRoot: 'http://localhost:8000/api/v1/task/',
     initialize: function(){
-        if(this.get('id')){
-            this.listenToVent()
-        }else{
-            this.once('update sync', function(){
-                this.listenToVent()
-            })
-        }
+
     },
 
     listenToVent: function(){
@@ -48,9 +42,9 @@ var Task = backbone.Model.extend({
             if(self.get(key)){
                 self.set(key, value);
             }
-        })
+        });
         // socket returns back
-        this.set('project', "/api/v1/project/"+obj.project+"/")
+        this.set('project', "/api/v1/project/"+obj.project+"/");
     },
 
     defaults: {

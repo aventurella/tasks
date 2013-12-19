@@ -37,7 +37,7 @@ var SockController = marionette.Controller.extend({
                 token:token
             }
         };
-
+        this.token = token;
         this.sock.send(JSON.stringify(connectionData));
         return this._login.promise();
    },
@@ -61,17 +61,25 @@ var SockController = marionette.Controller.extend({
 
    ventDispatchMessage: function(e){
        var data = JSON.parse(e.data);
-       // if(data.token == token)return;
-       var event;
 
-       if(data.action === 'create' && data.type === 'task'){
-            event =  'model:'+data.action+':'+ data.type +':'+data.status+ ':' + data.id;
-       }else if(data.action == 'update'){
-            event = 'model:'+data.action+':'+ data.type + ':' + data.id;
+       switch(data.action){
+            case 'update':
+                this.updateTask(data);
+                break;
+            case 'create':
+                // if(data.token == this.token)return;
+                this.createTask(data);
        }
-       vent.trigger(event, data);
-       console.log(event);
 
+   },
+
+   updateTask: function(data){
+       var model = this.tasks.get(data.id);
+       model.doUpdateModel(data);
+   },
+
+   createTask: function(data){
+       this.tasks.add(data);
    },
 
    setActiveProjectId: function(id){
@@ -82,6 +90,10 @@ var SockController = marionette.Controller.extend({
             }
         };
        this.sock.send(JSON.stringify(connectionData));
+   },
+
+   setTasksCollection: function(tasks){
+       this.tasks = tasks;
    },
 
    onclose: function(){

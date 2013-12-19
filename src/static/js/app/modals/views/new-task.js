@@ -62,9 +62,11 @@ var TaskFormView = marionette.ItemView.extend({
     },
 
     wantsCreate: function(){
-        this.model.save();
-        this._data = {ok: true, model: this.model};
-        this.trigger(events.COMPLETE);
+        var self = this;
+        this.model.save().then(function(){
+            self._data = {ok: true, model: self.model};
+            self.trigger(events.COMPLETE);
+        });
     },
 
     wantsCancel: function(){

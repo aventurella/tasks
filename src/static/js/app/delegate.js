@@ -148,6 +148,7 @@ var ApplicationDelegate = marionette.Controller.extend({
     showProject: function(project){
         var projectView = new ProjectDetailView({model: project});
         this.socketController.setActiveProjectId(project.get('id'));
+        this.socketController.setTasksCollection(projectView.tasks);
         if (this.currentProjectView){
             this.stopListening(this.currentProjectView, projectEvents.TOGGLE_SIDEBAR, this.wantsToggleSidebar);
         }

@@ -31,7 +31,7 @@ var BacklogView = marionette.ItemView.extend({
             'getTasks',
             'filterTasks',
             'addToBacklogModalComplete');
-
+        this.tasks = options.tasks;
         this.options = options;
     },
 
@@ -46,6 +46,12 @@ var BacklogView = marionette.ItemView.extend({
     setTasks: function(collection){
         this._tasks = collection;
         this.listenTo(collection, 'change:status', this.taskStatusDidChange);
+        this.listenTo(collection, 'add', this.onTaskAdded);
+    },
+
+    onTaskAdded: function(){
+        var filtered = this.filterTasks(this._tasks);
+        this.backlog.collection.reset(filtered.toArray());
     },
 
     getTasks: function(){
