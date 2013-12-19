@@ -41,6 +41,10 @@
             position: absolute;
             width: 315px;
             box-shadow: rgba(0,0,0,0.1) 0px 4px 9px -3px;
+            background-color: #fff;
+            max-height: 120px;
+            overflow-y: scroll;
+            overflow-x: hidden;
 
             .project{
                 border-bottom: 1px dotted #ddd;
