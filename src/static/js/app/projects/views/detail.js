@@ -6,6 +6,7 @@ var InProcessView = require('./in-process').InProcessView;
 var BacklogView = require('./backlog').BacklogView;
 var ArchivedView = require('./archived').ArchivedView;
 var events = require('../events');
+var cssFocus = require('built/ui/controls/x-css-focus-single');
 var template = require('hbs!app/projects/templates/detail');
 
 var ProjectDetailView = marionette.Layout.extend({
@@ -13,7 +14,10 @@ var ProjectDetailView = marionette.Layout.extend({
 
     ui:{
         projectName: '.project-name label',
-        toggleButton: '.project-name .pane-action'
+        toggleButton: '.project-name .pane-action',
+        btnBacklog: '.tabbar .backlog',
+        btnInProcess: '.tabbar .in-process',
+        btnArchived: '.tabbar .archived'
     },
 
     events: {
@@ -21,7 +25,6 @@ var ProjectDetailView = marionette.Layout.extend({
         'click .tabbar .backlog': 'wantsShowBacklog',
         'click .tabbar .in-process': 'wantsShowInProcess',
         'click .tabbar .archived': 'wantsShowArchived',
-
     },
 
     regions: {
@@ -53,18 +56,21 @@ var ProjectDetailView = marionette.Layout.extend({
     },
 
     showBacklog: function(){
+        this.focusManager.focus(this.ui.btnBacklog);
         this.section.show(new BacklogView({
             model: this.model,
             tasks: this.tasks}));
     },
 
     showInProcess: function(){
+        this.focusManager.focus(this.ui.btnInProcess);
         this.section.show(new InProcessView({
             model: this.model,
             tasks: this.tasks}));
     },
 
     showArchived: function(){
+        this.focusManager.focus(this.ui.btnArchived);
         this.section.show(new ArchivedView({
             model: this.model,
             tasks: this.tasks}));
@@ -83,7 +89,12 @@ var ProjectDetailView = marionette.Layout.extend({
         return deferred.promise();
     },
 
-    onRender: function(){
+    onShow: function(){
+        this.focusManager = cssFocus.focusManagerWithElements([
+            this.ui.btnBacklog,
+            this.ui.btnInProcess,
+            this.ui.btnArchived], {focusClass: 'active'});
+
         this.tasks = this.loadTasks();
         this.showInProcess();
     }
