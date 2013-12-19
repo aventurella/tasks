@@ -129,26 +129,18 @@ var ApplicationDelegate = marionette.Controller.extend({
     verifyToken: function(token, deferred){
         var self = this;
 
-        var success = function(token){
+        var success = function(){
             var currentSettings = getSettings();
             currentSettings.setToken(token);
 
             // end of the line
-            deferred.resolve();
+            deferred.resolve(token);
         };
 
         var fail = function(){
-
             var currentSettings = getSettings();
             currentSettings.setToken('');
-            deferred.then(self.beginApplication);
             self.promptForCredentials(deferred);
-            // what are we doing here?
-            // this means they successfully logged in
-            // but their token was invalid.
-            // probably want a message:
-            //
-            // "Something really bad happened, please contact someone."
         };
 
         this.socketController = new SockController();

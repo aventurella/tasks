@@ -52,9 +52,9 @@ var SockController = marionette.Controller.extend({
             return;
         }
 
-        getSettings().setUser(data);
+        getSettings().setUser(data.data);
         this.trigger('login:success');
-        this._login.resolve();
+        this._login.resolve(data.data);
 
         this.sock.onmessage = this.ventDispatchMessage;
    },
