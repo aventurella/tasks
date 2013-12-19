@@ -40,6 +40,7 @@ var SidebarView = marionette.ItemView.extend({
 
     wantsRemoveProject: function(){
         this.removeCurrentProject();
+
     },
 
     wantsSelectProject: function(sender, projectView){
@@ -65,7 +66,6 @@ var SidebarView = marionette.ItemView.extend({
 
     removeCurrentProject: function(){
         var activeProject = this.projectListView.activeProject;
-
         if(activeProject){
             activeProject.model.destroy();
             this.projectListView.activeProject = null;
@@ -76,6 +76,7 @@ var SidebarView = marionette.ItemView.extend({
 
             this.currentDetail = null;
         }
+        this.projectListView.trigger('itemview:select', this.projectListView.children.first());
     },
 
     addNewProject: function(){

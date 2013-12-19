@@ -29,8 +29,7 @@ var InputSelectComposite =  marionette.CompositeView.extend({
 
         this.inputSelect = new InputSelect(options);
 
-        this.listenTo(this.collection,'sync', this.onCollectionSync);
-        this.listenTo(this.collection,'change', this.onCollectionSync);
+        this.listenTo(this.collection,'all', this.onCollectionSync);
         this.listenTo(this.inputSelect, data.DATA, this.onData);
         this.listenTo(this.inputSelect, events.CANCEL, this.onCancel);
         this.listenTo(this.inputSelect, events.SELECT, this.onSelect);

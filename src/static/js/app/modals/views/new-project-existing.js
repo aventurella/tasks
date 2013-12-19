@@ -22,7 +22,11 @@ var NewProjectExistingView = InputSelectScrollableComposite.extend({
     },
 
     ui: {
-        input : 'input'
+        input : 'input',
+        headingText : '.heading div',
+        results: '.results',
+        action: '.action',
+        inputField: '.input-field'
     },
 
     initialize: function(options){
@@ -31,8 +35,18 @@ var NewProjectExistingView = InputSelectScrollableComposite.extend({
         this.collection = new Projects();
 
         this.collection.fetch({data:{all:1}}).then(function(){
+            if(self.collection.length === 0 ){
+                self.doShowForNone()
+            }
             self.projects = self.collection.toArray();
         });
+    },
+
+    doShowForNone: function(){
+        this.ui.headingText.text('You Are a part of all projects! Congrats! \n (Go tell auby to make one!!!)');
+        this.ui.results.hide();
+        this.ui.action.hide();
+        this.ui.inputField.hide();
     },
 
     wantsComplete: function(){
@@ -78,8 +92,8 @@ var NewProjectExistingView = InputSelectScrollableComposite.extend({
     },
 
     collectionViewDidSelect: function(view){
+        this._data = {ok: true, model: view.model.toJSON()};
         view.model.save('user', 'add')
-        this._data = {ok: true, model: view.model};
         this.trigger(events.COMPLETE, this.getData());
     },
 
