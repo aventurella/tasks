@@ -290,10 +290,10 @@ body {
       margin-right: 10px;
       cursor: pointer;
       position: absolute;
-      top: 8px;
-      width: 30px;
-      height: 25px;
-      border-radius: 20px;
+      top: 14px;
+      width: 21px;
+      height: 16px;
+      border-radius: 7px;
       border: 1px solid #145dd7; }
       #project-detail .project-name .pane-action .arrow {
         -webkit-transform: rotate(45deg);
@@ -302,17 +302,17 @@ body {
         -o-transform: rotate(45deg);
         transform: rotate(45deg);
         position: absolute;
-        top: 7px;
+        top: 4px;
         left: 37%;
         display: table;
-        border: 3px solid #145dd7;
+        border: 2px solid #145dd7;
         border-top: 0;
         border-right: 0;
         content: ' ';
-        padding: 3px; }
+        padding: 2px; }
     #project-detail .project-name label {
       font-size: 18px;
-      padding-left: 35px; }
+      padding-left: 25px; }
   #project-detail .tabbar {
     *zoom: 1;
     display: block;
