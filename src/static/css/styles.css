@@ -641,3 +641,8 @@ body {
   font-size: 14px;
   text-align: center;
   cursor: pointer; }
+
+#modal .view .session {
+  padding: 10px; }
+  #modal .view .session h2 {
+    font-weight: 200; }

@@ -23,7 +23,7 @@ var SockController = require('app/sock').SockController;
 var ApplicationDelegate = marionette.Controller.extend({
 
     initialize: function(options){
-        _.bindAll(this,'beginApplication')
+        _.bindAll(this,'beginApplication');
         this.app = options.app;
 
         this.listenTo(vent, modalEvents.PRESENT, this.presentModal);
@@ -35,7 +35,7 @@ var ApplicationDelegate = marionette.Controller.extend({
         var deferred = $.Deferred();
         deferred.then(this.beginApplication);
 
-        if (token){
+        if (!token){
             this.promptForCredentials(deferred);
             return;
         }
