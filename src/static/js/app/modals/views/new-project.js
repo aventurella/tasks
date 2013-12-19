@@ -5,7 +5,7 @@ var NewProjectCreateView = require('./new-project-create').NewProjectCreateView;
 var NewProjectExistingView = require('./new-project-existing').NewProjectExistingView;
 var modalEvents = require('../events');
 var template = require('hbs!../templates/new-project');
-
+var KeyResponder = require('built/core/responders/keys').KeyResponder;
 
 var NewProjectView = marionette.Layout.extend({
     template: template,
@@ -16,6 +16,7 @@ var NewProjectView = marionette.Layout.extend({
   },
 
   onRender: function(){
+    _.bindAll(this, 'wantsCancelWithKeys')
     this.createView = new NewProjectCreateView();
     this.existingView = new NewProjectExistingView();
 
@@ -24,6 +25,18 @@ var NewProjectView = marionette.Layout.extend({
 
     this.listenTo(this.createView, modalEvents.COMPLETE, this.wantsComplete);
     this.listenTo( this.existingView, modalEvents.COMPLETE, this.wantsComplete);
+    this.keyResponder = new KeyResponder({
+            el: $(window),
+            cancelOperation: this.wantsCancelWithKeys
+        });
+  },
+
+  onClose: function(){
+      this.keyResponder.close();
+  },
+
+  wantsCancelWithKeys: function(){
+      this.trigger(modalEvents.COMPLETE);
   },
 
   wantsComplete: function(obj){
