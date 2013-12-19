@@ -77,15 +77,16 @@
             display: inline-block;
             color: #fff;
             cursor: pointer;
+            border: 1px solid;
 
             &.yes{
-                background-color: #66cc33;
-                border-color: #478f24;
+                background-color: $green-fill;
+                border-color: $green-border;
             }
 
             &.no{
-                background-color: #ef4e3a;
-                border-color: #cc2511;
+                background-color: $red-fill;
+                border-color: $red-border;
             }
         }
     }
