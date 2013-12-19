@@ -22,6 +22,8 @@ var SockController = require('app/sock').SockController;
 var TaskFormView = require('app/modals/views/new-task').TaskFormView;
 var status = require('app/projects/models/task').status;
 
+var XController = require('./x-controller').XController;
+
 
 
 
@@ -127,6 +129,11 @@ var ApplicationDelegate = marionette.Controller.extend({
             request.setRequestHeader('Authorization', 'Bearer ' + token);
         });
 
+        this.xController = new XController({
+            sockets: this.socketController,
+            region: this.app.projectDetail
+        });
+
         var currentSettings = getSettings();
         this.sidebarView = new SidebarView({settings:currentSettings});
 
@@ -134,6 +141,7 @@ var ApplicationDelegate = marionette.Controller.extend({
         this.listenTo(this.sidebarView, sidebarEvents.SELECT_PROJECT, this.wantsChangeProject);
         this.listenTo(this.sidebarView, sidebarEvents.DESELECT_PROJECT, this.wantsClearProject);
         this.app.sidebar.show(this.sidebarView);
+
         this.initializeHotKeys();
     },
 
@@ -146,7 +154,11 @@ var ApplicationDelegate = marionette.Controller.extend({
     },
 
     showProject: function(project){
-        var projectView = new ProjectDetailView({model: project});
+
+        var projectView = new ProjectDetailView({
+            model: project,
+            tasks: this.xController.tasks});
+
         this.socketController.setActiveProjectId(project.get('id'));
         if (this.currentProjectView){
             this.stopListening(this.currentProjectView, projectEvents.TOGGLE_SIDEBAR, this.wantsToggleSidebar);

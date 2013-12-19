@@ -34,6 +34,10 @@ var ProjectDetailView = marionette.Layout.extend({
         '.project-name label': 'label'
     },
 
+    initialize: function(options){
+        this.tasks = options.tasks;
+    },
+
     wantsToggleSidebar: function(){
         this.trigger(events.TOGGLE_SIDEBAR, this);
     },
@@ -74,13 +78,13 @@ var ProjectDetailView = marionette.Layout.extend({
 
     loadTasks: function(){
         var deferred = $.Deferred();
+        var tasks = this.tasks;
 
-        tasks = new Tasks();
-        tasks.fetch({data: {project__id: this.model.get('id')}});
-
-        tasks.once('sync', function(){
-            deferred.resolve(tasks);
-        });
+        this.tasks
+            .fetch({data: {project__id: this.model.get('id')}})
+            .then(function(){
+                deferred.resolve(tasks);
+            });
 
         return deferred.promise();
     },

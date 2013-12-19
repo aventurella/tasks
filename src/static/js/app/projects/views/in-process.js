@@ -39,7 +39,6 @@ var InProcessView = marionette.ItemView.extend({
         _.bindAll(this, 'showSwimlanes', 'modelDidChange');
         this.options = options;
         this.swimlanes = {};
-        console.log(vent)
     },
 
     onShow: function(){
