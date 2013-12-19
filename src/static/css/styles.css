@@ -272,13 +272,6 @@ body {
       -webkit-flex-grow: 0;
       flex-grow: 0; }
 
-#sidebar.hide #project-detail .project-name .pane-action {
-  -webkit-transform: rotate(-135deg);
-  -moz-transform: rotate(-135deg);
-  -ms-transform: rotate(-135deg);
-  -o-transform: rotate(-135deg);
-  transform: rotate(-135deg); }
-
 #project-detail {
   height: 100%;
   padding-left: 10px;
@@ -290,18 +283,18 @@ body {
   #project-detail .project-name {
     margin-bottom: 15px;
     border-bottom: 1px dotted #c0c0c0;
-    padding-top: 8px;
-    padding-bottom: 18px; }
+    padding-top: 10px;
+    padding-bottom: 18px;
+    position: relative; }
     #project-detail .project-name .pane-action {
-      float: left;
       margin-right: 10px;
       cursor: pointer;
-      position: relative;
-      width: 30px;
-      height: 25px;
-      border-radius: 20px;
-      border: 1px solid #145dd7;
-      background: #4a87ee; }
+      position: absolute;
+      top: 14px;
+      width: 21px;
+      height: 16px;
+      border-radius: 7px;
+      border: 1px solid #145dd7; }
       #project-detail .project-name .pane-action .arrow {
         -webkit-transform: rotate(45deg);
         -moz-transform: rotate(45deg);
@@ -309,17 +302,17 @@ body {
         -o-transform: rotate(45deg);
         transform: rotate(45deg);
         position: absolute;
-        top: 7px;
+        top: 4px;
         left: 37%;
         display: table;
-        border: 3px solid #fff;
+        border: 2px solid #145dd7;
         border-top: 0;
         border-right: 0;
         content: ' ';
-        padding: 3px; }
+        padding: 2px; }
     #project-detail .project-name label {
-      font-size: 16px;
-      padding-left: 20px; }
+      font-size: 18px;
+      padding-left: 25px; }
   #project-detail .tabbar {
     *zoom: 1;
     display: block;
@@ -350,6 +343,17 @@ body {
         display: inline-block; }
         #project-detail .tabbar .buttons .btn.active {
           background-color: rgba(255, 255, 255, 0.8); }
+
+#sidebar.hide + #project-detail .project-name .pane-action {
+  background: #4a87ee; }
+  #sidebar.hide + #project-detail .project-name .pane-action .arrow {
+    -webkit-transform: rotate(-135deg);
+    -moz-transform: rotate(-135deg);
+    -ms-transform: rotate(-135deg);
+    -o-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+    border-color: white;
+    left: 30%; }
 
 #project-detail .task-placeholder {
   height: 25px;

@@ -1,6 +1,4 @@
-#sidebar.hide #project-detail .project-name .pane-action{
-    @include transform(rotate(-135deg));
-}
+
 
 #project-detail {
     height: 100%;
@@ -14,38 +12,37 @@
     .project-name{
         margin-bottom: 15px;
         border-bottom: 1px dotted #c0c0c0;
-        padding-top: 8px;
+        padding-top: 10px;
         padding-bottom: 18px;
+        position: relative;
 
         .pane-action{
-            float: left;
             margin-right: 10px;
             cursor: pointer;
-            position: relative;
-            width: 30px;
-            height: 25px;
-            border-radius: 20px;
+            position: absolute;
+            top: 14px;
+            width: 21px;
+            height: 16px;
+            border-radius: 7px;
             border: 1px solid $blue-border;
-            background: $blue-fill;
-
 
             .arrow{
                 @include transform(rotate(45deg));
                 position: absolute;
-                top: 7px;
+                top: 4px;
                 left: 37%;
                 display: table;
-                border: 3px solid #fff;
+                border: 2px solid $blue-border;
                 border-top: 0;
                 border-right: 0;
                 content: ' ';
-                padding: 3px;
+                padding: 2px;
             }
         }
 
         label{
-            font-size: 16px;
-            padding-left: 20px;
+            font-size: 18px;
+            padding-left: 25px;
         }
     }
 
@@ -80,5 +77,15 @@
                 }
             }
         }
+    }
+}
+
+#sidebar.hide+#project-detail .project-name .pane-action{
+    background: $blue-fill;
+
+    .arrow{
+        @include transform(rotate(-135deg));
+        border-color: $white-fill;
+        left: 30%;
     }
 }
