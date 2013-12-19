@@ -84,6 +84,7 @@ var ApplicationDelegate = marionette.Controller.extend({
         this.socketController.setActiveProjectId(null);
         this.currentProjectView = null;
         this.app.projectDetail.reset();
+        this.sidebarView.showProjectsPane(true);
     },
 
     wantsToggleSidebar: function(){
