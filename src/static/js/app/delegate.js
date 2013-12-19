@@ -4,8 +4,9 @@ var $ = require('jquery');
 var _ = require('underscore');
 var stickit = require('backbone/stickit');
 var marionette = require('marionette');
-var vent = require('app/vent').vent;
+var KeyResponder = require('built/core/responders/keys').KeyResponder;
 
+var vent = require('app/vent').vent;
 var modalEvents = require('app/modals/events');
 var sidebarEvents = require('app/sidebar/events');
 var projectEvents = require('app/projects/events');
@@ -18,12 +19,19 @@ var AccountFormView = require('app/modals/views/account').AccountFormView;
 var ProjectDetailView = require('app/projects/views/detail').ProjectDetailView;
 var SessionInitializationView = require('app/modals/views/session').SessionInitializationView;
 var SockController = require('app/sock').SockController;
+var TaskFormView = require('app/modals/views/new-task').TaskFormView;
+var status = require('app/projects/models/task').status;
+
+
 
 
 var ApplicationDelegate = marionette.Controller.extend({
 
     initialize: function(options){
-        _.bindAll(this,'beginApplication');
+        _.bindAll(this,
+            'beginApplication',
+            'wantsHotKeyCreateTask');
+
         this.app = options.app;
 
         this.listenTo(vent, modalEvents.PRESENT, this.presentModal);
@@ -44,6 +52,75 @@ var ApplicationDelegate = marionette.Controller.extend({
 
     },
 
+    initializeHotKeys: function(){
+        var hotkeys = {
+            'n': this.wantsHotKeyCreateTask
+        };
+
+        var getKeyFromEvent = function(e){
+            var key = String.fromCharCode(e.which);
+            if(!e.shiftKey) key = key.toLowerCase();
+
+            return key;
+        };
+
+        var processKeys = function(sender, e){
+            var key = getKeyFromEvent(e);
+            var action = hotkeys[key];
+
+            // dunno if document.body holds for all browsers
+            // it does for chrome and safari and firefox
+            if(action && e.target == document.body) {
+                // being over zelaous here.
+                // Another alternative is to let the action
+                // decide if it should kill the propagation
+                // and prevent default. AKA the action
+                // could return true or false and we
+                // would make these 2 calls accordingly.
+                // for now we kill everything.
+
+                e.preventDefault();
+                e.stopImmediatePropagation();
+
+                action();
+            }
+        };
+
+        this.keyResponder = new KeyResponder({
+            el: $(window),
+            insertText: processKeys,
+            acceptKeyEquivalent: true
+        });
+    },
+
+    wantsHotKeyCreateTask: function(){
+
+        var currentView = this.app.projectDetail.currentView;
+
+        // The user does not have a project selected;
+        if(!currentView) return;
+        if(this.app.modal.currentView) return;
+
+        var tag = currentView.section.currentView.tag;
+        var model = currentView.model;
+
+        var map = {
+            'backlog': status.BACKLOG,
+            'in-process': status.TODO,
+            'archived': status.BACKLOG
+        };
+
+        var finalize = _.bind(function(view){
+            console.log(view.getData());
+            modals.dismissModal();
+        }, this);
+
+        modals.presentModal(new TaskFormView({
+            project: model,
+            status: map[tag]
+        })).then(finalize);
+    },
+
     beginApplication: function(token){
 
         $(document).ajaxSend(function(e, request){
@@ -57,7 +134,7 @@ var ApplicationDelegate = marionette.Controller.extend({
         this.listenTo(this.sidebarView, sidebarEvents.SELECT_PROJECT, this.wantsChangeProject);
         this.listenTo(this.sidebarView, sidebarEvents.DESELECT_PROJECT, this.wantsClearProject);
         this.app.sidebar.show(this.sidebarView);
-
+        this.initializeHotKeys();
     },
 
     wantsChangeProject: function(project){

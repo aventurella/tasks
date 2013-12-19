@@ -9,6 +9,9 @@ var template = require('hbs!app/projects/templates/archived');
 var ArchivedView = marionette.ItemView.extend({
     template: template,
 
+    // tag representing this view
+    tag: 'archived',
+
     ui: {
         list: 'ul'
     },

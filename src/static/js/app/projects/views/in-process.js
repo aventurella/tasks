@@ -18,6 +18,10 @@ var template = require('hbs!app/projects/templates/in-process');
 
 var InProcessView = marionette.ItemView.extend({
     template: template,
+
+    // tag representing this view
+    tag: 'in-process',
+
     className: 'details',
 
     ui:{

@@ -6,8 +6,9 @@ var marionette = require('marionette');
 var backbone = require('backbone');
 var events = require('../events');
 var KeyResponder = require('built/core/responders/keys').KeyResponder;
-var template = require('hbs!../templates/new-task');
 var Task = require('app/projects/models/task').Task;
+var status = require('app/projects/models/task').status;
+var template = require('hbs!../templates/new-task');
 
 var TaskFormView = marionette.ItemView.extend({
     template: template,
@@ -31,7 +32,16 @@ var TaskFormView = marionette.ItemView.extend({
 
     initialize: function(options){
         this._data = {ok: false};
-        this.model = new Task({project:options.project.get('resource_uri')});
+        var model = options.model || new Task();
+
+        model.set('project', options.project.get('resource_uri'));
+
+        // status.BACKLOG === 0
+        // so if this evals to false we win no matter what
+        // as it was supposed to be backlog ANYWAY.
+        model.set('status', options.status || status.BACKLOG);
+
+        this.model = model;
     },
 
     onRender: function(){
