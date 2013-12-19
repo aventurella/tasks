@@ -43,7 +43,7 @@ var NewProjectExistingView = InputSelectScrollableComposite.extend({
     },
 
     doShowForNone: function(){
-        this.ui.headingText.text('You Are a part of all projects! Congrats! \n (Go tell auby to make one!!!)');
+        this.ui.headingText.html('You Are a part of all projects! Congrats! <br> (Go tell auby to make one!!!)');
         this.ui.results.hide();
         this.ui.action.hide();
         this.ui.inputField.hide();
