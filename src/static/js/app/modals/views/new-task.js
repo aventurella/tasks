@@ -13,8 +13,8 @@ var TaskFormView = marionette.ItemView.extend({
     template: template,
 
     events: {
-        'click .actions .btn.create': 'wantsCreate',
-        'click .actions .btn.cancel': 'wantsCancel'
+        'click .action .btn.create': 'wantsCreate',
+        'click .action .btn.cancel': 'wantsCancel'
     },
 
     ui: {
