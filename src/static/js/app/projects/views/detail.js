@@ -30,8 +30,8 @@ var ProjectDetailView = marionette.Layout.extend({
         section: '#section'
     },
 
-    initialize: function(){
-
+    bindings: {
+        'label': 'label'
     },
 
     wantsToggleSidebar: function(){
@@ -93,6 +93,7 @@ var ProjectDetailView = marionette.Layout.extend({
 
         this.tasks = this.loadTasks();
         this.showInProcess();
+        this.stickit();
     }
 
 
