@@ -16,8 +16,11 @@ var TasksProtocol = marionette.Controller.extend({
                 this.updateTask(data);
                 break;
             case 'create':
-                // if(data.token == this.token)return;
                 this.createTask(data);
+                break;
+            case 'delete':
+            this.deleteTask(data);
+                break;
        }
     },
 
@@ -28,6 +31,11 @@ var TasksProtocol = marionette.Controller.extend({
 
     createTask: function(data){
        this.tasks.add(data);
+    },
+
+    deleteTask: function(data){
+        var model = this.tasks.get(data.id);
+        this.tasks.remove(model);
     },
 
 
