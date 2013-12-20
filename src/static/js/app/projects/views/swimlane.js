@@ -14,6 +14,14 @@ var Swimlane = DragAndDropCollectionView.extend({
     initialize: function(options){
         this.masterList = options.masterList;
         DragAndDropCollectionView.prototype.initialize.apply(this, arguments);
+        this.listenTo(this.masterList, 'add', this.onTaskAdded);
+    },
+
+    onTaskAdded: function(model){
+        if(model.get('status') == this.options.status){
+            this.collection.add(model);
+        }
+
     },
 
     getDragImage: function(){

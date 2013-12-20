@@ -115,10 +115,13 @@ var InProcessView = marionette.ItemView.extend({
     },
 
     taskStatusDidChange: function(model){
+
         var target = this.swimlanes[model.previous('status')];
         var destination = this.swimlanes[model.get('status')];
 
-        target.collection.remove(model);
+        if(target){
+            target.collection.remove(model);
+        }
 
         if(destination){
             destination.collection.add(model);

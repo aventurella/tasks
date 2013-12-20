@@ -37,14 +37,14 @@ var Task = backbone.Model.extend({
     },
 
     doUpdateModel: function(obj){
-        var self = this;
-        _.map(obj, function(value, key){
-            if(self.get(key)){
-                self.set(key, value);
-            }
-        });
-        // socket returns back
-        this.set('project', "/api/v1/project/"+obj.project+"/");
+        this.set('id', obj.id);
+        this.set('description', obj.description);
+        this.set('label', obj.label);
+        this.set('loe', obj.loe);
+        this.set('status', obj.status);
+        this.set('task_type', obj.task_type);
+        this.set('project', '/api/v1/project/'+obj.project+'/');
+
     },
 
     defaults: {

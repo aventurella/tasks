@@ -1,7 +1,7 @@
 define(function (require, exports, module) {
 
 var marionette = require('marionette');
-
+var Task = require('app/projects/models/task').Task;
 require('sockjs');
 
 var TasksProtocol = marionette.Controller.extend({
@@ -30,7 +30,9 @@ var TasksProtocol = marionette.Controller.extend({
     },
 
     createTask: function(data){
-       this.tasks.add(data);
+       var model = new Task();
+       model.doUpdateModel(data);
+       this.tasks.add(model);
     },
 
     deleteTask: function(data){
