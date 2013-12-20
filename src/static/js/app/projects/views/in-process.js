@@ -19,7 +19,6 @@ var InProcessView = marionette.ItemView.extend({
 
     // tag representing this view
     tag: 'in-process',
-
     className: 'details',
 
     ui:{
@@ -39,7 +38,6 @@ var InProcessView = marionette.ItemView.extend({
     },
 
     onClose: function(){
-
         _.each(this.swimlanes, function(value){
             value.close();
         });
