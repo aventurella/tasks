@@ -9,7 +9,7 @@ require('sockjs');
 var SockController = marionette.Controller.extend({
 
    initialize : function(options){
-        _.bindAll(this, 'onopen', 'onAuthComplete', 'onclose', 'ventDispatchMessage');
+        _.bindAll(this, 'onopen', 'onAuthComplete', 'onclose', 'handleMessage');
         this._connection = $.Deferred();
         this._login = $.Deferred();
 
@@ -59,31 +59,15 @@ var SockController = marionette.Controller.extend({
         this.trigger('login:success');
         this._login.resolve(data.data);
 
-        this.sock.onmessage = this.ventDispatchMessage;
+        this.sock.onmessage = this.handleMessage;
    },
 
-   ventDispatchMessage: function(e){
+   handleMessage: function(e){
        var data = JSON.parse(e.data);
-
-       switch(data.action){
-            case 'update':
-                this.updateTask(data);
-                break;
-            case 'create':
-                // if(data.token == this.token)return;
-                this.createTask(data);
-       }
-
+       this.taskProtocol.handleMessage(data);
    },
 
-   updateTask: function(data){
-       var model = this.tasks.get(data.id);
-       model.doUpdateModel(data);
-   },
 
-   createTask: function(data){
-       this.tasks.add(data);
-   },
 
    setActiveProjectId: function(id){
        var connectionData = {

@@ -12,7 +12,6 @@ var Tasks = require('../collections/tasks').Tasks;
 var CellTodoView = require('./cells/todo').CellTodoView;
 var CellInProgressView = require('./cells/in-progress').CellInProgressView;
 var CellCompletedView = require('./cells/completed').CellCompletedView;
-var vent = require('app/vent');
 
 var events = require('../events');
 var template = require('hbs!app/projects/templates/in-process');
@@ -39,7 +38,6 @@ var InProcessView = marionette.ItemView.extend({
         _.bindAll(this, 'showSwimlanes', 'modelDidChange');
         this.options = options;
         this.swimlanes = {};
-        console.log(vent)
     },
 
     onShow: function(){
