@@ -7,7 +7,7 @@ var events = require('../events');
 var Tasks = require('../collections/tasks').Tasks;
 var tasks = require('../models/task');
 var TaskFormView = require('app/modals/views/new-task').TaskFormView;
-var modals = require('app/modals/modals');
+var modals = require('built/app/modals');
 var template = require('hbs!app/projects/templates/backlog');
 
 var BacklogView = marionette.ItemView.extend({

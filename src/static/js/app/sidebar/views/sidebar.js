@@ -2,14 +2,13 @@ define(function(require, exports, module) {
 
 var marionette = require('marionette');
 var backbone = require('backbone');
+var keys = require('built/app/keys');
+var modals = require('built/app/modals');
 var FooterView = require('./footer').FooterView;
 var ProjectListView = require('./projects').ProjectListView;
 var Project = require('../models/project').Project;
-var modals = require('app/modals/modals');
-var modalEvents = require('app/modals/events');
 var NewProjectView = require('app/modals/views/new-project').NewProjectView;
 var events = require('../events');
-var hotkeys = require('app/hotkeys/hotkeys');
 var template = require('hbs!app/sidebar/templates/sidebar');
 
 // this is probably better as a layout.
@@ -68,7 +67,6 @@ var SidebarView = marionette.ItemView.extend({
             return;
         }
 
-
         this.$el.parent().addClass('hide');
     },
 
@@ -83,13 +81,12 @@ var SidebarView = marionette.ItemView.extend({
             }
             this.currentDetail = null;
         }
+
         if(this.projectListView.children.first()){
             this.projectListView.trigger('itemview:select', this.projectListView.children.first());
-        }else{
+        } else {
             this.trigger(events.DESELECT_PROJECT);
         }
-
-
     },
 
     addNewProject: function(){
@@ -138,7 +135,7 @@ var SidebarView = marionette.ItemView.extend({
         this.initializeFooter();
         this.initializeProjectList();
 
-        hotkeys.registerInResponderChain(this);
+        keys.registerInResponderChain(this);
 
         if(this.user.get('hideSidebar')){
             var $parent = this.$el.parent();

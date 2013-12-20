@@ -1,17 +1,17 @@
 define(function(require, exports, module) {
 
 var marionette = require('marionette');
+var keys = require('built/app/keys');
+var KeyResponder = require('built/core/responders/keys').KeyResponder;
+var IndexManager = require('built/core/managers/index').IndexManager;
+var cssFocus = require('built/ui/controls/x-css-focus-single');
 var Tasks = require('../collections/tasks').Tasks;
 var InProcessView = require('./in-process').InProcessView;
 var BacklogView = require('./backlog').BacklogView;
 var ArchivedView = require('./archived').ArchivedView;
 var events = require('../events');
-var cssFocus = require('built/ui/controls/x-css-focus-single');
 var template = require('hbs!app/projects/templates/detail');
 
-var hotkeys = require('app/hotkeys/hotkeys');
-var KeyResponder = require('built/core/responders/keys').KeyResponder;
-var IndexManager = require('built/core/managers/index').IndexManager;
 
 var ProjectDetailView = marionette.Layout.extend({
     template: template,
@@ -112,7 +112,7 @@ var ProjectDetailView = marionette.Layout.extend({
 
         this.stickit();
 
-        hotkeys.registerInResponderChain(this);
+        keys.registerInResponderChain(this);
 
         this.indexManager = new IndexManager({length: 3});
         this.showInProcess();

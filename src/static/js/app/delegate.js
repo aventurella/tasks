@@ -4,9 +4,12 @@ var $ = require('jquery');
 var _ = require('underscore');
 var stickit = require('backbone/stickit');
 var marionette = require('marionette');
-var KeyResponder = require('built/core/responders/keys').KeyResponder;
 
-var vent = require('app/vent').vent;
+var vent = require('built/app/vent').vent;
+var modals = require('built/app/modals');
+var activity = require('built/app/activity');
+var keys = require('built/app/keys');
+
 var modalEvents = require('app/modals/events');
 var sidebarEvents = require('app/sidebar/events');
 var projectEvents = require('app/projects/events');
@@ -14,7 +17,6 @@ var SidebarView = require('app/sidebar/views/sidebar').SidebarView;
 var getSettings = require('app/settings/defaults').getSettings;
 var session     = require('app/session/session');
 
-var modals = require('app/modals/modals');
 var AccountFormView = require('app/modals/views/account').AccountFormView;
 var ProjectDetailView = require('app/projects/views/detail').ProjectDetailView;
 var SessionInitializationView = require('app/modals/views/session').SessionInitializationView;
@@ -22,26 +24,30 @@ var SockController = require('app/sockets/sock').SockController;
 var HotkeyController = require('app/hotkeys/hotkeys').HotkeyController;
 var Tasks = require('app/projects/collections/tasks').Tasks;
 
+var hotkeys = require('app/hotkeys/hotkeys');
+
 
 var ApplicationDelegate = marionette.Controller.extend({
 
+    BUILT: function(){
+        this.keyEvents = new keys.KeyEventController();
+        keys.registerInResponderChain(this);
+
+        this.listenTo(vent, modals.events.PRESENT, this._presentModal);
+        this.listenTo(vent, modals.events.DISMISS, this._dismissModal);
+
+        // this.listenTo(vent, activity.events.PRESENT, this._presentNetworkActivity);
+        // this.listenTo(vent, activity.events.DISMISS, this._dismissNetworkActivity);
+    },
+
     initialize: function(options){
-        _.bindAll(this,
-            'beginApplication');
+        _.bindAll(this, 'beginApplication');
 
         this.app = options.app;
-
-        this.listenTo(vent, modalEvents.PRESENT, this.presentModal);
-        this.listenTo(vent, modalEvents.DISMISS, this.dismissModal);
+        this.BUILT();
 
         this.tasks = new Tasks();
         this.socketController = new SockController({tasks: this.tasks});
-
-        this.hotkeys = new HotkeyController({
-            tasks: this.tasks,
-            projectDetail: this.app.projectDetail,
-            modal: this.app.modal
-        });
 
         var currentSettings = getSettings();
         var token = currentSettings.getToken();
@@ -66,12 +72,10 @@ var ApplicationDelegate = marionette.Controller.extend({
         var currentSettings = getSettings();
         this.sidebarView = new SidebarView({settings:currentSettings});
 
-
         this.listenTo(this.sidebarView, sidebarEvents.SELECT_PROJECT, this.wantsChangeProject);
         this.listenTo(this.sidebarView, sidebarEvents.DESELECT_PROJECT, this.wantsClearProject);
 
         this.app.sidebar.show(this.sidebarView);
-        this.hotkeys.start();
     },
 
     wantsChangeProject: function(project){
@@ -178,11 +182,26 @@ var ApplicationDelegate = marionette.Controller.extend({
 
     },
 
-    presentModal: function(modalView){
+    keyDown: function(e){
+        var key = keys.getKeyFromEvent(e);
+
+        if(key == 'n' &&
+           this.app.projectDetail.currentView &&
+           !this.app.modal.currentView){
+
+            hotkeys.createTask(
+                this.tasks,
+                this.app.projectDetail.currentView);
+
+            return true;
+        }
+    },
+
+    _presentModal: function(modalView){
         this.app.modal.show(modalView);
     },
 
-    dismissModal: function(modalView){
+    _dismissModal: function(modalView){
         this.app.modal.close().then(function(){
             modals.nextModal();
         });
