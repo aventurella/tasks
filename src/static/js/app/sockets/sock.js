@@ -85,7 +85,11 @@ var SockController = marionette.Controller.extend({
        this.sock = null;
        // should set a timeout and then notify
        // them of a countdown? re:slack?
-       this.connect();
+       // this.connect();
+       var self = this;
+       setTimeout(function(){
+        self.connect();
+       }, 5000);
    },
 });
 
