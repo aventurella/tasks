@@ -49,9 +49,10 @@ var BacklogView = marionette.ItemView.extend({
         this.listenTo(collection, 'add', this.onTaskAdded);
     },
 
-    onTaskAdded: function(){
-        var filtered = this.filterTasks(this._tasks);
-        this.backlog.collection.reset(filtered.toArray());
+    onTaskAdded: function(model){
+        if( model.get('status') == tasks.status.BACKLOG ){
+            this.backlog.collection.add(model);
+        }
     },
 
     getTasks: function(){
