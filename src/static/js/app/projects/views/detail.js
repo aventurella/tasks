@@ -125,6 +125,15 @@ var ProjectDetailView = marionette.Layout.extend({
             'command + shift + right', this.wantsTabbarMoveRight);
     },
 
+    keyDown: function(e){
+        var key = String.fromCharCode(e.which);
+        if(!e.shiftKey) key = key.toLowerCase();
+
+        if(key == 's'){
+            this.wantsToggleSidebar();
+        }
+    },
+
     performKeyEquivalent: function(e){
         return this.keyResponder.performKeyEquivalent(e);
     },
