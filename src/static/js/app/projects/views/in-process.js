@@ -3,8 +3,6 @@ define(function(require, exports, module) {
 var _ = require('underscore');
 var marionette = require('marionette');
 var backbone = require('backbone');
-var modals = require('app/modals/modals');
-var modalEvents = require('app/modals/events');
 var status = require('../models/task').status;
 var Swimlane = require('./swimlane').Swimlane;
 var Task = require('../models/task').Task;
@@ -30,10 +28,6 @@ var InProcessView = marionette.ItemView.extend({
         completed: '.swimlanes .lane.completed',
     },
 
-    events: {
-        'click .swimlanes .lane.backlog .heading .action': 'wantsAddToBacklog',
-    },
-
     initialize: function(options){
         _.bindAll(this, 'showSwimlanes', 'modelDidChange');
         this.options = options;
@@ -51,28 +45,6 @@ var InProcessView = marionette.ItemView.extend({
         _.each(this.swimlanes, function(value){
             value.close();
         });
-    },
-
-    wantsAddToBacklog: function(){
-        var taskForm = new TaskFormView({project:this.model});
-        var modalView = modals.presentModal(taskForm);
-
-        if(modalView){
-            modalView.once(modalEvents.COMPLETE, this.taskModalComplete, this);
-        }
-    },
-
-    taskModalComplete: function(modalView){
-        var data = modalView.getData();
-        modals.dismissModal();
-
-        if (data.ok === false) return;
-        this.swimlaneTodo.collection.add(data.model);
-    },
-
-    addToBacklog: function(){
-        var task = new Task({label: 'New Task'});
-        this.swimlaneTodo.collection.add(task);
     },
 
     showSwimlanes: function(tasks){

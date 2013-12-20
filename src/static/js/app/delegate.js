@@ -176,7 +176,7 @@ var ApplicationDelegate = marionette.Controller.extend({
            this.app.projectDetail.currentView &&
            !this.app.modal.currentView){
 
-            activity.presentNetworkActivityIndicator();
+            //activity.presentNetworkActivityIndicator();
 
             hotkeys.createTask(
                 this.tasks,
@@ -199,7 +199,6 @@ var ApplicationDelegate = marionette.Controller.extend({
     },
 
     _presentNetworkActivity: function(){
-        debugger;
         //this.app.activity.show();
     },
 
