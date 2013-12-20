@@ -34,8 +34,8 @@ var ProjectDetailView = marionette.Layout.extend({
         '.project-name label': 'label'
     },
 
-    initialize: function(){
-        this.tasks = new Tasks();
+    initialize: function(options){
+        this.tasks = options.tasks;
     },
 
     wantsToggleSidebar: function(){

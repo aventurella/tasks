@@ -2,7 +2,7 @@ define(function (require, exports, module) {
 
 var marionette = require('marionette');
 var getSettings = require('app/settings/defaults').getSettings;
-var vent = require('app/vent').vent;
+var TasksProtocol = require('./tasks').TasksProtocol;
 
 require('sockjs');
 
@@ -12,6 +12,7 @@ var SockController = marionette.Controller.extend({
         _.bindAll(this, 'onopen', 'onAuthComplete', 'onclose', 'ventDispatchMessage');
         this._connection = $.Deferred();
         this._login = $.Deferred();
+        this.taskProtocol = new TasksProtocol();
    },
 
    onopen: function(){

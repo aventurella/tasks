@@ -18,9 +18,10 @@ var modals = require('app/modals/modals');
 var AccountFormView = require('app/modals/views/account').AccountFormView;
 var ProjectDetailView = require('app/projects/views/detail').ProjectDetailView;
 var SessionInitializationView = require('app/modals/views/session').SessionInitializationView;
-var SockController = require('app/sock').SockController;
+var SockController = require('app/sockets/sock').SockController;
 var TaskFormView = require('app/modals/views/new-task').TaskFormView;
 var status = require('app/projects/models/task').status;
+var Tasks = require('app/projects/collections/tasks').Tasks;
 
 
 
@@ -146,9 +147,13 @@ var ApplicationDelegate = marionette.Controller.extend({
     },
 
     showProject: function(project){
-        var projectView = new ProjectDetailView({model: project});
+        var tasks = new Tasks();
+        var projectView = new ProjectDetailView({
+            model: project,
+            tasks: tasks
+        });
         this.socketController.setActiveProjectId(project.get('id'));
-        this.socketController.setTasksCollection(projectView.tasks);
+        this.socketController.setTasksCollection(tasks);
         if (this.currentProjectView){
             this.stopListening(this.currentProjectView, projectEvents.TOGGLE_SIDEBAR, this.wantsToggleSidebar);
         }
