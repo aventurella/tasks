@@ -29,15 +29,13 @@ var InProcessView = marionette.ItemView.extend({
     },
 
     initialize: function(options){
-        _.bindAll(this, 'showSwimlanes', 'modelDidChange');
+        _.bindAll(this, 'showSwimlanes');
         this.options = options;
         this.swimlanes = {};
     },
 
     onShow: function(){
-
         this.options.tasks.then(this.showSwimlanes);
-        this.listenTo(this.model, 'change', this.modelDidChange);
     },
 
     onClose: function(){
@@ -101,11 +99,6 @@ var InProcessView = marionette.ItemView.extend({
 
         model.save();
 
-    },
-
-    modelDidChange: function(model){
-
-        // this.ui.projectName.text(model.get('label'));
     }
 
 });
