@@ -38,6 +38,9 @@ var ApplicationDelegate = marionette.Controller.extend({
         this.listenTo(vent, modalEvents.PRESENT, this.presentModal);
         this.listenTo(vent, modalEvents.DISMISS, this.dismissModal);
 
+        this.tasks = new Tasks();
+        this.socketController = new SockController({tasks: this.tasks});
+
         var currentSettings = getSettings();
         var token = currentSettings.getToken();
 
@@ -147,13 +150,16 @@ var ApplicationDelegate = marionette.Controller.extend({
     },
 
     showProject: function(project){
-        var tasks = new Tasks();
+        var tasks = this.tasks;
+        tasks.reset();
+
         var projectView = new ProjectDetailView({
             model: project,
             tasks: tasks
         });
+
         this.socketController.setActiveProjectId(project.get('id'));
-        this.socketController.setTasksCollection(tasks);
+
         if (this.currentProjectView){
             this.stopListening(this.currentProjectView, projectEvents.TOGGLE_SIDEBAR, this.wantsToggleSidebar);
         }
@@ -233,7 +239,6 @@ var ApplicationDelegate = marionette.Controller.extend({
             self.promptForCredentials(deferred);
         };
 
-        this.socketController = new SockController();
         this.socketController.connect().then(function(){
             self.socketController.login(token).then(success, fail);
         });

@@ -6,9 +6,9 @@ require('sockjs');
 
 var TasksProtocol = marionette.Controller.extend({
 
-   initialize : function(){
-
-   },
+    initialize : function(options){
+        this.tasks = options.tasks;
+    },
 
 
 });

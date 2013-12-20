@@ -8,11 +8,13 @@ require('sockjs');
 
 var SockController = marionette.Controller.extend({
 
-   initialize : function(){
+   initialize : function(options){
         _.bindAll(this, 'onopen', 'onAuthComplete', 'onclose', 'ventDispatchMessage');
         this._connection = $.Deferred();
         this._login = $.Deferred();
-        this.taskProtocol = new TasksProtocol();
+
+        this.tasks = options.tasks;
+        this.taskProtocol = new TasksProtocol({tasks: this.tasks});
    },
 
    onopen: function(){
@@ -91,10 +93,6 @@ var SockController = marionette.Controller.extend({
             }
         };
        this.sock.send(JSON.stringify(connectionData));
-   },
-
-   setTasksCollection: function(tasks){
-       this.tasks = tasks;
    },
 
    onclose: function(){
