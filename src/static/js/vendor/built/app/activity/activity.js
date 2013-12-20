@@ -1,6 +1,6 @@
 define(function(require, exports, module) {
 
-var vent = require('./vent').vent;
+var vent = require('built/app/vent').vent;
 var events = require('./events');
 var count = 0;
 

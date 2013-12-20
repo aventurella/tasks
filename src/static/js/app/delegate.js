@@ -10,7 +10,6 @@ var modals = require('built/app/modals');
 var activity = require('built/app/activity');
 var keys = require('built/app/keys');
 
-var modalEvents = require('app/modals/events');
 var sidebarEvents = require('app/sidebar/events');
 var projectEvents = require('app/projects/events');
 var SidebarView = require('app/sidebar/views/sidebar').SidebarView;
@@ -28,17 +27,6 @@ var hotkeys = require('app/hotkeys/hotkeys');
 
 
 var ApplicationDelegate = marionette.Controller.extend({
-
-    BUILT: function(){
-        this.keyEvents = new keys.KeyEventController();
-        keys.registerInResponderChain(this);
-
-        this.listenTo(vent, modals.events.PRESENT, this._presentModal);
-        this.listenTo(vent, modals.events.DISMISS, this._dismissModal);
-
-        // this.listenTo(vent, activity.events.PRESENT, this._presentNetworkActivity);
-        // this.listenTo(vent, activity.events.DISMISS, this._dismissNetworkActivity);
-    },
 
     initialize: function(options){
         _.bindAll(this, 'beginApplication');
@@ -179,7 +167,6 @@ var ApplicationDelegate = marionette.Controller.extend({
         this.socketController.connect().then(function(){
             self.socketController.login(token).then(success, fail);
         });
-
     },
 
     keyDown: function(e){
@@ -189,12 +176,35 @@ var ApplicationDelegate = marionette.Controller.extend({
            this.app.projectDetail.currentView &&
            !this.app.modal.currentView){
 
+            activity.presentNetworkActivityIndicator();
+
             hotkeys.createTask(
                 this.tasks,
                 this.app.projectDetail.currentView);
 
             return true;
         }
+    },
+
+    BUILT: function(){
+
+        keys.initialize({modals: modals});
+        keys.registerInResponderChain(this);
+
+        this.listenTo(vent, modals.events.PRESENT, this._presentModal);
+        this.listenTo(vent, modals.events.DISMISS, this._dismissModal);
+
+        this.listenTo(vent, activity.events.PRESENT, this._presentNetworkActivity);
+        this.listenTo(vent, activity.events.DISMISS, this._dismissNetworkActivity);
+    },
+
+    _presentNetworkActivity: function(){
+        debugger;
+        //this.app.activity.show();
+    },
+
+    _dismissNetworkActivity: function(modalView){
+        //this.app.activity.close();
     },
 
     _presentModal: function(modalView){

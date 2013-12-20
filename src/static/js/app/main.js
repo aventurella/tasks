@@ -6,9 +6,9 @@ var ModalRegion = require('app/modals/region').ModalRegion;
 function main(options){
     var app = this;
     app.addRegions({
-        window: '#window',
-        sidebar: '#sidebar',
         modal: ModalRegion,
+        activity: '#activity',
+        sidebar: '#sidebar',
         projectDetail: '#project-detail'
     });
 

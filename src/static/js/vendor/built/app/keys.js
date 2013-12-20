@@ -4,7 +4,18 @@ var _ = require('underscore');
 var marionette = require('marionette');
 var KeyResponder = require('built/core/responders/keys').KeyResponder;
 var ArrayManager = require('built/core/managers/array').ArrayManager;
-var modals = require('built/app/modals');
+
+// An optional dependency on built/app/modals
+// if you wish to have the application key manager
+// work in concert with built/app/modals, pass the modal
+// module into the initialize options
+// {modals: theModule}
+
+var modals = null;
+
+var _responderChain = new ArrayManager();
+var _keyResponder;
+
 
 function getKeyFromEvent(e){
     var key = String.fromCharCode(e.which);
@@ -13,141 +24,129 @@ function getKeyFromEvent(e){
     return key;
 }
 
-var responderChain = new ArrayManager();
 
 function registerInResponderChain(view){
     view.once('close', function(){
-        var array = responderChain.getArray();
+        var array = _responderChain.getArray();
         var index = array.indexOf(view);
-        responderChain.removeObjectAt(index);
+        _responderChain.removeObjectAt(index);
     });
 
-    responderChain.insertObject(view);
+    _responderChain.insertObject(view);
 }
 
+function initialize(options){
+    options = options || {};
+    modals = options.modals || null;
 
-var KeyEventController = marionette.Controller.extend({
+    _keyResponder = new KeyResponder({
+        el: $(window),
+        keyDown: _processKeys,
+    });
+}
 
-    initialize: function(options){
-        _.bindAll(this, 'processKeys');
+function _processKeys(sender, e){
 
-        this.keyResponder = new KeyResponder({
-            el: $(window),
-            keyDown: this.processKeys,
-        });
-    },
+    var result;
+    var chain;
 
-    processKeys: function(sender, e){
+    // if a modal is present, it consumes all
+    // so the buck stops there.
+    if (_processModal(e)) return;
 
-        var result;
-        var chain;
+    chain = _responderChain.getArray().slice().reverse();
 
-        // if a modal is present, it consumes all
-        // so the buck stops there.
-        if (this.processModal(e)) return;
+    // First we ask, who in the chain
+    // would like to performKeyEquivalent?
+    // We don't just send the event in something like
+    // a "performKeyAction" we specifically use KeyEquivalent
+    // first, because someone in the chain could respond to
+    // just the 'enter' for example and the key that was
+    // sent was command + shift + enter. In that case
+    // if the person that responds to just 'enter' happens
+    // to exist first in the chain traversal, we would never
+    // get to view in the chain that handles KeyEquivalent.
+    // In other words, KeyEquivalent are the most important
+    // followed by regular keys.
+    //
+    // performKeyEquivalent and keyDown idioms come directly
+    // from Cocoa key event handling.
+    //
+    // https://developer.apple.com/librarY/mac/documentation/Cocoa/Conceptual/EventOverview/HandlingKeyEvents/HandlingKeyEvents.html#//apple_ref/doc/uid/10000060i-CH7-SW1
+    //
+    // result here will be the itemView that handeled this
+    // event.
 
-        chain = responderChain.getArray().slice().reverse();
-
-        // First we ask, who in the chain
-        // would like to performKeyEquivalent?
-        // We don't just send the event in something like
-        // a "performKeyAction" we specifically use KeyEquivalent
-        // first, because someone in the chain could respond to
-        // just the 'enter' for example and the key that was
-        // sent was command + shift + enter. In that case
-        // if the person that responds to just 'enter' happens
-        // to exist first in the chain traversal, we would never
-        // get to view in the chain that handles KeyEquivalent.
-        // In other words, KeyEquivalent are the most important
-        // followed by regular keys.
-        //
-        // performKeyEquivalent and keyDown idioms come directly
-        // from Cocoa key event handling.
-        //
-        // https://developer.apple.com/librarY/mac/documentation/Cocoa/Conceptual/EventOverview/HandlingKeyEvents/HandlingKeyEvents.html#//apple_ref/doc/uid/10000060i-CH7-SW1
-        //
-        // result here will be the itemView that handeled this
-        // event.
-
-        result = _.find(chain, function(item){
-            if(item.performKeyEquivalent){
-                // returns true to stop the chain
-                // returns false to keep things moving.
-                return item.performKeyEquivalent(e);
-            }
-        });
-
-        if(result){
-            this.completeEvent(e);
-            return;
+    result = _.find(chain, function(item){
+        if(item.performKeyEquivalent){
+            // returns true to stop the chain
+            // returns false to keep things moving.
+            return item.performKeyEquivalent(e);
         }
+    });
 
-        // No one in the chain wanted to handle the KeyEquivalent
-        // lets ask them if they would like to handle the plain
-        // key event:
-
-        result = _.find(chain, function(item){
-            if(item.keyDown){
-                // returns true to stop the chain
-                // returns false to keep things moving.
-                return item.keyDown(e);
-            }
-        });
-
-        if(result) {
-            this.completeEvent(e);
-            return;
-        }
-    },
-
-    processModal: function(e){
-        // a modal is present, so lets ask that first
-        // then bail if nothing
-        var currentModal = modals.getCurrentModal();
-        var result;
-
-        if(currentModal){
-            var view = currentModal.view;
-
-            if(view.performKeyEquivalent){
-                // returns true to stop the chain
-                // returns false to keep things moving.
-                if (view.performKeyEquivalent(e)){
-                    this.completeEvent(e);
-                    return;
-                }
-            }
-
-            if(view.keyDown){
-                // returns true to stop the chain
-                // returns false to keep things moving.
-                view.keyDown(e);
-            }
-
-            return true;
-        }
-
-        return false;
-    },
-
-    globalHotkeys: function(sender, e){
-        var key = getKeyFromEvent(e);
-        var action = this.hotkeys[key];
-
-        if(action){
-            this.completeEvent(e);
-            action();
-        }
-    },
-
-    completeEvent: function(e){
-        e.preventDefault();
-        e.stopImmediatePropagation();
+    if(result){
+        _completeEvent(e);
+        return;
     }
 
-});
+    // No one in the chain wanted to handle the KeyEquivalent
+    // lets ask them if they would like to handle the plain
+    // key event:
 
-exports.KeyEventController = KeyEventController;
+    result = _.find(chain, function(item){
+        if(item.keyDown){
+            // returns true to stop the chain
+            // returns false to keep things moving.
+            return item.keyDown(e);
+        }
+    });
+
+    if(result) {
+        _completeEvent(e);
+        return;
+    }
+}
+
+function _processModal(e){
+
+    // a modal is present, so lets ask that first
+    // then bail if nothing
+    if(!modals) return;
+
+    var currentModal = modals.getCurrentModal();
+    var result;
+
+    if(currentModal){
+        var view = currentModal.view;
+
+        if(view.performKeyEquivalent){
+            // returns true to stop the chain
+            // returns false to keep things moving.
+            if (view.performKeyEquivalent(e)){
+                _completeEvent(e);
+                return;
+            }
+        }
+
+        if(view.keyDown){
+            // returns true to stop the chain
+            // returns false to keep things moving.
+            view.keyDown(e);
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
+function _completeEvent(e){
+    e.preventDefault();
+    e.stopImmediatePropagation();
+}
+
+exports.initialize = initialize;
 exports.getKeyFromEvent = getKeyFromEvent;
 exports.registerInResponderChain = registerInResponderChain;
 });
