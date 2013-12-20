@@ -37,6 +37,14 @@ var ArchivedView = marionette.ItemView.extend({
 
     setTasks: function(collection){
         this._tasks = collection;
+        this.listenTo(collection, 'change:status', this.taskStatusDidChange);
+        this.listenTo(collection, 'add', this.onTaskAdded);
+    },
+
+    onTaskAdded: function(model){
+        if( model.get('status') == tasks.status.ARCHIVED ){
+            this.archived.collection.add(model);
+        }
     },
 
     getTasks: function(){
@@ -66,6 +74,25 @@ var ArchivedView = marionette.ItemView.extend({
 
         this.archived.render();
     },
+
+    taskStatusDidChange: function(model){
+        // changed TO archived
+        // we don't need to call save here
+        // because the only way this can happen is
+        // if it's pushed to us, which means it was
+        // already saved.
+        if(model.get('status') === tasks.status.ARCHIVED){
+            this.archived.collection.add(model);
+            return;
+        }
+
+        // changed FROM archived
+        if(model.previous('status') === tasks.status.ARCHIVED){
+            this.archived.collection.remove(model);
+            model.save();
+        }
+    },
+
 });
 
 
