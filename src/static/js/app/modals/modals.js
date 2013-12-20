@@ -8,6 +8,10 @@ var currentModal = null;
 
 var queue = [];
 
+function getCurrentModal(){
+    return currentModal;
+}
+
 function presentModal(view){
 
     var deferred = $.Deferred();
@@ -49,4 +53,5 @@ function dismissModal(){
 exports.presentModal = presentModal;
 exports.dismissModal = dismissModal;
 exports.nextModal = nextModal;
+exports.getCurrentModal = getCurrentModal;
 });

@@ -9,6 +9,10 @@ var events = require('../events');
 var cssFocus = require('built/ui/controls/x-css-focus-single');
 var template = require('hbs!app/projects/templates/detail');
 
+var hotkeys = require('app/hotkeys/hotkeys');
+var KeyResponder = require('built/core/responders/keys').KeyResponder;
+var IndexManager = require('built/core/managers/index').IndexManager;
+
 var ProjectDetailView = marionette.Layout.extend({
     template: template,
 
@@ -35,6 +39,12 @@ var ProjectDetailView = marionette.Layout.extend({
     },
 
     initialize: function(options){
+        _.bindAll(this,
+            'wantsTabbarMoveLeft',
+            'wantsTabbarMoveRight',
+            'showBacklog',
+            'showInProcess',
+            'showArchived');
         this.tasks = options.tasks;
     },
 
@@ -56,6 +66,7 @@ var ProjectDetailView = marionette.Layout.extend({
     },
 
     showBacklog: function(){
+        this.indexManager.setIndex(0);
         this.focusManager.focus(this.ui.btnBacklog);
         this.section.show(new BacklogView({
             model: this.model,
@@ -63,6 +74,7 @@ var ProjectDetailView = marionette.Layout.extend({
     },
 
     showInProcess: function(){
+        this.indexManager.setIndex(1);
         this.focusManager.focus(this.ui.btnInProcess);
         this.section.show(new InProcessView({
             model: this.model,
@@ -70,6 +82,7 @@ var ProjectDetailView = marionette.Layout.extend({
     },
 
     showArchived: function(){
+        this.indexManager.setIndex(2);
         this.focusManager.focus(this.ui.btnArchived);
         this.section.show(new ArchivedView({
             model: this.model,
@@ -96,10 +109,50 @@ var ProjectDetailView = marionette.Layout.extend({
             this.ui.btnArchived], {focusClass: 'active'});
 
         this.tasks = this.loadTasks();
-        this.showInProcess();
-        this.stickit();
-    }
 
+        this.stickit();
+
+        hotkeys.registerInResponderChain(this);
+
+        this.indexManager = new IndexManager({length: 3});
+        this.showInProcess();
+
+        this.keyResponder = new KeyResponder();
+        this.keyResponder.registerKeyEquivalentWithString(
+            'command + shift + left', this.wantsTabbarMoveLeft);
+
+        this.keyResponder.registerKeyEquivalentWithString(
+            'command + shift + right', this.wantsTabbarMoveRight);
+    },
+
+    performKeyEquivalent: function(e){
+        return this.keyResponder.performKeyEquivalent(e);
+    },
+
+    wantsTabbarMoveLeft: function(){
+        var index = this.indexManager.previousIndex();
+        this.showSectionWithIndex(index);
+    },
+
+    wantsTabbarMoveRight: function(){
+        var index = this.indexManager.nextIndex();
+        this.showSectionWithIndex(index);
+    },
+
+    showSectionWithIndex: function(index){
+        var map = {
+            0: this.showBacklog,
+            1: this.showInProcess,
+            2: this.showArchived
+        };
+
+        var action = map[index];
+        action();
+    },
+
+    onClose: function(){
+        this.focusManager.close();
+    }
 
 });
 

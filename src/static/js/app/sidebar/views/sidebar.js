@@ -9,6 +9,7 @@ var modals = require('app/modals/modals');
 var modalEvents = require('app/modals/events');
 var NewProjectView = require('app/modals/views/new-project').NewProjectView;
 var events = require('../events');
+var hotkeys = require('app/hotkeys/hotkeys');
 var template = require('hbs!app/sidebar/templates/sidebar');
 
 // this is probably better as a layout.
@@ -137,6 +138,7 @@ var SidebarView = marionette.ItemView.extend({
         this.initializeFooter();
         this.initializeProjectList();
 
+        hotkeys.registerInResponderChain(this);
 
         if(this.user.get('hideSidebar')){
             var $parent = this.$el.parent();

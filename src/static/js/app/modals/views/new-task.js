@@ -48,9 +48,7 @@ var TaskFormView = marionette.ItemView.extend({
         _.bindAll(this, 'wantsCancelWithKeys', 'wantsCreateWithKeys');
 
         this.keyResponder = new KeyResponder({
-            el: $(window),
             cancelOperation: this.wantsCancelWithKeys,
-            acceptKeyEquivalent: true
         });
 
         this.keyResponder.registerKeyEquivalentWithString(
@@ -59,6 +57,14 @@ var TaskFormView = marionette.ItemView.extend({
 
         this.stickit();
         this.ui.label.focus();
+    },
+
+    performKeyEquivalent: function(e){
+        this.keyResponder.performKeyEquivalent(e);
+    },
+
+    keyDown: function(e){
+        this.keyResponder.interpretKeyEvents(e);
     },
 
     wantsCreate: function(){
@@ -74,14 +80,10 @@ var TaskFormView = marionette.ItemView.extend({
     },
 
     wantsCreateWithKeys: function(){
-        this.keyResponder.close();
-        this.keyResponder = null;
         this.wantsCreate();
     },
 
     wantsCancelWithKeys: function(){
-        this.keyResponder.close();
-        this.keyResponder = null;
         this.wantsCancel();
     },
 
