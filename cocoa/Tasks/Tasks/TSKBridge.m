@@ -19,11 +19,11 @@
 {
     if (self = [super init])
     {
-        
+
         self.settings = [[TSKApplicationSettings alloc] init];
         [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
     }
-    
+
     return self;
 }
 
@@ -32,50 +32,52 @@
 {
     NSUserNotification *notification = [[NSUserNotification alloc] init];
     NSString *label = data[@"label"];
+    NSString *project_label = data[@"project_label"];
     NSString *target;
-    
+
     // http://stackoverflow.com/questions/5684157/how-to-detect-if-nsstring-is-null
     NSString *token = data[@"token"] == [NSNull null] ? @"" : data[@"token"];
-    
+
     TSKStatus status = (TSKStatus)[data[@"status"] integerValue];
-    
+
     switch (status) {
-        
+
         case BACKLOG:
             target = @"Backlog";
             break;
-        
+
         case TODO:
             target = @"Todo";
             break;
-        
+
         case IN_PROGRESS:
             target = @"In Progress";
             break;
-        
+
         case COMPLETED:
             target = @"Completed";
             break;
-            
+
         case ARCHIVED:
             target = @"Archived";
             break;
-            
+
         default:
             target = @"Unknown";
             break;
     }
 
     NSString *message = [NSString stringWithFormat:@"'%@' has moved to '%@'", label, target];
-    
+    NSString *subtitle = [NSString stringWithFormat:@"Project: '%@'", project_label];
+
     notification.title = @"Task Update";
     notification.informativeText = message;
-    notification.subtitle = @"Project: bigMETHOD";
+    notification.subtitle = subtitle;
     notification.soundName = NSUserNotificationDefaultSoundName;
     notification.userInfo = @{@"status": [NSNumber numberWithInteger:status],
                               @"token": token,
                               @"project_id": [NSNumber numberWithInteger:[data[@"project_id"] integerValue]]};
-    
+
     [self sendNotification:notification];
     /*
      {
@@ -101,24 +103,24 @@
 - (void)sendNotification:(NSUserNotification *)notification
 {
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
-    
+
 }
 
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification
 {
     NSDictionary *data = notification.userInfo;
-    
+
     NSNumber *project_id = data[@"project_id"];
     NSString *token = data[@"token"];
-    
+
     if([project_id unsignedIntegerValue] != self.currentProjectId){
         return NO;
     }
-    
+
     if([self.settings.token isEqualToString:token]){
         return NO;
     }
-    
+
     return YES;
 }
 

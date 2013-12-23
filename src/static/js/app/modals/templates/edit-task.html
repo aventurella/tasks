@@ -1,0 +1,64 @@
+<div class="task">
+    <h2>Edit Task</h2>
+    <div class="choices">
+        <div class="type choice">
+            <div class="item-radio">
+                <div class="radio">
+                    <input value="0" type="radio" name="inputType">
+                </div>
+                Task
+            </div>
+            <div class="item-radio">
+                <div class="radio">
+                    <input value="1" type="radio" name="inputType">
+                </div>
+                Bug
+            </div>
+        </div>
+        <div class="loe choice">
+            <div class="item-radio">
+                <div class="green radio">
+                    <input value="0" type="radio" name="inputLOE">
+                </div>
+                Low
+            </div>
+            <div class="item-radio">
+                <div class="yellow radio">
+                    <input value="1" type="radio" name="inputLOE">
+                </div>
+                Medium
+            </div>
+            <div class="item-radio">
+                <div class="red radio">
+                    <input value="2" type="radio" name="inputLOE">
+                </div>
+                High
+            </div>
+        </div>
+
+        <div class="status choice">
+            <div class="item-radio">
+                <div class=" radio">
+                    <input value="0" type="radio" name="inputStatus">
+                </div>
+                Backlog
+            </div>
+            <div class="item-radio">
+                <div class=" radio">
+                    <input value="1" type="radio" name="inputStatus">
+                </div>
+                Todo
+            </div>
+        </div>
+    </div>
+    <div class="input-field">
+        <input id="inputLabel" autocomplete="off" type="text" name="label" placeholder="Task">
+    </div>
+    <div class="input-field">
+        <textarea id="inputDescription" name="description" cols="80", rows="10" placeholder="Optional Description"></textarea>
+    </div>
+    <div class="action">
+        <div class="btn yes save">&#x2713;</div>
+        <div class="btn no cancel">&#x2717;</div>
+    </div>
+</div>
