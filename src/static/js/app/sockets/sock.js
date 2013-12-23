@@ -25,7 +25,7 @@ var SockController = marionette.Controller.extend({
 
    connect: function(){
         if(!this.sock){
-            this.sock = new SockJS('http://127.0.0.1:8888');
+            this.sock = new SockJS('http://54.242.250.233:8888');
             this.sock.onopen = this.onopen;
             this.sock.onmessage = this.onAuthComplete;
             this.sock.onclose = this.onclose;

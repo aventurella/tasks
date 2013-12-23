@@ -4,7 +4,7 @@ var backbone = require('backbone');
 var Project = require('../models/project').Project;
 
 var Projects =  backbone.Collection.extend({
-    url: 'http://localhost:8000/api/v1/project/',
+    url: 'http://54.242.250.233/api/v1/project/',
     model: Project,
 
     parse: function(response) {

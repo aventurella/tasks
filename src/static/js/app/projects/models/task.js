@@ -26,7 +26,7 @@ var task_type = {
 
 
 var Task = backbone.Model.extend({
-    urlRoot: 'http://localhost:8000/api/v1/task/',
+    urlRoot: 'http://54.242.250.233/api/v1/task/',
     initialize: function(){
 
     },
