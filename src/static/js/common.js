@@ -54,6 +54,7 @@ require.config({
 
         'app/settings/defaults':{
             'driver': 'app/settings/drivers/html-local-storage'
+            //'driver': 'app/settings/drivers/cocoa'
         },
 
         'app/session/session':{

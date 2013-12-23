@@ -7,7 +7,7 @@ STYLESRC = $(wildcard $(RESOURCE_PATH_SRC)/scss/*.scss)
 STYLEOBJ = $(STYLESRC:$(RESOURCE_PATH_SRC)/scss/%.scss=$(RESOURCE_PATH_BLD)/css/%.css)
 
 .PHONY: all
-all: clean scripts styles finalize
+all: clean scripts finalize
 
 .PHONY: styles
 styles: prepare_styles $(STYLEOBJ)

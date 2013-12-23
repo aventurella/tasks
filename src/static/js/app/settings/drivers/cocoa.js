@@ -21,12 +21,11 @@ var _user = new LSUserModel();
 
 
 function getToken(){
-    var token = localStorage.getItem('token');
-    return token;
+    return Bridge.settings.token;
 }
 
 function setToken(value){
-    localStorage.setItem('token', value);
+    Bridge.settings.token = value;
 }
 
 function getUser(){

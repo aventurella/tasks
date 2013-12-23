@@ -12,7 +12,8 @@ function main(options){
         projectDetail: '#project-detail'
     });
 
-    new ApplicationDelegate({app: app});
+    // global
+    window.application = new ApplicationDelegate({app: app});
 }
 
 exports.main = main;

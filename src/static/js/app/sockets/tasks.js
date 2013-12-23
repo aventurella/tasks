@@ -11,6 +11,7 @@ var TasksProtocol = marionette.Controller.extend({
     },
 
     handleMessage: function(data){
+
         switch(data.action){
             case 'update':
                 this.updateTask(data);
@@ -25,6 +26,7 @@ var TasksProtocol = marionette.Controller.extend({
     },
 
     updateTask: function(data){
+       if(Bridge) Bridge.taskDidChange(data);
        var model = this.tasks.get(data.id);
        model.doUpdateModel(data);
     },

@@ -29,7 +29,7 @@ var hotkeys = require('app/hotkeys/hotkeys');
 var ApplicationDelegate = marionette.Controller.extend({
 
     initialize: function(options){
-        _.bindAll(this, 'beginApplication');
+        _.bindAll(this, 'beginApplication', 'createTask');
 
         this.app = options.app;
         this.BUILT();
@@ -172,38 +172,51 @@ var ApplicationDelegate = marionette.Controller.extend({
     keyDown: function(e){
         var key = keys.getKeyFromEvent(e);
 
-        if(key == 'n' &&
-           this.app.projectDetail.currentView &&
-           !this.app.modal.currentView){
+        if(key == 'n'){
 
             //activity.presentNetworkActivityIndicator();
 
-            hotkeys.createTask(
-                this.tasks,
-                this.app.projectDetail.currentView);
+            this.createTask();
+            // hotkeys.createTask(
+            //     this.tasks,
+            //     this.app.projectDetail.currentView);
 
             return true;
         }
     },
 
+    createTask: function(){
+    if(this.app.projectDetail.currentView &&
+       !this.app.modal.currentView){
+
+        hotkeys.createTask(
+                this.tasks,
+                this.app.projectDetail.currentView);
+    }
+    },
+
     BUILT: function(){
 
+        // Key Management
         keys.initialize({modals: modals});
         keys.registerInResponderChain(this);
 
+        // Modal Management
         this.listenTo(vent, modals.events.PRESENT, this._presentModal);
         this.listenTo(vent, modals.events.DISMISS, this._dismissModal);
 
-        this.listenTo(vent, activity.events.PRESENT, this._presentNetworkActivity);
-        this.listenTo(vent, activity.events.DISMISS, this._dismissNetworkActivity);
+        // Activity Management
+        this.listenTo(vent, activity.events.PRESENT, this._presentNetworkActivityIndicator);
+        this.listenTo(vent, activity.events.DISMISS, this._dismissNetworkActivityIndicator);
     },
 
-    _presentNetworkActivity: function(){
-        //this.app.activity.show();
+    _presentNetworkActivityIndicator: function(){
+        throw new Error('No Activity Indicator View Specified');
+        //this.app.activity.show(new YourActivityView);
     },
 
-    _dismissNetworkActivity: function(modalView){
-        //this.app.activity.close();
+    _dismissNetworkActivityIndicator: function(modalView){
+        this.app.activity.close();
     },
 
     _presentModal: function(modalView){
