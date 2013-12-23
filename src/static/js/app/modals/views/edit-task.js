@@ -4,6 +4,7 @@ var $ = require('jquery');
 var _ = require('underscore');
 var marionette = require('marionette');
 var backbone = require('backbone');
+
 var events = require('../events');
 var KeyResponder = require('built/core/responders/keys').KeyResponder;
 var Task = require('app/projects/models/task').Task;
@@ -32,11 +33,10 @@ var EditTaskFormView = marionette.ItemView.extend({
 
     initialize: function(options){
         this._data = {ok: false};
+        _.bindAll(this, 'wantsCancelWithKeys', 'wantsSaveWithKeys');
     },
 
     onRender: function(){
-        _.bindAll(this, 'wantsCancelWithKeys', 'wantsSaveWithKeys');
-
         this.keyResponder = new KeyResponder({
             cancelOperation: this.wantsCancelWithKeys,
         });
@@ -46,6 +46,15 @@ var EditTaskFormView = marionette.ItemView.extend({
 
         this.stickit();
         this.ui.label.focus();
+
+    },
+
+    performKeyEquivalent: function(e){
+        this.keyResponder.performKeyEquivalent(e);
+    },
+
+    keyDown: function(e){
+        this.keyResponder.interpretKeyEvents(e);
     },
 
     getData: function(){

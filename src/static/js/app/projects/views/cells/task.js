@@ -38,8 +38,9 @@ var TaskView = marionette.ItemView.extend({
         this.stickit();
     },
 
-    editTaskComplete: function(){
-        console.log('called');
+    editTaskComplete: function(modalView){
+        var data = modalView.getData();
+        modals.dismissModal();
     },
 
     wantsSetTodo: function(){

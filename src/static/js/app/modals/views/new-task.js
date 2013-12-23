@@ -34,7 +34,7 @@ var TaskFormView = marionette.ItemView.extend({
         this._data = {ok: false};
         var model = options.model || new Task();
 
-        model.set('project', options.project.get('resource_uri'));
+        // model.set('project', options.project.get('resource_uri'));
 
         // status.BACKLOG === 0
         // so if this evals to false we win no matter what

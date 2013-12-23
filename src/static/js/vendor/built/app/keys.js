@@ -46,7 +46,6 @@ function initialize(options){
 }
 
 function _processKeys(sender, e){
-
     var result;
     var chain;
 
@@ -109,7 +108,6 @@ function _processKeys(sender, e){
 }
 
 function _processModal(e){
-
     // a modal is present, so lets ask that first
     // then bail if nothing
     if(!modals) return;
