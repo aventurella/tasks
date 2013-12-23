@@ -78,6 +78,7 @@ var SockController = marionette.Controller.extend({
             }
         };
 
+        var Bridge = window.Bridge || undefined;
         if(Bridge) Bridge.currentProjectId = id;
         this.sock.send(JSON.stringify(connectionData));
    },

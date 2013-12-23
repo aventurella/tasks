@@ -11,7 +11,6 @@ var TasksProtocol = marionette.Controller.extend({
     },
 
     handleMessage: function(data){
-
         switch(data.action){
             case 'update':
                 this.updateTask(data);
@@ -20,21 +19,22 @@ var TasksProtocol = marionette.Controller.extend({
                 this.createTask(data);
                 break;
             case 'delete':
-            this.deleteTask(data);
+                this.deleteTask(data);
                 break;
-       }
+        }
     },
 
     updateTask: function(data){
-       if(Bridge) Bridge.taskDidChange(data);
-       var model = this.tasks.get(data.id);
-       model.doUpdateModel(data);
+        var Bridge = window.Bridge || undefined;
+        if(Bridge) Bridge.taskDidChange(data);
+        var model = this.tasks.get(data.id);
+        model.doUpdateModel(data);
     },
 
     createTask: function(data){
-       var model = new Task();
-       model.doUpdateModel(data);
-       this.tasks.add(model);
+        var model = new Task();
+        model.doUpdateModel(data);
+        this.tasks.add(model);
     },
 
     deleteTask: function(data){
