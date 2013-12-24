@@ -115,3 +115,5 @@ collected-static/*
 uploads/*
 !collected-static/.gitkeep
 !uploads/README
+
+*.xcuserdatad
