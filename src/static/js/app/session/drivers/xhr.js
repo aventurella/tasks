@@ -1,11 +1,12 @@
 define(function(require, exports, module) {
 
 var $ = require('jquery');
+var domain = require('app/settings/defaults').getSettings().getApiDomain();
 
 function authenticate(username, password){
     var deferred = $.Deferred();
 
-    $.get('http://54.242.250.233/api/v1/token/me/?u='+username+'&p='+password)
+    $.get(domain + '/api/v1/token/me/?u='+username+'&p='+password)
     .then(function(data){
 
         if(data.ok){

@@ -7,6 +7,19 @@ var driver = require('driver');
 var settings = null;
 
 var ApplicationSettings = marionette.Controller.extend({
+
+    getApiDomain: function(){
+        // 54.242.250.233 or localhost
+        // return 'http://54.242.250.233';
+        return 'http://localhost:8000';
+    },
+
+    getSocketDomain: function(){
+        // 54.242.250.233 or localhost
+        // return 'http://54.242.250.233:8888';
+        return 'http://localhost:8888';
+    },
+
     getToken: function(){
         return driver.getToken();
     },
@@ -35,8 +48,4 @@ function getSettings(){
 exports.getSettings = getSettings;
 
 });
-
-
-
-
 

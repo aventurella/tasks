@@ -3,7 +3,6 @@ define(function(require){
     require('vendor/encrypt/md5');
 
     function mdfive (email) {
-        console.log(email)
         email = email || '';
         return hex_md5(email);
     }

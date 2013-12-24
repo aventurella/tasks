@@ -2,7 +2,7 @@ define(function(require, exports, module) {
 
 var backbone = require('backbone');
 var url = require('app/shared/model-utils').url;
-
+var domain = require('app/settings/defaults').getSettings().getApiDomain();
 
 var status = {
     BACKLOG: 0,
@@ -26,7 +26,7 @@ var task_type = {
 
 
 var Task = backbone.Model.extend({
-    urlRoot: 'http://54.242.250.233/api/v1/task/',
+    urlRoot: domain+'/api/v1/task/',
     initialize: function(){
 
     },

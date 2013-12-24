@@ -4,6 +4,7 @@ var marionette = require('marionette');
 var getSettings = require('app/settings/defaults').getSettings;
 var TasksProtocol = require('./tasks').TasksProtocol;
 var events = require('./events');
+var socketDomain = require('app/settings/defaults').getSettings().getSocketDomain();
 
 require('sockjs');
 
@@ -25,7 +26,7 @@ var SockController = marionette.Controller.extend({
 
    connect: function(){
         if(!this.sock){
-            this.sock = new SockJS('http://54.242.250.233:8888');
+            this.sock = new SockJS(socketDomain);
             this.sock.onopen = this.onopen;
             this.sock.onmessage = this.onAuthComplete;
             this.sock.onclose = this.onclose;
