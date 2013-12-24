@@ -73,7 +73,7 @@ require.config({
         // if disableI18n is `true` it won't load locales and the i18n helper
         // won't work as well.
         disableI18n : true,
-        helperDirectory: 'app/shared/hbs'
+        helperDirectory: 'app/shared/hbs/'
   },
 
   shim : {
