@@ -45,23 +45,23 @@ var TaskView = marionette.ItemView.extend({
     },
 
     wantsSetTodo: function(){
-        this.model.set('status', status.TODO);
+        this.model.save('status', status.TODO);
     },
 
     wantsSetInProgress: function(){
-        this.model.set('status', status.IN_PROGRESS);
+        this.model.save('status', status.IN_PROGRESS);
     },
 
     wantsSetCompleted: function(){
-        this.model.set('status', status.COMPLETED);
+        this.model.save('status', status.COMPLETED);
     },
 
     wantsSetArchived: function(){
-        this.model.set('status', status.ARCHIVED);
+        this.model.save('status', status.ARCHIVED);
     },
 
     wantsSetBacklog: function(){
-        this.model.set('status', status.BACKLOG);
+        this.model.save('status', status.BACKLOG);
     },
 
 
