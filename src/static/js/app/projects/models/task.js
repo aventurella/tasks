@@ -42,9 +42,9 @@ var Task = backbone.Model.extend({
         this.set('label', obj.label);
         this.set('loe', obj.loe);
         this.set('status', obj.status);
+        this.set('assigned_email', obj.assigned_email);
         this.set('task_type', obj.task_type);
         this.set('project', '/api/v1/project/'+obj.project+'/');
-
     },
 
     defaults: {

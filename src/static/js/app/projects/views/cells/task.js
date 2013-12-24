@@ -26,7 +26,7 @@ var TaskView = marionette.ItemView.extend({
 
     initialize: function(){
         // needed for when we reasign the assigned_to via server
-        this.listenTo(this.model, 'sync', this.render);
+        this.listenTo(this.model, 'change', this.render);
     },
 
     onDoubleClick: function(){

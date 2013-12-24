@@ -95,7 +95,7 @@ var InProcessView = marionette.ItemView.extend({
             destination.collection.add(model);
         }
 
-        model.save();
+        // model.save();
 
     }
 
