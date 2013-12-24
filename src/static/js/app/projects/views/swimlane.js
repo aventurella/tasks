@@ -63,8 +63,7 @@ var Swimlane = DragAndDropCollectionView.extend({
     dropResponderPerformDragOperation: function(responder, e){
         var model = this.deserializeModel(responder.getData());
         DragAndDropCollectionView.prototype.dropResponderPerformDragOperation.apply(this, arguments);
-        var task = new tasks.Task(model);
-        task.save();
+        model.save();
     },
 
 });

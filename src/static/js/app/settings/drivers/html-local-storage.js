@@ -30,12 +30,12 @@ function setToken(value){
 }
 
 function getUser(){
-    console.log('LSUserModel1', _user);
+    // console.log('LSUserModel1', _user.toJSON());
     return _user;
 }
 
 function setUser(user){
-    console.log('LSUserModel2', user);
+    // console.log('LSUserModel2', user);
     _user.set(user);
 }
 
