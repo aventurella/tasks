@@ -16,4 +16,14 @@
     //[self.window makeFirstResponder:self.webController];
 }
 
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)app hasVisibleWindows:(BOOL)hasWindows
+{
+    if(hasWindows){
+        return NO;
+    }
+    
+    [self.window makeKeyAndOrderFront:self];
+    return YES;
+}
+
 @end
