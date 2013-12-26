@@ -20,7 +20,7 @@ function createTask(tasks, options){
 
     var map = {
         'backlog': status.BACKLOG,
-        'in-process': status.TODO,
+        'active': status.TODO,
         'archived': status.BACKLOG
     };
 

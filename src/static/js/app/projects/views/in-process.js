@@ -18,7 +18,7 @@ var InProcessView = marionette.ItemView.extend({
     template: template,
 
     // tag representing this view
-    tag: 'in-process',
+    tag: 'active',
     className: 'details',
 
     ui:{

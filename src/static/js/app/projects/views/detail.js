@@ -19,14 +19,14 @@ var ProjectDetailView = marionette.Layout.extend({
     ui:{
         toggleButton: '.project-name .pane-action',
         btnBacklog: '.tabbar .backlog',
-        btnInProcess: '.tabbar .in-process',
+        btnActive: '.tabbar .active',
         btnArchived: '.tabbar .archived'
     },
 
     events: {
         'click .project-name .pane-action': 'wantsToggleSidebar',
         'click .tabbar .backlog': 'wantsShowBacklog',
-        'click .tabbar .in-process': 'wantsShowInProcess',
+        'click .tabbar .active': 'wantsShowActive',
         'click .tabbar .archived': 'wantsShowArchived',
     },
 
@@ -43,7 +43,7 @@ var ProjectDetailView = marionette.Layout.extend({
             'wantsTabbarMoveLeft',
             'wantsTabbarMoveRight',
             'showBacklog',
-            'showInProcess',
+            'showActive',
             'showArchived');
         this.tasks = options.tasks;
     },
@@ -57,8 +57,8 @@ var ProjectDetailView = marionette.Layout.extend({
         this.showBacklog();
     },
 
-    wantsShowInProcess: function(){
-        this.showInProcess();
+    wantsShowActive: function(){
+        this.showActive();
     },
 
     wantsShowArchived: function(){
@@ -73,9 +73,9 @@ var ProjectDetailView = marionette.Layout.extend({
             tasks: this.tasks}));
     },
 
-    showInProcess: function(){
+    showActive: function(){
         this.indexManager.setIndex(1);
-        this.focusManager.focus(this.ui.btnInProcess);
+        this.focusManager.focus(this.ui.btnActive);
         this.section.show(new InProcessView({
             model: this.model,
             tasks: this.tasks}));
@@ -105,8 +105,8 @@ var ProjectDetailView = marionette.Layout.extend({
     onShow: function(){
         this.focusManager = cssFocus.focusManagerWithElements([
             this.ui.btnBacklog,
-            this.ui.btnInProcess,
-            this.ui.btnArchived], {focusClass: 'active'});
+            this.ui.btnActive,
+            this.ui.btnArchived], {focusClass: 'selected'});
 
         this.tasks = this.loadTasks();
 
@@ -115,7 +115,7 @@ var ProjectDetailView = marionette.Layout.extend({
         keys.registerInResponderChain(this);
 
         this.indexManager = new IndexManager({length: 3});
-        this.showInProcess();
+        this.showActive();
 
         this.keyResponder = new KeyResponder();
         this.keyResponder.registerKeyEquivalentWithString(
@@ -151,7 +151,7 @@ var ProjectDetailView = marionette.Layout.extend({
     showSectionWithIndex: function(index){
         var map = {
             0: this.showBacklog,
-            1: this.showInProcess,
+            1: this.showActive,
             2: this.showArchived
         };
 
