@@ -6,38 +6,49 @@ var modals = require('built/app/modals');
 var TaskFormView = require('app/modals/views/new-task').TaskFormView;
 var status = require('app/projects/models/task').status;
 
-function createTask(tasks, currentView){
+function createTask(tasks, options){
 
-    var tag = currentView.section.currentView.tag;
-    var model = currentView.model;
+    // required options:
+    // {
+    //    tag : 'backlog'|'in-process'|'archived'
+    //    project: <project model>
+    // }
+    var deferred = $.Deferred();
+
+    var tag = options.tag ;
+    var project = options.project;
 
     var map = {
         'backlog': status.BACKLOG,
-        'in-process': status.TODO,
+        'active': status.TODO,
         'archived': status.BACKLOG
     };
 
     var finalize = _.bind(function(view){
         modals.dismissModal();
+
         var data = view.getData();
         var model;
-        var tasks = this.tasks;
 
         if(!data.ok) return;
 
         model = data.model;
-        model.save({'wait': true})
-             .then(function(){
-                tasks.add(model);
-             });
+        deferred.resolve(model);
+
+        tasks.add(model);
+        model.save();
+
     }, this);
 
     modals.presentModal(new TaskFormView({
-        project: model,
-        status: map[tag]
+        project: project,
+        status: map[tag] || undefined
     })).then(finalize);
+
+    return deferred.promise();
 }
 
 exports.createTask = createTask;
 });
+
 

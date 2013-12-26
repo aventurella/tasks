@@ -10,6 +10,8 @@ var TaskFormView = require('app/modals/views/new-task').TaskFormView;
 var modals = require('built/app/modals');
 var template = require('hbs!app/projects/templates/backlog');
 
+var hotkeys = require('app/hotkeys/hotkeys');
+
 var BacklogView = marionette.ItemView.extend({
     template: template,
 
@@ -29,8 +31,7 @@ var BacklogView = marionette.ItemView.extend({
             'showCollection',
             'setTasks',
             'getTasks',
-            'filterTasks',
-            'addToBacklogModalComplete');
+            'filterTasks');
         this.tasks = options.tasks;
         this.options = options;
     },
@@ -103,24 +104,16 @@ var BacklogView = marionette.ItemView.extend({
     },
 
     wantsAddToBacklog: function(){
-        var taskForm = new TaskFormView({project: this.model});
-        var modalView = modals.presentModal(taskForm);
 
-        modalView.then(this.addToBacklogModalComplete);
-    },
+        // the collection of all of the tasks
+        // has an add listener.
+        // createTask will add to the global collection
+        // triggering that add which will drop it into
+        // the backlog list if applicable.
 
-    addToBacklogModalComplete: function(modalView){
-        var data = modalView.getData();
-        modals.dismissModal();
-
-        if (data.ok === false) return;
-
-        if(data.model.get('status') === tasks.status.BACKLOG ){
-            this.addToBacklog(data.model);
-        } else {
-            this.getTasks().add(data.model);
-        }
-
+        hotkeys.createTask(
+            this.getTasks(),
+            {tag: this.tag, project: this.model});
     },
 
     removeFromBacklog: function(task){

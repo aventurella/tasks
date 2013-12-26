@@ -176,22 +176,21 @@ var ApplicationDelegate = marionette.Controller.extend({
             //activity.presentNetworkActivityIndicator();
 
             this.createTask();
-            // hotkeys.createTask(
-            //     this.tasks,
-            //     this.app.projectDetail.currentView);
-
             return true;
         }
     },
 
     createTask: function(){
-    if(this.app.projectDetail.currentView &&
-       !this.app.modal.currentView){
+        if(this.app.projectDetail.currentView &&
+           !this.app.modal.currentView){
 
-        hotkeys.createTask(
-                this.tasks,
-                this.app.projectDetail.currentView);
-    }
+            var currentView = this.app.projectDetail.currentView;
+
+            hotkeys.createTask(
+                    this.tasks,
+                    {tag: currentView.section.currentView.tag,
+                     project: currentView.model});
+        }
     },
 
     BUILT: function(){
