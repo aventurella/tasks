@@ -55,11 +55,14 @@
             }
         }
 
-        ul{
+        >ul{
             margin: 0;
             padding: 0;
             list-style-type: none;
-            min-height: 500px;
+            min-height:400px;
+            .task:last-child{
+                margin-bottom: 500px;
+            }
         }
     }
 }

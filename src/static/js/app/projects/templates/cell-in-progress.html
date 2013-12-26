@@ -1,15 +1,23 @@
 <div class="loe">
     <div class="{{ levelOfEffort }}"></div>
 </div>
+{{#if assigned_email }}
 <div class="icon">
     <img src="http://www.gravatar.com/avatar/{{ mdfive assigned_email }}.png">
 </div>
+{{/if }}
 <div class="label">
     <span class="lbl">{{ label }}</span>
-    <span class="action">
-        Send to
-        <span class="btn todo">todo</span>
-        <span class="btn completed">completed</span>
-    </span>
+    <div class="btn-group">
+        <a type="button" class="actions glyphicon glyphicon-edit pull-right"></a>
+        <ul class="dropdown-menu" role="menu">
+            <li><a class='edit' href="#">Edit</a></li>
+            <li class="divider"></li>
+            <li><a class='todo' href="#">Move To Todo</a></li>
+            <li><a class='completed' href="#">Move To In Completed</a></li>
+            <li class="divider"></li>
+            <li><a class='delete' href="#">Delete</a></li>
+        </ul>
+    </div>
 </div>
 <div class="description">{{ description }}</div>

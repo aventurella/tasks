@@ -1,0 +1,18 @@
+.task{
+    >.label{
+        @extend .clearfix;
+    }
+    >.lbl{
+        float:left;
+    }
+    .btn-group{
+        float:right;
+        position: relative;
+        margin-right:15px;
+    }
+    .delete:hover{
+        color: #fff;
+        background-color: #d9534f;
+        border-color: #d43f3a;
+    }
+}

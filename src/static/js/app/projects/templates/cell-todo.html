@@ -3,10 +3,17 @@
 </div>
 <div class="label">
     <span class="lbl">{{ label }}</span>
-    <span class="action">
-        Send to
-        <span class="btn backlog">backlog</span>
-        <span class="btn in-progress">in progress</span>
-    </span>
+    <div class="btn-group">
+        <a type="button" class="actions glyphicon glyphicon-edit pull-right"></a>
+        <ul class="dropdown-menu" role="menu">
+            <li><a class='edit' href="#">Edit</a></li>
+            <li class="divider"></li>
+            <li><a class='backlog' href="#">Move To Backlog</a></li>
+            <li><a class='in-progress' href="#">Move To In Progress</a></li>
+            <li class="divider"></li>
+            <li><a class='delete' href="#">Delete</a></li>
+        </ul>
+    </div>
 </div>
 <div class="description">{{ description }}</div>
+
