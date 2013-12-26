@@ -154,5 +154,6 @@ function _completeEvent(e){
 exports.initialize = initialize;
 exports.getKeyFromEvent = getKeyFromEvent;
 exports.registerInResponderChain = registerInResponderChain;
+exports.removeFromResponderChain = removeFromResponderChain;
 });
 
