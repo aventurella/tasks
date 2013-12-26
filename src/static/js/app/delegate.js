@@ -25,7 +25,6 @@ var Tasks = require('app/projects/collections/tasks').Tasks;
 
 var hotkeys = require('app/hotkeys/hotkeys');
 
-
 var ApplicationDelegate = marionette.Controller.extend({
 
     initialize: function(options){

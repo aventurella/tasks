@@ -53,8 +53,8 @@ require.config({
         },
 
         'app/settings/defaults':{
-            // 'driver': 'app/settings/drivers/html-local-storage'
-            'driver': 'app/settings/drivers/cocoa'
+            'driver': 'app/settings/drivers/html-local-storage'
+            //'driver': 'app/settings/drivers/cocoa'
         },
 
         'app/session/session':{
@@ -86,6 +86,11 @@ require.config({
     'backbone/stickit' : {
       'deps' : ['backbone'],
       'exports' : 'Stickit'
+    },
+
+    'jquery/mockjax': {
+        'deps': ['jquery'],
+        'exports': 'jquery'
     },
 
     'marionette': {
