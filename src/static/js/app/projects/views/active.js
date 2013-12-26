@@ -12,9 +12,9 @@ var CellInProgressView = require('./cells/in-progress').CellInProgressView;
 var CellCompletedView = require('./cells/completed').CellCompletedView;
 
 var events = require('../events');
-var template = require('hbs!app/projects/templates/in-process');
+var template = require('hbs!app/projects/templates/active');
 
-var InProcessView = marionette.ItemView.extend({
+var ActiveView = marionette.ItemView.extend({
     template: template,
 
     // tag representing this view
@@ -101,6 +101,6 @@ var InProcessView = marionette.ItemView.extend({
 
 });
 
-exports.InProcessView = InProcessView;
+exports.ActiveView = ActiveView;
 
 });
