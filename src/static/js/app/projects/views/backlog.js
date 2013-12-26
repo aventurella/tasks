@@ -10,6 +10,8 @@ var TaskFormView = require('app/modals/views/new-task').TaskFormView;
 var modals = require('built/app/modals');
 var template = require('hbs!app/projects/templates/backlog');
 
+var hotkeys = require('app/hotkeys/hotkeys');
+
 var BacklogView = marionette.ItemView.extend({
     template: template,
 
@@ -103,22 +105,21 @@ var BacklogView = marionette.ItemView.extend({
     },
 
     wantsAddToBacklog: function(){
-        var taskForm = new TaskFormView({project: this.model});
-        var modalView = modals.presentModal(taskForm);
 
-        modalView.then(this.addToBacklogModalComplete);
+        var action = hotkeys.createTask(
+            this.getTasks(),
+            {tag: this.tag, project: this.model});
+
+        action.then(this.addToBacklogModalComplete);
+
     },
 
-    addToBacklogModalComplete: function(modalView){
-        var data = modalView.getData();
-        modals.dismissModal();
+    addToBacklogModalComplete: function(task){
 
-        if (data.ok === false) return;
-
-        if(data.model.get('status') === tasks.status.BACKLOG ){
-            this.addToBacklog(data.model);
+        if(task.get('status') === tasks.status.BACKLOG ){
+            this.addToBacklog(task);
         } else {
-            this.getTasks().add(data.model);
+            this.getTasks().add(task);
         }
 
     },
