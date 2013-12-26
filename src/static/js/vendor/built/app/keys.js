@@ -24,6 +24,13 @@ function getKeyFromEvent(e){
     return key;
 }
 
+function removeFromResponderChain(view){
+    var array = _responderChain.getArray();
+    var index = array.indexOf(view);
+    if(index == -1) return;
+
+     _responderChain.removeObjectAt(index);
+}
 
 function registerInResponderChain(view){
     view.once('close', function(){
