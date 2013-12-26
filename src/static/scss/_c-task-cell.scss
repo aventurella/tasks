@@ -1,4 +1,14 @@
 .task{
+    .id{
+        display: inline-block;
+        padding: 5px;
+        height: 20px;
+        color: white;
+        background-color: #5bc0de;
+        border-color: #46b8da;
+        line-height: 10px;
+        margin-right:10px;
+    }
     >.label{
         @extend .clearfix;
     }

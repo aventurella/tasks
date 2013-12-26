@@ -70,6 +70,7 @@ var TaskView = marionette.ItemView.extend({
 
     keyDown: function(e){
         this.keyResponder.interpretKeyEvents(e);
+        return true;
     },
 
     doCloseActions: function(){
