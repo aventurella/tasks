@@ -3,6 +3,7 @@ define(function(require, exports, module) {
 var marionette = require('marionette');
 var modals = require('built/app/modals');
 var ClickTestResponder = require('built/core/responders/clicks').ClickTestResponder;
+var KeyResponder = require('built/core/responders/keys').KeyResponder;
 var events = require('../../events');
 var status = require('../../models/task').status;
 var EditTaskFormView = require('app/modals/views/edit-task').EditTaskFormView;
@@ -42,6 +43,9 @@ var TaskView = marionette.ItemView.extend({
         if(this._clickTest){
             this._clickTest.close();
         }
+        // if(this.keyResponder){
+        //     this.keyResponder.close();
+        // }
     },
 
     onDoubleClick: function(){
@@ -49,16 +53,26 @@ var TaskView = marionette.ItemView.extend({
     },
 
     doOpenActions: function(){
+        $('window').focus();
         this.ui.dropdownMenu.show();
         this._clickTest = new ClickTestResponder({
             el: this.$el,
             clickOutside: this.doCloseActions
         });
+
+        // this.keyResponder = new KeyResponder({
+        //     cancelOperation: this.doCloseActions
+        // });
     },
+
+    // keyDown: function(e){
+    //     this.keyResponder.interpretKeyEvents(e);
+    // },
 
     doCloseActions: function(){
         this.ui.dropdownMenu.hide();
         this._clickTest.close();
+        // this.keyResponder.close();
     },
 
     onRender: function(){
