@@ -26,7 +26,7 @@ var task_type = {
 
 
 var Task = backbone.Model.extend({
-    urlRoot: domain+'/api/v1/task/',
+    urlRoot: domain + '/api/v1/task/',
     initialize: function(){
 
     },
