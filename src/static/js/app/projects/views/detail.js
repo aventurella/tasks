@@ -160,6 +160,7 @@ var ProjectDetailView = marionette.Layout.extend({
     },
 
     onClose: function(){
+        keys.removeFromResponderChain(this);
         this.focusManager.close();
     }
 
