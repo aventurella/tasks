@@ -39,7 +39,7 @@ var TasksProtocol = marionette.Controller.extend({
 
     deleteTask: function(data){
         var model = this.tasks.get(data.id);
-        this.tasks.remove(model);
+        model.trigger('destroy', model, model.collection);
     },
 
 
