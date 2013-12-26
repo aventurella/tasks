@@ -31,8 +31,7 @@ var BacklogView = marionette.ItemView.extend({
             'showCollection',
             'setTasks',
             'getTasks',
-            'filterTasks',
-            'addToBacklogModalComplete');
+            'filterTasks');
         this.tasks = options.tasks;
         this.options = options;
     },
@@ -106,22 +105,15 @@ var BacklogView = marionette.ItemView.extend({
 
     wantsAddToBacklog: function(){
 
-        var action = hotkeys.createTask(
+        // the collection of all of the tasks
+        // has an add listener.
+        // createTask will add to the global collection
+        // triggering that add which will drop it into
+        // the backlog list if applicable.
+
+        hotkeys.createTask(
             this.getTasks(),
             {tag: this.tag, project: this.model});
-
-        action.then(this.addToBacklogModalComplete);
-
-    },
-
-    addToBacklogModalComplete: function(task){
-
-        if(task.get('status') === tasks.status.BACKLOG ){
-            this.addToBacklog(task);
-        } else {
-            this.getTasks().add(task);
-        }
-
     },
 
     removeFromBacklog: function(task){
