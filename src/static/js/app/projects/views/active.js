@@ -12,6 +12,7 @@ var CellInProgressView = require('./cells/in-progress').CellInProgressView;
 var CellCompletedView = require('./cells/completed').CellCompletedView;
 
 var events = require('../events');
+var dndevents = require('built/core/events/drag');
 var template = require('hbs!app/projects/templates/active');
 
 var ActiveView = marionette.ItemView.extend({
@@ -77,9 +78,29 @@ var ActiveView = marionette.ItemView.extend({
         inProgress.render();
         completed.render();
 
+        this.listenTo(todo, dndevents.DRAG_START, this._dragDidStart);
+        this.listenTo(inProgress, dndevents.DRAG_START, this._dragDidStart);
+        this.listenTo(completed, dndevents.DRAG_START, this._dragDidStart);
+
+        this.listenTo(todo, dndevents.DRAG_END, this._dragDidEnd);
+        this.listenTo(inProgress, dndevents.DRAG_END, this._dragDidEnd);
+        this.listenTo(completed, dndevents.DRAG_END, this._dragDidEnd);
+
         this.swimlanes[status.TODO] = todo;
         this.swimlanes[status.IN_PROGRESS] = inProgress;
         this.swimlanes[status.COMPLETED] = completed;
+    },
+
+    _dragDidStart: function(){
+        this.swimlanes[status.TODO].$el.addClass('reveal');
+        this.swimlanes[status.IN_PROGRESS].$el.addClass('reveal');
+        this.swimlanes[status.COMPLETED].$el.addClass('reveal');
+    },
+
+    _dragDidEnd: function(){
+        this.swimlanes[status.TODO].$el.removeClass('reveal');
+        this.swimlanes[status.IN_PROGRESS].$el.removeClass('reveal');
+        this.swimlanes[status.COMPLETED].$el.removeClass('reveal');
     },
 
     taskStatusDidChange: function(model){

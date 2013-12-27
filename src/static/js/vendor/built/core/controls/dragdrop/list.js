@@ -7,7 +7,7 @@ define(function(require, exports, module) {
     var ArrayManager = require('built/core/managers/array').ArrayManager;
     var dndutils = require('built/core/utils/dndutils');
     var getElementBounds = require('built/ui/helpers/dom').getElementBounds;
-
+    var dndevents = require('built/core/events/drag');
 
     var DragDropList = marionette.Controller.extend({
         el: null,
@@ -260,6 +260,7 @@ define(function(require, exports, module) {
             // !!! WARNING !!!, THE EVENT IS AN EMPTY OBJECT IN THIS CASE
             //_.defer(this._dropResponderLazyDraggingExited, this.dropResponder, {});
             this._dropResponderLazyDraggingExited(this.dropResponder, {});
+            this.trigger(dndevents.DRAG_START);
         },
 
         dragResponderDraggingEnded: function(sender, $el, operation) {
@@ -302,6 +303,7 @@ define(function(require, exports, module) {
 
             this._draggingItem = null;
             this._draggingIndex = -1;
+            this.trigger(dndevents.DRAG_END);
         },
 
         draggingEndedRestoreElementAtPosition: function(position, $el){

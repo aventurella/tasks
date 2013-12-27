@@ -4,6 +4,7 @@ var marionette = require('marionette');
 var getElementId = require('built/core/utils/helpers').getElementId;
 var registerElement = require('built/core/utils/helpers').registerElement;
 var DragDropList = require('built/core/controls/dragdrop/list').DragDropList;
+var dndevents = require('built/core/events/drag');
 
 
 var DragAndDropCollectionView =  marionette.CollectionView.extend({
@@ -27,6 +28,9 @@ var DragAndDropCollectionView =  marionette.CollectionView.extend({
         });
         this.dragDropList.setDropElement(this.$el);
         this.on('show', this.onShow);
+
+        this.listenTo(this.dragDropList, dndevents.DRAG_START, this._dragDidStart);
+        this.listenTo(this.dragDropList, dndevents.DRAG_END, this._dragDidEnd);
     },
 
     onClose: function(){
@@ -35,6 +39,16 @@ var DragAndDropCollectionView =  marionette.CollectionView.extend({
 
     onShow: function(){
 
+    },
+
+    _dragDidStart: function(){
+        // forwarding events on
+        this.trigger(dndevents.DRAG_START);
+    },
+
+    _dragDidEnd: function(){
+        // forwarding events on
+        this.trigger(dndevents.DRAG_END);
     },
 
 

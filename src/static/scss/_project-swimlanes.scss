@@ -78,6 +78,16 @@
             left: 0;
             right: 30px; // match padding-right on the lane
             z-index: 0;
+
+            @include transition (background-color 0.25s linear, border 0.25s linear);
+            background-color: rgba(0, 0, 0, 0);
+            border: 1px dotted #e1e3e6;
+
+            &.reveal{
+                background-color: rgba(0, 0, 0, 0.03);
+                border: 1px dotted #c2c2c2;
+                box-sizing: border-box;
+            }
         }
     }
 }
