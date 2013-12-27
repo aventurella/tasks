@@ -36,6 +36,7 @@ var TasksProtocol = marionette.Controller.extend({
     createTask: function(data){
         var model = new Task();
         model.doUpdateModel(data);
+
         var pendingId = pendingIdForTask(model);
         var pendingModel = this.tasks.pending[pendingId];
 

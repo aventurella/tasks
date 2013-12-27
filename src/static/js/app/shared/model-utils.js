@@ -16,7 +16,7 @@ define(function (require, exports, module) {
         task.get('project'),
         task.get('task_type')];
 
-        return md5.hex_md5(parts.join(''));
+        return hex_md5(parts.join(''));
     }
 
     exports.url = url;
