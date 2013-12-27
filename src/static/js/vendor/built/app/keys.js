@@ -33,11 +33,11 @@ function removeFromResponderChain(view){
 }
 
 function registerInResponderChain(view){
-    view.once('close', function(){
-        var array = _responderChain.getArray();
-        var index = array.indexOf(view);
-        _responderChain.removeObjectAt(index);
-    });
+    if (view.once){
+        view.once('close', function(){
+            removeFromResponderChain(view);
+        });
+    }
 
     _responderChain.insertObject(view);
 }

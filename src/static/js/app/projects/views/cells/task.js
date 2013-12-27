@@ -26,7 +26,7 @@ var TaskView = marionette.ItemView.extend({
         'click .completed': 'wantsSetCompleted',
         'click .archive': 'wantsSetArchived',
         'click .backlog': 'wantsSetBacklog',
-        'click .actions':'doOpenActions',
+        'click .actions':'wantsShowActions',
         'dblclick':'onDoubleClick'
     },
 
@@ -35,9 +35,10 @@ var TaskView = marionette.ItemView.extend({
     },
 
     initialize: function(){
-        _.bindAll(this, 'doCloseActions');
+        //_.bindAll(this, 'doCloseActions');
         // needed for when we reasign the assigned_to via server
         this.listenTo(this.model, 'change', this.render);
+
     },
 
     onClose: function(){
@@ -54,30 +55,47 @@ var TaskView = marionette.ItemView.extend({
         this.wantsEdit();
     },
 
-    doOpenActions: function(){
-        $('window').focus();
-        this.ui.dropdownMenu.show();
-        this._clickTest = new ClickTestResponder({
+    wantsShowActions: function(){
+
+        if(!this.actionsMenuVisible){
+            this.showActions();
+        }
+    },
+
+    showActions: function(){
+        this.actionsMenuVisible = true;
+
+        var dropdownMenu = this.ui.dropdownMenu;
+        dropdownMenu.show();
+
+        var deferred = $.Deferred();
+
+        var keyResponder = new KeyResponder({
+            cancelOperation: deferred.resolve
+        });
+
+        var clickTest = new ClickTestResponder({
             el: this.$el,
-            clickOutside: this.doCloseActions
+            clickOutside: deferred.resolve
         });
 
-        this.keyResponder = new KeyResponder({
-            cancelOperation: this.doCloseActions
+        var responder = {
+            keyDown: function(e){
+                keyResponder.interpretKeyEvents(e);
+                return true;
+            }
+        };
+
+        keys.registerInResponderChain(responder);
+        var self = this;
+
+        deferred.then(function(){
+            self.actionsMenuVisible = false;
+            dropdownMenu.hide();
+            clickTest.close();
+            keyResponder.close();
+            keys.removeFromResponderChain(responder);
         });
-        keys.registerInResponderChain(this);
-    },
-
-    keyDown: function(e){
-        this.keyResponder.interpretKeyEvents(e);
-        return true;
-    },
-
-    doCloseActions: function(){
-        this.ui.dropdownMenu.hide();
-        this._clickTest.close();
-        this.keyResponder.close();
-        keys.removeFromResponderChain(this);
     },
 
     onRender: function(){
