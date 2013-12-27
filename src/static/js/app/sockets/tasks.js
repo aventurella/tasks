@@ -2,6 +2,8 @@ define(function (require, exports, module) {
 
 var marionette = require('marionette');
 var Task = require('app/projects/models/task').Task;
+var pendingIdForTask = require('app/shared/model-utils').pendingIdForTask;
+
 require('sockjs');
 
 var TasksProtocol = marionette.Controller.extend({
@@ -34,7 +36,17 @@ var TasksProtocol = marionette.Controller.extend({
     createTask: function(data){
         var model = new Task();
         model.doUpdateModel(data);
+        var pendingId = pendingIdForTask(model);
+        var pendingModel = this.tasks.pending[pendingId];
+
+        if(pendingModel){
+            pendingModel.set('id', model.get('id'));
+            delete this.tasks.pending[pendingId];
+            return;
+        }
+
         this.tasks.add(model);
+
     },
 
     deleteTask: function(data){

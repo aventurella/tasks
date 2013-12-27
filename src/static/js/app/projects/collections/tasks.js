@@ -7,6 +7,11 @@ var domain = require('app/settings/defaults').getSettings().getApiDomain();
 var Tasks =  backbone.Collection.extend({
     url: domain+'/api/v1/task/',
     model: Task,
+
+    initialize: function(){
+        this.pending = {};
+    },
+
     parse: function(response) {
         return response.objects;
     }

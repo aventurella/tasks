@@ -5,6 +5,7 @@ var marionette = require('marionette');
 var modals = require('built/app/modals');
 var TaskFormView = require('app/modals/views/new-task').TaskFormView;
 var status = require('app/projects/models/task').status;
+var pendingIdForTask = require('app/shared/model-utils').pendingIdForTask;
 
 function createTask(tasks, options){
 
@@ -29,13 +30,17 @@ function createTask(tasks, options){
 
         var data = view.getData();
         var model;
+        var pendingId;
 
         if(!data.ok) return;
 
         model = data.model;
-        deferred.resolve(model);
 
+        pendingId = pendingIdForTask(model);
         tasks.add(model);
+        tasks.pending[pendingId] = model;
+
+        deferred.resolve(model);
         model.save();
 
     }, this);
