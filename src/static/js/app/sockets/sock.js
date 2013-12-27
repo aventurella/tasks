@@ -44,6 +44,7 @@ var SockController = marionette.Controller.extend({
         };
         this.token = token;
         this.send(connectionData);
+        this._login = $.Deferred();
         return this._login.promise();
    },
 
