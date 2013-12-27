@@ -13,6 +13,12 @@
 #project-detail .details .swimlanes{
     -webkit-flex-grow: 1;
     flex-grow: 1;
+    position: absolute;
+    top: 65px;
+    left: 10px; // match padding-left on #project-detail
+    right: 0;
+    bottom: 0;
+    z-index: 0; // for scroll bar
 
     display: flex;
     display: -webkit-flex;
@@ -27,8 +33,10 @@
         flex-direction: column;
         -webkit-flex-direction: column;
 
+
         padding-right: 30px;
         width: 300px;
+        position: relative;
 
         .heading{
             padding: 10px 0;
@@ -37,6 +45,8 @@
             background-color: $white;
             color: $selected-project;
             border: 1px solid $task-light-gray-border;
+            position: relative;
+            z-index: 1;
 
             box-shadow:
             rgba(255, 255, 255, 0.1) 0 1px 1px 1px inset,
@@ -59,10 +69,15 @@
             margin: 0;
             padding: 0;
             list-style-type: none;
-            min-height:400px;
-            .task:last-child{
-                margin-bottom: 500px;
-            }
+            padding-bottom: 20px;
+            overflow-y: auto;
+            // make the lanes full height for dragging/dropping
+            position: absolute;
+            top: 44px;
+            bottom: 0;
+            left: 0;
+            right: 30px; // match padding-right on the lane
+            z-index: 0;
         }
     }
 }

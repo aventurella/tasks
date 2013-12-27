@@ -15,6 +15,7 @@ var template = require('hbs!app/projects/templates/detail');
 
 var ProjectDetailView = marionette.Layout.extend({
     template: template,
+    className: 'project-detail-wrapper',
 
     ui:{
         toggleButton: '.project-name .pane-action',
