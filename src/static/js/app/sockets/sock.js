@@ -43,9 +43,14 @@ var SockController = marionette.Controller.extend({
             }
         };
         this.token = token;
-        this.sock.send(JSON.stringify(connectionData));
+        this.send(connectionData);
         return this._login.promise();
    },
+
+    send: function(data){
+        var payload = JSON.stringify(data);
+        this.sock.send(payload);
+    },
 
    onAuthComplete: function(e){
         var data = JSON.parse(e.data);
@@ -80,7 +85,7 @@ var SockController = marionette.Controller.extend({
         };
 
         if(Bridge) Bridge.currentProjectId = id;
-        this.sock.send(JSON.stringify(connectionData));
+        this.send(connectionData);
    },
 
    onclose: function(){

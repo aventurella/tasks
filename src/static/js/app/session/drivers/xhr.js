@@ -6,9 +6,16 @@ var domain = require('app/settings/defaults').getSettings().getApiDomain();
 function authenticate(username, password){
     var deferred = $.Deferred();
 
-    $.get(domain + '/api/v1/token/me/?u='+username+'&p='+password)
-    .then(function(data){
+    var query = {u: username, p: password};
+    var url = domain + '/api/v1/token/me/';
+    var options = {
+        url: url,
+        data: query,
+        dataType: 'json'
+    };
 
+    $.ajax(options)
+     .then(function(data){
         if(data.ok){
             deferred.resolve(data.token);
             return;
