@@ -52,6 +52,12 @@ var TaskView = marionette.Layout.extend({
 
     wantsShowActions: function(){
         var choices = {
+            'backlog': [
+            {label: 'Move To Todo', tag: 'todo'},
+            {label: 'Move To In Progress', tag: 'in-progress'},
+            {label: 'Move To In Completed', tag: 'completed'},
+            ],
+
             'todo': [
             {label: 'Move To Backlog', tag: 'backlog'},
             {label: 'Move To In Progress', tag: 'in-progress'},
