@@ -88,7 +88,7 @@ var SockController = marionette.Controller.extend({
                 project_id:id
             }
         };
-
+        this._project_id = id;
         if(Bridge) Bridge.currentProjectId = id;
         this.send(connectionData);
    },
@@ -108,9 +108,10 @@ var SockController = marionette.Controller.extend({
    },
    showModal: function(){
        modals.presentModal(new SocketConnectingView());
+
        this.once(events.CONNECT, function(){
             modals.dismissModal();
-            this.tasks.fetch();
+            this.tasks.fetch({data: {project__id: this._project_id}});
        });
 
    },
