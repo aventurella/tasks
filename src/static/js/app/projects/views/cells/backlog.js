@@ -8,7 +8,6 @@ var CellBacklogView = TaskView.extend({
     className: 'task backlog',
     tag: 'backlog'
 
-
 });
 
 exports.CellBacklogView = CellBacklogView;

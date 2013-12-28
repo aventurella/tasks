@@ -71,6 +71,12 @@ var TaskView = marionette.Layout.extend({
             'completed': [
             {label: 'Move To Todo', tag: 'todo'},
             {label: 'Move To Archive', tag: 'archive'},
+            ],
+
+            'archived':[
+            {label: 'Move To Todo', tag: 'todo'},
+            {label: 'Move To In Progress', tag: 'in-progress'},
+            {label: 'Move To In Completed', tag: 'completed'},
             ]
         };
 
