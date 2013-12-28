@@ -47,6 +47,14 @@ var Task = backbone.Model.extend({
         this.set('project', '/api/v1/project/'+obj.project+'/');
     },
 
+    parse: function(resp, options){
+        if(resp.project.resource_uri){
+            resp.project = resp.project.resource_uri;
+        }
+
+        return resp;
+    },
+
     defaults: {
         label: null,
         description: null,

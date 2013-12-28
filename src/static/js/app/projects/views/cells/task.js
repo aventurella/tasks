@@ -19,13 +19,6 @@ var TaskView = marionette.Layout.extend({
     },
 
     events:{
-        // 'click .todo': 'wantsSetTodo',
-        // 'click .edit': 'wantsEdit',
-        // 'click .delete': 'wantsDelete',
-        // 'click .in-progress': 'wantsSetInProgress',
-        // 'click .completed': 'wantsSetCompleted',
-        // 'click .archive': 'wantsSetArchived',
-        // 'click .backlog': 'wantsSetBacklog',
         'click .actions':'wantsShowActions',
         'dblclick':'onDoubleClick'
     },
@@ -39,7 +32,6 @@ var TaskView = marionette.Layout.extend({
     },
 
     initialize: function(){
-        //_.bindAll(this, 'doCloseActions');
         // needed for when we reasign the assigned_to via server
         this.listenTo(this.model, 'change', this.render);
     },
@@ -59,18 +51,6 @@ var TaskView = marionette.Layout.extend({
     },
 
     wantsShowActions: function(){
-        // $('window').focus();
-        // this.ui.dropdownMenu.show();
-        // this._clickTest = new ClickTestResponder({
-        //     el: this.$el,
-        //     clickOutside: this.doCloseActions
-        // });
-
-        // this.keyResponder = new KeyResponder({
-        //     cancelOperation: this.doCloseActions
-        // });
-
-        // keys.registerInResponderChain(this);
         var choices = {
             'todo': [
             {label: 'Move To Backlog', tag: 'backlog'},
@@ -88,16 +68,6 @@ var TaskView = marionette.Layout.extend({
             ]
         };
 
-        // var items = choices[this.tag] || [];
-        // var menu = new TaskActionsMenu({choices: items});
-        // var actions = this.actions;
-
-        // menu.once('select', function(tag){
-        //     console.log(tag);
-        //     actions.close();
-        // });
-
-        // this.actions.show(menu);
         this.showActions(choices[this.tag] || []);
     },
 
@@ -135,34 +105,25 @@ var TaskView = marionette.Layout.extend({
 
             if(!menu.selectedTag) return;
 
+            var options = {
+                'todo': 'wantsSetTodo',
+                'in-progress': 'wantsSetInProgress',
+                'completed': 'wantsSetCompleted',
+                'archive': 'wantsSetArchived',
+                'backlog': 'wantsSetBacklog',
+                'edit': 'wantsEdit',
+                'delete': 'wantsDelete'
+            };
 
-            switch(menu.selectedTag){
-                case 'todo':
-                    this.wantsSetTodo();
-                    break;
-                case 'in-progress':
-                    this.wantsSetInProgress();
-                    break;
-            }
-
+            var actionKey = options[menu.selectedTag] || null;
+            if(!actionKey) return;
+            this[actionKey]();
 
         }, this));
 
         keys.registerInResponderChain(responder);
         actions.show(menu);
     },
-
-    // keyDown: function(e){
-    //     this.keyResponder.interpretKeyEvents(e);
-    //     return true;
-    // },
-
-    // doCloseActions: function(){
-    //     this.ui.dropdownMenu.hide();
-    //     this._clickTest.close();
-    //     this.keyResponder.close();
-    //     keys.removeFromResponderChain(this);
-    // },
 
     onRender: function(){
         this.stickit();

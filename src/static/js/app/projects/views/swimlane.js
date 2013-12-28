@@ -52,7 +52,12 @@ var Swimlane = DragAndDropCollectionView.extend({
     deserializeModel: function(data){
         var model = $.parseJSON(data);
         model = this.masterList.get(model.id);
-        model.set('status', this.options.status, {silent:true});
+
+        if(this.options.status !== model.get('status')){
+            model.set('status', this.options.status, {silent:true});
+            model.save();
+        }
+
         return model;
     },
 
@@ -63,7 +68,6 @@ var Swimlane = DragAndDropCollectionView.extend({
     dropResponderPerformDragOperation: function(responder, e){
         var model = this.deserializeModel(responder.getData());
         DragAndDropCollectionView.prototype.dropResponderPerformDragOperation.apply(this, arguments);
-        model.save();
     },
 
 });
