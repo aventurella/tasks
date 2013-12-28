@@ -62,6 +62,7 @@ var Task = backbone.Model.extend({
         loe:loe.LOW,
         task_type:task_type.TASK
     },
+
     url: url
 });
 
