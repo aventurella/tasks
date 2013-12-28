@@ -1,10 +1,15 @@
 define(function (require, exports, module) {
 
 var marionette = require('marionette');
+
+var modals = require('built/app/modals');
+
 var getSettings = require('app/settings/defaults').getSettings;
+var socketDomain = require('app/settings/defaults').getSettings().getSocketDomain();
+var SocketConnectingView = require('app/modals/views/sockets').SocketConnectingView;
+
 var TasksProtocol = require('./tasks').TasksProtocol;
 var events = require('./events');
-var socketDomain = require('app/settings/defaults').getSettings().getSocketDomain();
 
 require('sockjs');
 
@@ -31,7 +36,6 @@ var SockController = marionette.Controller.extend({
             this.sock.onmessage = this.onAuthComplete;
             this.sock.onclose = this.onclose;
         }
-        this.trigger('connected');
         return this._connection.promise();
    },
 
@@ -91,6 +95,8 @@ var SockController = marionette.Controller.extend({
 
    onclose: function(){
        this.trigger(events.DISCONNECT);
+       // SocketConnectingView
+       this.showModal();
        this.sock = null;
        // should set a timeout and then notify
        // them of a countdown? re:slack?
@@ -99,6 +105,14 @@ var SockController = marionette.Controller.extend({
        setTimeout(function(){
         self.connect();
        }, 5000);
+   },
+   showModal: function(){
+       modals.presentModal(new SocketConnectingView());
+       this.once(events.CONNECT, function(){
+            modals.dismissModal();
+            this.tasks.fetch();
+       });
+
    },
 });
 
