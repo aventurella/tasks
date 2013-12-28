@@ -104,6 +104,7 @@ var ActiveView = marionette.ItemView.extend({
     },
 
     taskStatusDidChange: function(model){
+        debugger;
 
         var target = this.swimlanes[model.previous('status')];
         var destination = this.swimlanes[model.get('status')];

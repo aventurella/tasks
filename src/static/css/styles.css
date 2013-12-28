@@ -1069,8 +1069,6 @@ body {
     #project-detail .task .loe .high {
       border: 1px solid #cc2511;
       background-color: #f8b7af; }
-  #project-detail .task:hover .action {
-    visibility: visible; }
   #project-detail .task .action {
     font-size: 11px;
     margin-left: 10px;
@@ -1395,7 +1393,6 @@ body {
   top: 100%;
   right: 0;
   z-index: 1;
-  display: none;
   float: left;
   min-width: 160px;
   padding: 5px 0;
@@ -1409,7 +1406,11 @@ body {
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   background-clip: padding-box; }
-  .dropdown-menu > li > a {
+  .dropdown-menu ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none; }
+  .dropdown-menu li > a {
     display: block;
     padding: 3px 20px;
     clear: both;
@@ -1418,10 +1419,10 @@ body {
     color: #333;
     white-space: nowrap;
     text-decoration: none; }
-    .dropdown-menu > li > a:hover {
+    .dropdown-menu li > a:hover {
       color: #262626;
       background-color: #f5f5f5; }
-  .dropdown-menu > li.divider {
+  .dropdown-menu li.divider {
     margin: 5px;
     height: 1px;
     background-color: #f5f5f5; }

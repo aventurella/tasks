@@ -6,6 +6,7 @@ var TaskView = require('./task').TaskView;
 var CellTodoView = TaskView.extend({
     template: template,
     className: 'task todo',
+    tag: 'todo'
 
 });
 

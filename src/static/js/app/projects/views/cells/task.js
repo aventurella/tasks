@@ -8,9 +8,9 @@ var keys = require('built/app/keys');
 var events = require('../../events');
 var status = require('../../models/task').status;
 var EditTaskFormView = require('app/modals/views/edit-task').EditTaskFormView;
+var TaskActionsMenu = require('../menus/menu-task-actions').TaskActionsMenu;
 
-
-var TaskView = marionette.ItemView.extend({
+var TaskView = marionette.Layout.extend({
     tagName: 'li',
 
     bindings:{
@@ -19,13 +19,13 @@ var TaskView = marionette.ItemView.extend({
     },
 
     events:{
-        'click .todo': 'wantsSetTodo',
-        'click .edit': 'wantsEdit',
-        'click .delete': 'wantsDelete',
-        'click .in-progress': 'wantsSetInProgress',
-        'click .completed': 'wantsSetCompleted',
-        'click .archive': 'wantsSetArchived',
-        'click .backlog': 'wantsSetBacklog',
+        // 'click .todo': 'wantsSetTodo',
+        // 'click .edit': 'wantsEdit',
+        // 'click .delete': 'wantsDelete',
+        // 'click .in-progress': 'wantsSetInProgress',
+        // 'click .completed': 'wantsSetCompleted',
+        // 'click .archive': 'wantsSetArchived',
+        // 'click .backlog': 'wantsSetBacklog',
         'click .actions':'wantsShowActions',
         'dblclick':'onDoubleClick'
     },
@@ -34,11 +34,14 @@ var TaskView = marionette.ItemView.extend({
         'dropdownMenu':'.dropdown-menu'
     },
 
+    regions: {
+        actions: '.actions-menu'
+    },
+
     initialize: function(){
         //_.bindAll(this, 'doCloseActions');
         // needed for when we reasign the assigned_to via server
         this.listenTo(this.model, 'change', this.render);
-
     },
 
     onClose: function(){
@@ -56,27 +59,65 @@ var TaskView = marionette.ItemView.extend({
     },
 
     wantsShowActions: function(){
+        // $('window').focus();
+        // this.ui.dropdownMenu.show();
+        // this._clickTest = new ClickTestResponder({
+        //     el: this.$el,
+        //     clickOutside: this.doCloseActions
+        // });
 
-        if(!this.actionsMenuVisible){
-            this.showActions();
-        }
+        // this.keyResponder = new KeyResponder({
+        //     cancelOperation: this.doCloseActions
+        // });
+
+        // keys.registerInResponderChain(this);
+        var choices = {
+            'todo': [
+            {label: 'Move To Backlog', tag: 'backlog'},
+            {label: 'Move To In Progress', tag: 'in-progress'},
+            ],
+
+            'in-progress': [
+            {label: 'Move To Todo', tag: 'todo'},
+            {label: 'Move To Completed', tag: 'completed'},
+            ],
+
+            'completed': [
+            {label: 'Move To Todo', tag: 'todo'},
+            {label: 'Move To Archive', tag: 'archive'},
+            ]
+        };
+
+        // var items = choices[this.tag] || [];
+        // var menu = new TaskActionsMenu({choices: items});
+        // var actions = this.actions;
+
+        // menu.once('select', function(tag){
+        //     console.log(tag);
+        //     actions.close();
+        // });
+
+        // this.actions.show(menu);
+        this.showActions(choices[this.tag] || []);
     },
 
-    showActions: function(){
-        this.actionsMenuVisible = true;
+    showActions: function(choices){
+        var actions = this.actions;
 
-        var dropdownMenu = this.ui.dropdownMenu;
-        dropdownMenu.show();
+        if(actions.currentView) return;
 
         var deferred = $.Deferred();
-
-        var keyResponder = new KeyResponder({
-            cancelOperation: deferred.resolve
+        var menu = new TaskActionsMenu({
+            choices: choices
         });
 
         var clickTest = new ClickTestResponder({
             el: this.$el,
             clickOutside: deferred.resolve
+        });
+
+        var keyResponder = new KeyResponder({
+            cancelOperation: deferred.resolve
         });
 
         var responder = {
@@ -86,17 +127,42 @@ var TaskView = marionette.ItemView.extend({
             }
         };
 
-        keys.registerInResponderChain(responder);
-        var self = this;
-
-        deferred.then(function(){
-            self.actionsMenuVisible = false;
-            dropdownMenu.hide();
+        deferred.then(_.bind(function(){
+            actions.close();
             clickTest.close();
             keyResponder.close();
             keys.removeFromResponderChain(responder);
-        });
+
+            if(!menu.selectedTag) return;
+
+
+            switch(menu.selectedTag){
+                case 'todo':
+                    this.wantsSetTodo();
+                    break;
+                case 'in-progress':
+                    this.wantsSetInProgress();
+                    break;
+            }
+
+
+        }, this));
+
+        keys.registerInResponderChain(responder);
+        actions.show(menu);
     },
+
+    // keyDown: function(e){
+    //     this.keyResponder.interpretKeyEvents(e);
+    //     return true;
+    // },
+
+    // doCloseActions: function(){
+    //     this.ui.dropdownMenu.hide();
+    //     this._clickTest.close();
+    //     this.keyResponder.close();
+    //     keys.removeFromResponderChain(this);
+    // },
 
     onRender: function(){
         this.stickit();

@@ -6,6 +6,7 @@ var TaskView = require('./task').TaskView;
 var CellCompletedView = TaskView.extend({
     template: template,
     className: 'task completed',
+    tag: 'completed'
 
 });
 
