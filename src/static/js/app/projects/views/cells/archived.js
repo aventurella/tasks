@@ -6,6 +6,7 @@ var TaskView = require('./task').TaskView;
 var CellArchivedView = TaskView.extend({
     template: template,
     className: 'task archived',
+    tag: 'archived'
 
 
 });

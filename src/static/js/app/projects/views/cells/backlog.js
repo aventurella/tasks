@@ -6,6 +6,7 @@ var TaskView = require('./task').TaskView;
 var CellBacklogView = TaskView.extend({
     template: template,
     className: 'task backlog',
+    tag: 'backlog'
 
 
 });
