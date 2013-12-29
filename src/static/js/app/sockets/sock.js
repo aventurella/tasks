@@ -60,7 +60,6 @@ var SockController = marionette.Controller.extend({
    onAuthComplete: function(e){
         var data = JSON.parse(e.data);
         var currentSettings;
-
         if(!data.ok){
             this.trigger('login:fail');
             this._login.reject();

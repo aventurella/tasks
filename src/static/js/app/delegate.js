@@ -209,12 +209,14 @@ var ApplicationDelegate = marionette.Controller.extend({
     },
 
     _presentNetworkActivityIndicator: function(){
-        throw new Error('No Activity Indicator View Specified');
+        $('body').addClass('loading');
+        // throw new Error('No Activity Indicator View Specified');
         //this.app.activity.show(new YourActivityView);
     },
 
     _dismissNetworkActivityIndicator: function(modalView){
-        this.app.activity.close();
+        $('body').removeClass('loading');
+        // this.app.activity.close();
     },
 
     _presentModal: function(modalView){

@@ -1,10 +1,9 @@
 define(function( require, exports, module ){
 
 var backbone = require('backbone');
-var modals = require('built/app/modals');
+var activity = require('built/app/activity');
 var Task = require('../models/task').Task;
 var domain = require('app/settings/defaults').getSettings().getApiDomain();
-var LoadingIndicatorView = require('app/modals/views/loading').LoadingIndicatorView;
 
 var Tasks =  backbone.Collection.extend({
     url: domain+'/api/v1/task/',
@@ -19,12 +18,12 @@ var Tasks =  backbone.Collection.extend({
     },
 
     fetch: function(){
-        modals.presentModal(new LoadingIndicatorView());
+        activity.presentNetworkActivityIndicator();
         this.once('sync', this.onFetchComplete);
         return backbone.Collection.prototype.fetch.apply(this, arguments);
     },
     onFetchComplete: function(){
-        modals.dismissModal();
+        activity.dismissNetworkActivityIndicator();
     },
 });
 
