@@ -9,6 +9,18 @@
     flex-direction: column;
     -webkit-flex-direction: column;
     position: relative;
+    .loading &{
+        &:before{
+            font-size:20px;
+            content:'loading...';
+            position: fixed;
+            left:50%;
+            top:40%;
+        }
+        .project-detail-wrapper{
+            display: none;
+        }
+    }
 
     .project-name{
         margin-bottom: 15px;

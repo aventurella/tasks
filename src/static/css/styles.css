@@ -943,6 +943,14 @@ body {
   flex-direction: column;
   -webkit-flex-direction: column;
   position: relative; }
+  .loading #project-detail:before {
+    font-size: 20px;
+    content: 'loading...';
+    position: fixed;
+    left: 50%;
+    top: 40%; }
+  .loading #project-detail .project-detail-wrapper {
+    display: none; }
   #project-detail .project-name {
     margin-bottom: 15px;
     border-bottom: 1px dotted #c0c0c0;
