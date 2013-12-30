@@ -16,6 +16,34 @@ var TaskView = marionette.Layout.extend({
     bindings:{
         '.lbl':'label',
         '.description':'description',
+        '.loe': {
+            observe: 'loe',
+            update: function($el, val, model, options) {
+                var loe = 'easy';
+                switch(val){
+                    case 0:
+                        loe = 'easy';
+                        break;
+                    case 1:
+                        loe = 'medium';
+                        break;
+                    case 2:
+                        loe = 'hard';
+                        break;
+                }
+                $el.find('>div').attr('class', loe);
+            }
+        },
+        ':el': {
+            observe: 'task_type',
+            update: function($el, val, model, options) {
+                if(val){
+                    $el.addClass('bug');
+                }else{
+                    $el.removeClass('bug');
+                }
+            }
+        },
     },
 
     events:{
