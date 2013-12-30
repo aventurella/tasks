@@ -2,10 +2,13 @@ define(function(require, exports, module) {
 
 var _ = require('underscore');
 var marionette = require('marionette');
+var dndevents = require('built/core/events/drag');
 var CellBacklogView = require('./cells/backlog').CellBacklogView;
+var Swimlane = require('./swimlane').Swimlane;
 var events = require('../events');
 var Tasks = require('../collections/tasks').Tasks;
 var tasks = require('../models/task');
+var status = require('../models/task').status;
 var TaskFormView = require('app/modals/views/new-task').TaskFormView;
 var modals = require('built/app/modals');
 var template = require('hbs!app/projects/templates/backlog');
@@ -66,22 +69,21 @@ var BacklogView = marionette.ItemView.extend({
     },
 
     showCollection: function(collection){
-        this.backlog = new marionette.CollectionView({
+
+        this.backlog = new Swimlane({
             el: this.ui.list,
             itemView: CellBacklogView,
-            collection: collection,
-
-            itemViewOptions: function(model, index) {
-                if(model.get('task_type') == tasks.task_type.BUG){
-                    var ItemView = this.getItemView();
-                    return {
-                        className: ItemView.prototype.className + ' bug'
-                    };
-                }
-            }
+            status: status.BACKLOG,
+            masterList:collection,
+            collection: new Tasks(collection.where({status:status.BACKLOG}))
         });
-
+        this.listenTo(this.backlog, dndevents.DRAG_END, this._dragDidEnd);
         this.backlog.render();
+    },
+
+    _dragDidEnd: function(){
+        // TODO handle resort and set backlog_order
+        // debugger;
     },
 
     taskStatusDidChange: function(model){

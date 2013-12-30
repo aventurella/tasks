@@ -44,6 +44,7 @@ var Task = backbone.Model.extend({
         this.set('status', obj.status);
         this.set('assigned_email', obj.assigned_email);
         this.set('task_type', obj.task_type);
+        this.set('backlog_order', obj.backlog_order);
         this.set('project', '/api/v1/project/'+obj.project+'/');
     },
 
