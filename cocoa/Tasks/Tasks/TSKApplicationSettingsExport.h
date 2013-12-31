@@ -10,5 +10,6 @@
 #import <JavaScriptCore/JavaScriptCore.h>
 
 @protocol TSKApplicationSettingsExport <JSExport>
-@property (strong) NSString *token;
+@property (nonatomic, strong) NSString *token;
+@property(nonatomic, assign) NSUInteger currentProjectId;
 @end

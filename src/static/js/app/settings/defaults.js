@@ -9,13 +9,13 @@ var settings = null;
 var ApplicationSettings = marionette.Controller.extend({
 
     getApiDomain: function(){
-        // return 'http://54.242.250.233';
-        return 'http://localhost:8000';
+        return 'http://54.242.250.233';
+        //return 'http://localhost:8000';
     },
 
     getSocketDomain: function(){
-        // return 'http://54.242.250.233:8888';
-        return 'http://localhost:8888';
+        return 'http://54.242.250.233:8888';
+        //return 'http://localhost:8888';
     },
 
     getToken: function(){
@@ -33,6 +33,15 @@ var ApplicationSettings = marionette.Controller.extend({
     getUser: function(){
         return driver.getUser();
     },
+
+    setCurrentProjectId: function(value){
+        return driver.setCurrentProjectId(value);
+    },
+
+
+    getCurrentProjectId: function(){
+        return driver.getCurrentProjectId();
+    }
 });
 
 function getSettings(){

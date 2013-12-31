@@ -28,6 +28,15 @@ function setToken(value){
     Bridge.settings.token = value;
 }
 
+function setCurrentProjectId(value){
+    Bridge.settings.currentProjectId = value;
+}
+
+function getCurrentProjectId(){
+    //$('#window').prepend('<pre>' + getCurrentProjectId+ '</pre>')
+    return Bridge.settings.currentProjectId;
+}
+
 function getUser(){
     console.log('LSUserModel1', _user);
     return _user;
@@ -40,8 +49,11 @@ function setUser(user){
 
 exports.getToken = getToken;
 exports.setToken = setToken;
+exports.setCurrentProjectId = setCurrentProjectId;
+exports.getCurrentProjectId = getCurrentProjectId;
 exports.getUser = getUser;
 exports.setUser = setUser;
+
 
 });
 

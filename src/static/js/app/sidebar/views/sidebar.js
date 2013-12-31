@@ -9,6 +9,7 @@ var ProjectListView = require('./projects').ProjectListView;
 var Project = require('../models/project').Project;
 var NewProjectView = require('app/modals/views/new-project').NewProjectView;
 var events = require('../events');
+var getSettings = require('app/settings/defaults').getSettings;
 var template = require('hbs!app/sidebar/templates/sidebar');
 
 // this is probably better as a layout.
@@ -25,6 +26,7 @@ var SidebarView = marionette.ItemView.extend({
 
     initialize: function(options){
         this.user = options.settings.getUser();
+        this.currentSettings = options.settings;
     },
 
     wantsAddProject: function(){
@@ -99,11 +101,11 @@ var SidebarView = marionette.ItemView.extend({
     },
 
     initializeProjectList: function(){
+
         this.projectListView = new ProjectListView({
             el: this.ui.projectListView,
-            user: this.user
+            settings: this.currentSettings
         });
-
 
         this.projectListView.bindUIElements();
         this.projectListView.triggerMethod('show', this.projectListView);

@@ -29,6 +29,15 @@ function setToken(value){
     localStorage.setItem('token', value);
 }
 
+function setCurrentProjectId(value){
+   localStorage.setItem('currentProjectId', value);
+}
+
+function getCurrentProjectId(){
+   var id = localStorage.getItem('currentProjectId');
+   return id;
+}
+
 function getUser(){
     // console.log('LSUserModel1', _user.toJSON());
     return _user;
@@ -41,6 +50,8 @@ function setUser(user){
 
 exports.getToken = getToken;
 exports.setToken = setToken;
+exports.setCurrentProjectId = setCurrentProjectId;
+exports.getCurrentProjectId = getCurrentProjectId;
 exports.getUser = getUser;
 exports.setUser = setUser;
 

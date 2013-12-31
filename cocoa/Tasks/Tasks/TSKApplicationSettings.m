@@ -9,7 +9,7 @@
 #import "TSKApplicationSettings.h"
 
 @implementation TSKApplicationSettings
-@synthesize token;
+@synthesize token, currentProjectId;
 
 - (id)init
 {
@@ -30,5 +30,18 @@
 
 - (NSString *)token{
     return [_defaults objectForKey:@"token"];
+}
+
+- (void)setCurrentProjectId:(NSUInteger)value{
+    
+    NSNumber * obj = [NSNumber numberWithUnsignedInteger:value];
+    [_defaults setObject:obj forKey:@"currentProjectId"];
+    [_defaults synchronize];
+    
+}
+
+- (NSUInteger)currentProjectId{
+    NSNumber * obj =  [_defaults objectForKey:@"currentProjectId"];
+    return [obj unsignedIntegerValue];
 }
 @end

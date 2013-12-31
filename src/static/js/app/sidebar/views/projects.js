@@ -13,8 +13,7 @@ var ProjectListView = marionette.CompositeView.extend({
     initialize: function(options){
         this.collection = new Projects();
         this.collection.fetch();
-        this.user = options.user;
-
+        this.settings = options.settings;
     },
 
     onShow: function(){
@@ -26,13 +25,13 @@ var ProjectListView = marionette.CompositeView.extend({
         var child;
         this.listenTo(this.collection, 'add', this.onProjectAdd);
 
-        if(this.collection.length && this.user.get('project_id')){
-            var id = this.user.get('project_id');
+        var id = this.settings.getCurrentProjectId();
+
+        if(this.collection.length && id){
             var model = this.collection.get(id) || false;
-            if(!model){
-                this.user.set('project_id', null);
-                return;
-            }
+
+            if(!model) return;
+
             child = this.children.findByModel(model);
         }else{
             child = this.children.findByIndex(0);
@@ -58,10 +57,7 @@ var ProjectListView = marionette.CompositeView.extend({
         obj.setSelected(true);
         this.activeProject = obj;
 
-
         this.trigger(events.SELECT_PROJECT, this, obj);
-
-        this.user.set('project_id', obj.model.get('id'));
     }
 
 });
