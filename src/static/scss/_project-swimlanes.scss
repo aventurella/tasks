@@ -11,6 +11,8 @@
 }
 
 #project-detail .details .swimlanes{
+
+
     -webkit-flex-grow: 1;
     flex-grow: 1;
     position: absolute;
@@ -19,6 +21,10 @@
     right: 0;
     bottom: 0;
     z-index: 0; // for scroll bar
+
+    &.backlog{
+        top: 115px;
+    }
 
     display: flex;
     display: -webkit-flex;

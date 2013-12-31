@@ -1108,7 +1108,13 @@ body {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  margin-top: 20px; }
+  padding-bottom: 20px;
+  overflow-y: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 10px; }
 
 #archived-list {
   list-style-type: none;
@@ -1137,6 +1143,8 @@ body {
   display: -webkit-flex;
   flex-direction: row;
   -webkit-flex-direction: row; }
+  #project-detail .details .swimlanes.backlog {
+    top: 115px; }
   #project-detail .details .swimlanes .lane {
     -webkit-flex-grow: 1;
     flex-grow: 1;
