@@ -1120,7 +1120,13 @@ body {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  margin-top: 20px; }
+  padding-bottom: 20px;
+  overflow-y: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 10px; }
 
 #project-detail .details .project-name {
   -webkit-flex-grow: 0;
@@ -1145,6 +1151,8 @@ body {
   -webkit-flex-direction: row; }
   #project-detail .details .swimlanes.backlog {
     top: 115px; }
+  #project-detail .details .swimlanes.archived {
+    top: 65px; }
   #project-detail .details .swimlanes .lane {
     -webkit-flex-grow: 1;
     flex-grow: 1;

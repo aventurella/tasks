@@ -26,6 +26,10 @@
         top: 115px;
     }
 
+    &.archived{
+        top: 65px;
+    }
+
     display: flex;
     display: -webkit-flex;
     flex-direction: row;
