@@ -126,8 +126,10 @@ var TaskView = marionette.Layout.extend({
             css.right = viewRect.width - 3; // drop shadow + 3
         }
 
-        var pop = new PopView({view: menu});
-        pop.showRelativeToElement(this.ui.actions.parent(), layout);
+        var pop = new PopView();
+        pop.show(menu, {rect: this.ui.actions.parent(), anchor: layout});
+        // var pop = new PopView({view: menu});
+        // pop.showRelativeToElement(this.ui.actions.parent(), layout);
 
         // handle a click
         menu.once('select', _.bind(function(){

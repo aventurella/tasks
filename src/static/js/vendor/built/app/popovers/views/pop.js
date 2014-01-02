@@ -11,40 +11,63 @@ var PopView = marionette.View.extend({
     defaultEdge: 'bottom',
 
     initialize: function(options){
-        this.view = options.view;
     },
 
-    showRelativeToElement: function($el, edge){
-        this._anchorElement = $el;
+    show: function(view, options){
+        options = options || {};
 
+        var rect; // {x, y, width, height}
+        var anchorElement = null;
+
+        if (!options.rect) throw new Error('Must provide at least a \'rect\' option');
+
+        if(this.currentView){ this.close(); }
+
+        rect = options.rect;
+
+        if(rect instanceof jQuery){
+            this._anchorElement = anchorElement = rect;
+            rect = this.rectForAnchorElement(anchorElement);
+        }
+
+        view.render();
+
+        this.open(view);
+
+        this.currentView = view;
+        this._anchorRect = rect;
+        this._anchorEdge = options.anchor || this.defaultEdge;
+
+        // because we need the object to have it's final dimensions
+        // for positioning, we trigger show on the child view
+        // before it's *technically* shown in case the view
+        // adds items to it's collection onShow etc, which could
+        // alter the dimensions.
+        Marionette.triggerMethod.call(view, 'show');
+
+        this.showRelativeToRect(rect, options.anchor);
+
+        Marionette.triggerMethod.call(this, 'show', view);
+    },
+
+    rectForAnchorElement: function($el){
         var clientRect = dom.getElementBounds($el);
-
-        // the $el could have an absolutely positioned
-        // element, etc inside of it. getElementBounds would
-        // report the improper dimensions, so we make the corrective
-        // adjustement using scrollWidth and scrollHeight of
-        // $el
         var rect = {
             x: clientRect.left,
             y: clientRect.top,
             width: $el.prop('scrollWidth'),
             height: $el.prop('scrollHeight')};
 
-        this.showRelativeToRect(rect, edge);
+        return rect;
     },
 
     showRelativeToRect: function(rect, edge){
-        // Warning, if you call this, you will be
+        // Warning, if you call this directly, you will be
         // responsible for repositioning the the view
         // if something related in your viewport changes.
-        // Chances are you wanted showRelativeToElement instead
+        // Chances are you wanted show() instead
         // of calling this directly.
-        edge = edge || this.defaultEdge;
 
-        this._anchorRect = rect;
-        this._anchorEdge = edge;
-
-        this.render();
         // don't show anything until after layout has happened
         this.$el.css({
             position: 'absolute',
@@ -65,14 +88,12 @@ var PopView = marionette.View.extend({
             $('body').append(this.el);
         }
 
-        this.triggerMethod('show');
-
         this.layout();
         this.$el.css({visibility: 'visible'});
     },
 
     layout: function(){
-        var viewBounds = dom.getElementBounds(this.view.$el);
+        var viewBounds = dom.getElementBounds(this.currentView.$el);
 
         // the view.$el could have an absolutely positioned
         // element, etc inside of it. getElementBounds would
@@ -150,11 +171,6 @@ var PopView = marionette.View.extend({
         css.left = anchorRect.x;
     },
 
-    render: function(){
-        this.view.render();
-        this.$el.empty().append(this.view.el);
-    },
-
     performKeyEquivalent: function(e){
         return false;
     },
@@ -163,7 +179,7 @@ var PopView = marionette.View.extend({
         // if escape is pressed while this pop view is
         // displayed, auto wire up closing it.
         if (e.keyCode == 27){ // ESCAPE
-            this.triggerMethod('close');
+            this.close();
         }
 
         // no matter what we stop the key event
@@ -172,37 +188,36 @@ var PopView = marionette.View.extend({
     },
 
     wantsDismissFromClick: function(){
-        this.triggerMethod('close');
+        this.close();
     },
 
-    onShow: function(){
-
-        this.view.triggerMethod('show');
+    open: function(view){
+        this.$el.empty().append(view.el);
 
         // ensure the relationship is maintained
         // any key presses should be handled first
         // by the this.view. If it chooses not to handle
         // then, then we get our chance to handle them here.
         keys.registerInResponderChain(this);
-        keys.registerInResponderChain(this.view);
+        keys.registerInResponderChain(view);
 
         // if we click anywhere outside of this
         // pop view, we want this view to close.
         this._clicks = new ClickTestResponder({
-            el: this.view.$el,
+            el: view.$el,
             clickOutside: _.bind(this.wantsDismissFromClick, this)
         });
     },
 
-    onClose: function(){
-        this.view.triggerMethod('close');
-
-        keys.removeFromResponderChain(this.view);
+    close: function(){
+        keys.removeFromResponderChain(this.currentView);
         keys.removeFromResponderChain(this);
         this._clicks.close();
 
+        Marionette.Region.prototype.close.call(this);
+
         this.$el.remove();
-    }
+    },
 });
 
 exports.PopView = PopView;
