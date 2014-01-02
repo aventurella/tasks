@@ -178,7 +178,6 @@ var PopView = marionette.View.extend({
     },
 
     onClose: function(){
-
         this.view.triggerMethod('close');
 
         keys.removeFromResponderChain(this.view);
