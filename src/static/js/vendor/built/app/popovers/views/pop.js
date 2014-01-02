@@ -19,6 +19,11 @@ var PopView = marionette.View.extend({
 
         var clientRect = dom.getElementBounds($el);
 
+        // the $el could have an absolutely positioned
+        // element, etc inside of it. getElementBounds would
+        // report the improper dimensions, so we make the corrective
+        // adjustement using scrollWidth and scrollHeight of
+        // $el
         var rect = {
             x: clientRect.left,
             y: clientRect.top,
@@ -57,7 +62,7 @@ var PopView = marionette.View.extend({
             }
 
         } else {
-            $('body').prepend(this.el);
+            $('body').append(this.el);
         }
 
         this.triggerMethod('show');
@@ -124,6 +129,7 @@ var PopView = marionette.View.extend({
         }
     },
 
+    // generic layout methods
     anchorBottom: function(anchorRect, $anchorElement, viewRect, css){
         css.top = anchorRect.y + anchorRect.height;
         css.left = anchorRect.x;
@@ -145,7 +151,6 @@ var PopView = marionette.View.extend({
     },
 
     render: function(){
-
         this.view.render();
         this.$el.empty().append(this.view.el);
     },
@@ -155,6 +160,8 @@ var PopView = marionette.View.extend({
     },
 
     keyDown: function (e){
+        // if escape is pressed while this pop view is
+        // displayed, auto wire up closing it.
         if (e.keyCode == 27){ // ESCAPE
             this.triggerMethod('close');
         }
@@ -172,9 +179,15 @@ var PopView = marionette.View.extend({
 
         this.view.triggerMethod('show');
 
+        // ensure the relationship is maintained
+        // any key presses should be handled first
+        // by the this.view. If it chooses not to handle
+        // then, then we get our chance to handle them here.
         keys.registerInResponderChain(this);
         keys.registerInResponderChain(this.view);
 
+        // if we click anywhere outside of this
+        // pop view, we want this view to close.
         this._clicks = new ClickTestResponder({
             el: this.view.$el,
             clickOutside: _.bind(this.wantsDismissFromClick, this)
