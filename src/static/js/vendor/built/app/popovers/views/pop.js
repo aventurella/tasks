@@ -55,6 +55,7 @@ var PopView = marionette.View.extend({
             if(this._anchorElement.prop('style').position != 'relative'){
                 this._anchorElement.css({position: 'relative'});
             }
+
         } else {
             $('body').prepend(this.el);
         }
