@@ -64,7 +64,7 @@ var TaskView = marionette.Layout.extend({
 
     initialize: function(){
         // needed for when we reasign the assigned_to via server
-        this.listenTo(this.model, 'change', this.render);
+        this.listenTo(this.model, 'change:assigned_to', this.render);
     },
 
     onClose: function(){
@@ -128,8 +128,6 @@ var TaskView = marionette.Layout.extend({
 
         var pop = new PopView();
         pop.show(menu, {rect: this.ui.actions.parent(), anchor: layout});
-        // var pop = new PopView({view: menu});
-        // pop.showRelativeToElement(this.ui.actions.parent(), layout);
 
         // handle a click
         menu.once('select', _.bind(function(){
@@ -159,8 +157,12 @@ var TaskView = marionette.Layout.extend({
     },
 
     editTaskComplete: function(modalView){
-        var data = modalView.getData();
         modals.dismissModal();
+        var data = modalView.getData();
+
+        if(data.ok && data.model.changedAttributes()){
+            data.model.save();
+        }
     },
 
     wantsSetTodo: function(){
@@ -184,6 +186,11 @@ var TaskView = marionette.Layout.extend({
     },
 
     wantsEdit: function(){
+        // Note this is an EditTaskFormView
+        // For now it's basically the same as TaskFormView
+        // it's here because comments etc may be added to
+        // editing a task which would mean we need an alternate
+        // view representation.
         var taskForm = new EditTaskFormView({model: this.model});
         var modalView = modals.presentModal(taskForm);
         modalView.then(this.editTaskComplete);

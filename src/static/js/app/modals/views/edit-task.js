@@ -11,6 +11,14 @@ var Task = require('app/projects/models/task').Task;
 var status = require('app/projects/models/task').status;
 var template = require('hbs!../templates/edit-task');
 
+// *IMPORTANT*
+// For now it's basically the same as TaskFormView
+// it's here because comments etc may be added to
+// editing a task which would mean we need an alternate
+// view representation.
+//
+// this is probably better expressed as Extending TaskFormView
+// rather then a re-implementation.
 var EditTaskFormView = marionette.ItemView.extend({
     template: template,
 
@@ -62,11 +70,8 @@ var EditTaskFormView = marionette.ItemView.extend({
     },
 
     wantsSave: function(){
-        var self = this;
-        this.model.save().then(function(){
-            self._data = {ok: true, model: self.model};
-            self.trigger(events.COMPLETE);
-        });
+        this._data = {ok: true, model: this.model};
+        this.trigger(events.COMPLETE);
     },
 
     wantsCancel: function(){
