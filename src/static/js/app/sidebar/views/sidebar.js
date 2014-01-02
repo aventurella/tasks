@@ -10,15 +10,12 @@ var Project = require('../models/project').Project;
 var NewProjectView = require('app/modals/views/new-project').NewProjectView;
 var events = require('../events');
 var getSettings = require('app/settings/defaults').getSettings;
+var OrgMenu = require('./org-menu').OrgMenu;
 var template = require('hbs!app/sidebar/templates/sidebar');
 
 var PopupView = require('built/app/popovers').PopupView;
 // this is probably better as a layout.
 
-var orgMenuTemplate = require('hbs!app/sidebar/templates/org-menu');
-var OrgMenu = marionette.ItemView.extend({
-    template: orgMenuTemplate
-});
 
 var SidebarView = marionette.ItemView.extend({
     template: template,
@@ -44,6 +41,19 @@ var SidebarView = marionette.ItemView.extend({
         var menu = new OrgMenu();
         var popover = new PopupView();
         popover.show(menu, {rect: this.ui.orgName});
+
+        menu.once('select', _.bind(function(tag){
+
+            if(tag == 'dashboard'){
+                this.trigger(events.DASHBOARD_ORG);
+            }
+
+            this.projectListView.activeProject.setSelected(false);
+            this.projectListView.activeProject = null;
+
+            popover.close();
+
+        }, this));
     },
 
     wantsAddProject: function(){

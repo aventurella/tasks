@@ -59,10 +59,20 @@ var ApplicationDelegate = marionette.Controller.extend({
         var currentSettings = getSettings();
         this.sidebarView = new SidebarView({settings:currentSettings});
 
+        this.listenTo(this.sidebarView, sidebarEvents.DASHBOARD_ORG, this.wantsOrgDashboard);
         this.listenTo(this.sidebarView, sidebarEvents.SELECT_PROJECT, this.wantsChangeProject);
         this.listenTo(this.sidebarView, sidebarEvents.DESELECT_PROJECT, this.wantsClearProject);
 
         this.app.sidebar.show(this.sidebarView);
+    },
+
+    wantsOrgDashboard: function(){
+        this.app.projectDetail.close();
+        this.currentProjectView = null;
+
+        if (this.currentProjectView){
+            this.stopListening(this.currentProjectView, projectEvents.TOGGLE_SIDEBAR, this.wantsToggleSidebar);
+        }
     },
 
     wantsChangeProject: function(project){
