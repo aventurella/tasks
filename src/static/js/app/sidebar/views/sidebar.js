@@ -41,8 +41,9 @@ var SidebarView = marionette.ItemView.extend({
     },
 
     wantsOrgMenu: function(){
-        var popover = new PopupView({view: new OrgMenu()});
-        popover.showRelativeToElement(this.ui.orgName);
+        var menu = new OrgMenu();
+        var popover = new PopupView();
+        popover.show(menu, {rect: this.ui.orgName});
     },
 
     wantsAddProject: function(){
