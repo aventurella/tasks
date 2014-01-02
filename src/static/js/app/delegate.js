@@ -18,6 +18,7 @@ var session     = require('app/session/session');
 
 var AccountFormView = require('app/modals/views/account').AccountFormView;
 var ProjectDetailView = require('app/projects/views/detail').ProjectDetailView;
+var DashboardView = require('app/organization/views/dashboard').DashboardView;
 var SessionInitializationView = require('app/modals/views/session').SessionInitializationView;
 var SockController = require('app/sockets/sock').SockController;
 var HotkeyController = require('app/hotkeys/hotkeys').HotkeyController;
@@ -59,10 +60,23 @@ var ApplicationDelegate = marionette.Controller.extend({
         var currentSettings = getSettings();
         this.sidebarView = new SidebarView({settings:currentSettings});
 
+        this.listenTo(this.sidebarView, sidebarEvents.DASHBOARD_ORG, this.wantsOrgDashboard);
         this.listenTo(this.sidebarView, sidebarEvents.SELECT_PROJECT, this.wantsChangeProject);
         this.listenTo(this.sidebarView, sidebarEvents.DESELECT_PROJECT, this.wantsClearProject);
 
         this.app.sidebar.show(this.sidebarView);
+    },
+
+    wantsOrgDashboard: function(){
+        this.currentProjectView = null;
+
+        if (this.currentProjectView){
+            this.stopListening(this.currentProjectView, projectEvents.TOGGLE_SIDEBAR, this.wantsToggleSidebar);
+        }
+
+        var dashboard = new DashboardView();
+        this.app.projectDetail.show(dashboard);
+
     },
 
     wantsChangeProject: function(project){
