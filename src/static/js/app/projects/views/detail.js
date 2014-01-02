@@ -53,7 +53,6 @@ var ProjectDetailView = marionette.Layout.extend({
         this.trigger(events.TOGGLE_SIDEBAR, this);
     },
 
-
     wantsShowBacklog: function(){
         this.showBacklog();
     },
@@ -92,6 +91,13 @@ var ProjectDetailView = marionette.Layout.extend({
 
     loadTasks: function(){
         var deferred = $.Deferred();
+
+        if (this.loadOperation){
+            this.loadOperation.reject();
+            this.loadOperation = null;
+        }
+
+        this.loadOperation = deferred;
 
         tasks = this.tasks;
         tasks.fetch({data: {project__id: this.model.get('id')}});
@@ -161,6 +167,10 @@ var ProjectDetailView = marionette.Layout.extend({
     },
 
     onClose: function(){
+        if(this.loadOperation.state() == 'pending'){
+            this.loadOperation.reject();
+        }
+
         keys.removeFromResponderChain(this);
         this.focusManager.close();
     }

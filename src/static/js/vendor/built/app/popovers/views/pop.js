@@ -43,11 +43,11 @@ var PopView = marionette.View.extend({
         // before it's *technically* shown in case the view
         // adds items to it's collection onShow etc, which could
         // alter the dimensions.
-        Marionette.triggerMethod.call(view, 'show');
+        marionette.triggerMethod.call(view, 'show');
 
         this.showRelativeToRect(rect, options.anchor);
 
-        Marionette.triggerMethod.call(this, 'show', view);
+        marionette.triggerMethod.call(this, 'show', view);
     },
 
     rectForAnchorElement: function($el){
@@ -214,7 +214,7 @@ var PopView = marionette.View.extend({
         keys.removeFromResponderChain(this);
         this._clicks.close();
 
-        Marionette.Region.prototype.close.call(this);
+        marionette.Region.prototype.close.call(this);
 
         this.$el.remove();
     },
