@@ -27,9 +27,9 @@ var ClickTestResponder = marionette.Controller.extend({
 
     onWindowPress: function(e){
         var isChild = this.targetIsChild($(e.target));
-
         if(isChild){
             this.clickInside(this, e);
+            return;
         }
 
         this.clickOutside(this, e);

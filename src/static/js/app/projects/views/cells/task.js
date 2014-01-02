@@ -117,6 +117,7 @@ var TaskView = marionette.Layout.extend({
         if(actions.currentView) return;
 
         var deferred = $.Deferred();
+
         var menu = new TaskActionsMenu({
             choices: choices
         });
@@ -136,6 +137,8 @@ var TaskView = marionette.Layout.extend({
                 return true;
             }
         };
+
+        menu.once('select', deferred.resolve);
 
         deferred.then(_.bind(function(){
             actions.close();
