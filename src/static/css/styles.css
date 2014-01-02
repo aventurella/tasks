@@ -1066,17 +1066,17 @@ body {
     position: absolute;
     width: 5px;
     left: 1px;
-    top: 0;
-    height: 100%; }
-    #project-detail .task .loe .low {
-      border: 1px solid #b2b2b2;
-      background-color: #f3f3f3; }
-    #project-detail .task .loe .medium {
+    top: 1px;
+    bottom: 1px; }
+    #project-detail .task .loe.easy {
+      border: 1px solid #145dd7;
+      background-color: #4a87ee; }
+    #project-detail .task .loe.medium {
       border: 1px solid #d39511;
-      background-color: #f9e3b2; }
-    #project-detail .task .loe .high {
+      background-color: #f0b840; }
+    #project-detail .task .loe.hard {
       border: 1px solid #cc2511;
-      background-color: #f8b7af; }
+      background-color: #ef4e3a; }
   #project-detail .task .action {
     font-size: 11px;
     margin-left: 10px;

@@ -33,7 +33,8 @@ var TaskView = marionette.Layout.extend({
                         loe = 'hard';
                         break;
                 }
-                $el.find('>div').attr('class', loe);
+
+                $el.attr('class', 'loe ' + loe);
             }
         },
         ':el': {

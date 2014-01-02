@@ -59,25 +59,25 @@
         position: absolute;
         width: 5px;
         left: 1px;
-        top: 0;
-        height: 100%;
+        top: 1px;
+        bottom: 1px;
 
 
-        .low{
-            border: 1px solid $task-light-gray-border;
-            background-color: $task-light-gray-background;
+        &.easy{
+            border: 1px solid $blue-border;
+            background-color: $blue-fill;
             //border: 1px solid $task-blue-border;
             //background-color: $task-blue-background;
         }
 
-        .medium{
-            border: 1px solid $task-yellow-border;
-            background-color: $task-yellow-background;
+        &.medium{
+            border: 1px solid $yellow-border;
+            background-color: $yellow-fill;
         }
 
-        .high{
-            border: 1px solid $task-red-border;
-            background-color: $task-red-background;
+        &.hard{
+            border: 1px solid $red-border;
+            background-color: $red-fill;
         }
     }
 
