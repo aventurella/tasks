@@ -77,7 +77,16 @@ var BacklogView = marionette.ItemView.extend({
             masterList:collection,
             collection: new Tasks(collection.where({status:status.BACKLOG}))
         });
+
+        // if you change the sort order of things it happens N times, debounce it
+        var changeDebounce = _.debounce(this.onBacklogCollectionChange, 400);
+        this.listenTo(this.backlog.collection, 'change', changeDebounce);
         this.listenTo(this.backlog, dndevents.DRAG_END, this._dragDidEnd);
+        this.backlog.render();
+    },
+
+    onBacklogCollectionChange: function(){
+        this.backlog.collection.sort();
         this.backlog.render();
     },
 
@@ -87,7 +96,8 @@ var BacklogView = marionette.ItemView.extend({
         var self = this;
         _.each(list, function($el){
             var view = self.getViewByEl($el);
-            view.model.set('backlog_order', index);
+            // make this silent
+            view.model.set('backlog_order', index, {silent:true});
             index ++;
         });
         Backbone.sync('update', this.backlog.collection, {type:'PATCH'});
