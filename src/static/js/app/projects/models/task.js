@@ -64,6 +64,16 @@ var Task = backbone.Model.extend({
         task_type:task_type.TASK
     },
 
+    toJSON: function(options) {
+        options = options || {};
+        if(options.type == 'PATCH'){
+            var response = this.changedAttributes();
+            response.resource_uri = this.get('resource_uri');
+            return response;
+        }
+        return _.clone(this.attributes);
+    },
+
     url: url
 });
 

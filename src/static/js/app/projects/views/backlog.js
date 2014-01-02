@@ -82,8 +82,23 @@ var BacklogView = marionette.ItemView.extend({
     },
 
     _dragDidEnd: function(){
-        // TODO handle resort and set backlog_order
-        // debugger;
+        var list = this.backlog.dragDropList.listManager.getArray();
+        var index = 0;
+        var self = this;
+        _.each(list, function($el){
+            var view = self.getViewByEl($el);
+            view.model.set('backlog_order', index);
+            index ++;
+        });
+        Backbone.sync('update', this.backlog.collection, {type:'PATCH'});
+    },
+
+    getViewByEl: function($el){
+        return this.backlog.children.find(function(view){
+            if($el == view.$el[0]){
+                return $el;
+            }
+        });
     },
 
     taskStatusDidChange: function(model){
