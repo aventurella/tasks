@@ -14,6 +14,9 @@
 {
     // Insert code here to initialize your application
     //[self.window makeFirstResponder:self.webController];
+    //NSMenuItem *file = [self.mainMenu itemWithTitle:@"File"];
+    //NSMenuItem *new = [file.submenu itemWithTitle:@"New"];
+    //[new setEnabled:YES];
 }
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)app hasVisibleWindows:(BOOL)hasWindows

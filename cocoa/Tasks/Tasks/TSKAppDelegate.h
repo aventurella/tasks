@@ -13,6 +13,6 @@
 
 @property (assign) IBOutlet NSWindow *window;
 @property (strong) IBOutlet TSKWebViewController *webController;
-//@property (strong) IBOutlet TSKWebView * webView;
+@property (assign) IBOutlet NSMenu *mainMenu;
 
 @end
