@@ -12,7 +12,13 @@ var events = require('../events');
 var getSettings = require('app/settings/defaults').getSettings;
 var template = require('hbs!app/sidebar/templates/sidebar');
 
+var PopupView = require('built/app/popovers').PopupView;
 // this is probably better as a layout.
+
+var orgMenuTemplate = require('hbs!app/sidebar/templates/org-menu');
+var OrgMenu = marionette.ItemView.extend({
+    template: orgMenuTemplate
+});
 
 var SidebarView = marionette.ItemView.extend({
     template: template,
@@ -21,12 +27,22 @@ var SidebarView = marionette.ItemView.extend({
 
     ui: {
         projectListView: '.menu',
-        footerView: '.footer'
+        footerView: '.footer',
+        orgName: 'h2'
+    },
+
+    events: {
+        'click h2': 'wantsOrgMenu'
     },
 
     initialize: function(options){
         this.user = options.settings.getUser();
         this.currentSettings = options.settings;
+    },
+
+    wantsOrgMenu: function(){
+        var popover = new PopupView({view: new OrgMenu()});
+        popover.showRelativeToElement(this.ui.orgName, null);
     },
 
     wantsAddProject: function(){

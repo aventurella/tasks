@@ -1414,8 +1414,6 @@ body {
 
 .dropdown-menu {
   position: absolute;
-  top: 100%;
-  right: 0;
   z-index: 1;
   float: left;
   min-width: 160px;

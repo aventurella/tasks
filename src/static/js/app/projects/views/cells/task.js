@@ -10,6 +10,8 @@ var status = require('../../models/task').status;
 var EditTaskFormView = require('app/modals/views/edit-task').EditTaskFormView;
 var TaskActionsMenu = require('../menus/menu-task-actions').TaskActionsMenu;
 
+var PopView = require('built/app/popovers').PopView;
+
 var TaskView = marionette.Layout.extend({
     tagName: 'li',
 
@@ -52,7 +54,8 @@ var TaskView = marionette.Layout.extend({
     },
 
     ui: {
-        'dropdownMenu':'.dropdown-menu'
+        'dropdownMenu':'.dropdown-menu',
+        'actions': '.actions'
     },
 
     regions: {
@@ -114,37 +117,21 @@ var TaskView = marionette.Layout.extend({
     showActions: function(choices){
         var actions = this.actions;
 
-        if(actions.currentView) return;
-
-        var deferred = $.Deferred();
-
         var menu = new TaskActionsMenu({
             choices: choices
         });
 
-        var clickTest = new ClickTestResponder({
-            el: this.$el,
-            clickOutside: deferred.resolve
-        });
+        function layout(anchorRect, $anchorElement, viewRect, css){
+            css.top = -3; // drop shadow - 3
+            css.right = viewRect.width - 3; // drop shadow + 3
+        }
 
-        var keyResponder = new KeyResponder({
-            cancelOperation: deferred.resolve
-        });
+        var pop = new PopView({view: menu});
+        pop.showRelativeToElement(this.ui.actions.parent(), layout);
 
-        var responder = {
-            keyDown: function(e){
-                keyResponder.interpretKeyEvents(e);
-                return true;
-            }
-        };
-
-        menu.once('select', deferred.resolve);
-
-        deferred.then(_.bind(function(){
-            actions.close();
-            clickTest.close();
-            keyResponder.close();
-            keys.removeFromResponderChain(responder);
+        // handle a click
+        menu.once('select', _.bind(function(){
+            pop.close();
 
             if(!menu.selectedTag) return;
 
@@ -163,9 +150,6 @@ var TaskView = marionette.Layout.extend({
             this[actionKey]();
 
         }, this));
-
-        keys.registerInResponderChain(responder);
-        actions.show(menu);
     },
 
     onRender: function(){
