@@ -1282,6 +1282,9 @@ body {
     #section.dashboard .users .user .tasks .task label {
       display: block; }
 
+#project-detail .tabbar.dashboard {
+  width: 207px; }
+
 #section.dashboard .container {
   display: -webkit-flex;
   flex-flow: row wrap;

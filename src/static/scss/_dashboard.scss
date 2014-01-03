@@ -1,6 +1,10 @@
 @import "dashboard-projects";
 @import "dashboard-users";
 
+#project-detail .tabbar.dashboard{
+    width: 207px;
+}
+
 #section.dashboard{
     .container{
         display: -webkit-flex;
