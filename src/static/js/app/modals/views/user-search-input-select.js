@@ -42,13 +42,16 @@ var UserSearchInputSelect = InputSelectScrollableComposite.extend({
     },
 
     inputDidReceiveData: function(data){
-        var search = this.ui.input.val();
+        console.log('Searching For: ', data);
+
         var filtered = this.master.filter(function(model){
             var email = model.get('email');
-            if(email.indexOf(search) != -1){
+            if(email.indexOf(data) != -1){
                 return true;
             }
+
         }, this);
+
         this.collection.reset(filtered);
 
     },
