@@ -1,0 +1,52 @@
+#section.dashboard{
+    .projects{
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+
+        // display: -webkit-flex;
+        // flex-flow: row wrap;
+        // -webkit-flex-flow: row wrap;
+
+        .project{
+            width: 300px;
+            background-color: #35414D;
+            color: #fff;
+            padding: 10px;
+            border-radius: 7px;
+            box-shadow: rgba(0, 0, 0, 0.1) 0 0 1px 1px;
+            margin: 4px;
+
+            >label{
+                color: #fff;
+                font-weight: 100;
+                font-size: 16px;
+                margin-bottom: 8px;
+                display: block;
+            }
+        }
+    }
+
+    .projects .project .tasks{
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+
+        .task{
+            color: #000;
+
+            .username{
+                font-size: 11px;
+                border-bottom: 1px dotted #ddd;
+                padding-bottom: 3px;
+                margin-left: 26px;
+                font-style: italic;
+            }
+
+            label{
+                margin-left: 26px;
+                display: block;
+            }
+        }
+    }
+}

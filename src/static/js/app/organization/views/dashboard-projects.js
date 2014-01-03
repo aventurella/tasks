@@ -13,7 +13,6 @@ var DashboardProjectsView = marionette.CompositeView.extend({
 
     initialize: function(options){
         this.collection = new backbone.Collection();
-
         options.data.then(_.bind(this.displayUsers, this));
     },
 
@@ -69,14 +68,6 @@ var DashboardProjectsView = marionette.CompositeView.extend({
 
         data.sort(projectComparator);
         this.collection.reset(data);
-    },
-
-    onRender: function(){
-        console.log('RENDER!');
-    },
-
-    onShow: function(){
-        console.log('SHOW!!!');
     }
 
 });
