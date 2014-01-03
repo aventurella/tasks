@@ -1551,3 +1551,6 @@ body {
   color: #fff;
   background-color: #d9534f;
   border-color: #d43f3a; }
+
+.user-search-input-select .list-group .list-group-item {
+  display: block; }

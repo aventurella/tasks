@@ -9,6 +9,7 @@ var KeyResponder = require('built/core/responders/keys').KeyResponder;
 var Task = require('app/projects/models/task').Task;
 var status = require('app/projects/models/task').status;
 var template = require('hbs!../templates/new-task');
+var UserSearchInputSelect = require('./user-search-input-select').UserSearchInputSelect;
 
 var TaskFormView = marionette.ItemView.extend({
     template: template,
@@ -57,6 +58,11 @@ var TaskFormView = marionette.ItemView.extend({
 
         this.stickit();
         this.ui.label.focus();
+
+        this.userSearchInputSelect = new UserSearchInputSelect({
+            el:'.user-search-input-select'
+        });
+        this.userSearchInputSelect.render();
     },
 
     performKeyEquivalent: function(e){
