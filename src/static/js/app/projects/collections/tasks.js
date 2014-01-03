@@ -33,7 +33,8 @@ var Tasks =  backbone.Collection.extend({
         response = _.filter(response, function(item){
             return item;
         });
-        if(options.type == 'PATCH'){
+
+        if(options && options.type == 'PATCH'){
             return {
                 objects: response
             };

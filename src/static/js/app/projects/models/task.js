@@ -70,7 +70,7 @@ var Task = backbone.Model.extend({
 
     toJSON: function(options) {
         options = options || {};
-        if(options.type == 'PATCH'){
+        if(options.type && options.type == 'PATCH'){
             var response = this.changedAttributes();
             response.resource_uri = this.get('resource_uri');
             return response;
