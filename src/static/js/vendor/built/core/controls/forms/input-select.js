@@ -202,6 +202,8 @@ define(function(require, exports, module){
                 actionEvent = _.debounce(this.receivedText, this.options.debounceDelay);
             }
 
+            actionEvent = _.bind(actionEvent, this);
+
             this.inputResponder = new KeyResponder({
                 el: this.$el,
                 insertText: actionEvent,
@@ -213,12 +215,25 @@ define(function(require, exports, module){
             var $el = this.$el;
             var val = $el.is('input') ? $el.val() : $el.text();
 
-            if (e.which == 8){
-                val = val.slice(0, -1);
-            } else {
-                var char = String.fromCharCode(e.which);
-                if(!e.shiftKey) char = char.toLowerCase();
-                val = val + char;
+            // The key responder controlling when this event
+            // is fired intreperates key events on keyDown.
+            // That means if the debounceDelay is 0, this
+            // handler will receive the character before the
+            // input field receives it. That's good, because
+            // if we wanted we could preventDefault() and the char
+            // would never even get inserted. But it means we need
+            // to handle building up the values ourselves
+            // and handle deleting the values. Again, only
+            // when the debounce delay is 0.
+
+            if (this.options.debounceDelay === 0){
+                if (e.which == 8){
+                    val = val.slice(0, -1);
+                } else {
+                    var char = String.fromCharCode(e.which);
+                    if(!e.shiftKey) char = char.toLowerCase();
+                    val = val + char;
+                }
             }
 
             if (val.length >= this.options.minLength){
