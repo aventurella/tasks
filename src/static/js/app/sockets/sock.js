@@ -75,7 +75,7 @@ var SockController = marionette.Controller.extend({
 
    handleMessage: function(e){
        var data = JSON.parse(e.data);
-       if(data.token == this.token)return;
+       if(data.token == this.token) return;
        this.taskProtocol.handleMessage(data);
    },
 

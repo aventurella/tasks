@@ -37,15 +37,19 @@ var Task = backbone.Model.extend({
     },
 
     doUpdateModel: function(obj){
-        this.set('id', obj.id);
-        this.set('description', obj.description);
-        this.set('label', obj.label);
-        this.set('loe', obj.loe);
-        this.set('status', obj.status);
-        this.set('assigned_email', obj.assigned_email);
-        this.set('task_type', obj.task_type);
-        this.set('backlog_order', obj.backlog_order);
-        this.set('project', '/api/v1/project/'+obj.project+'/');
+        var data = {
+            id: obj.id,
+            description: obj.description,
+            label: obj.label,
+            loe: obj.loe,
+            status: obj.status,
+            assigned_email: obj.assigned_email,
+            task_type: obj.task_type,
+            backlog_order: obj.backlog_order,
+            project: '/api/v1/project/' + obj.project + '/'
+        };
+
+        this.set(data);
     },
 
     parse: function(resp, options){

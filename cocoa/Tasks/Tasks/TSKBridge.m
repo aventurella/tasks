@@ -34,6 +34,7 @@
     NSString *label = data[@"label"];
     NSString *project_label = data[@"project_label"];
     NSString *target;
+    NSString *assigned_email = data[@"assigned_email"];
 
     // http://stackoverflow.com/questions/5684157/how-to-detect-if-nsstring-is-null
     NSString *token = data[@"token"] == [NSNull null] ? @"" : data[@"token"];
@@ -68,7 +69,14 @@
     }
 
     NSString *message = [NSString stringWithFormat:@"'%@' has moved to '%@'", label, target];
-    NSString *subtitle = [NSString stringWithFormat:@"Project: '%@'", project_label];
+    NSString *subtitle;
+    
+    if([assigned_email length] > 0){
+        subtitle = [NSString stringWithFormat:@"Project: '%@' (%@)", project_label, assigned_email];
+    } else {
+        subtitle = [NSString stringWithFormat:@"Project: '%@'", project_label];
+    }
+    
 
     notification.title = @"Task Update";
     notification.informativeText = message;

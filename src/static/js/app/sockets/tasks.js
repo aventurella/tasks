@@ -1,5 +1,6 @@
 define(function (require, exports, module) {
 
+var $ = require('jquery');
 var marionette = require('marionette');
 var Task = require('app/projects/models/task').Task;
 var pendingIdForTask = require('app/shared/model-utils').pendingIdForTask;
@@ -28,9 +29,15 @@ var TasksProtocol = marionette.Controller.extend({
 
     updateTask: function(data){
         var Bridge = window.Bridge || undefined;
-        if(Bridge) Bridge.taskDidChange(data);
+
         var model = this.tasks.get(data.id);
+
         model.doUpdateModel(data);
+        var attrs = model.changedAttributes();
+
+        if(attrs.status !== undefined){
+            if(Bridge) Bridge.taskDidChange(data);
+        }
     },
 
     createTask: function(data){
