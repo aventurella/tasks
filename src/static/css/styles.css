@@ -1210,7 +1210,10 @@ body {
 #section.dashboard .projects {
   list-style-type: none;
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  display: -webkit-flex;
+  flex-flow: row wrap;
+  -webkit-flex-flow: row wrap; }
   #section.dashboard .projects .project {
     width: 300px;
     background-color: #35414D;
