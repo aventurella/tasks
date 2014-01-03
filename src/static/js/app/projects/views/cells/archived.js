@@ -8,7 +8,6 @@ var CellArchivedView = TaskView.extend({
     className: 'task archived',
     tag: 'archived'
 
-
 });
 
 exports.CellArchivedView = CellArchivedView;
