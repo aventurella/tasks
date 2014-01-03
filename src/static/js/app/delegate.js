@@ -74,7 +74,9 @@ var ApplicationDelegate = marionette.Controller.extend({
             this.stopListening(this.currentProjectView, projectEvents.TOGGLE_SIDEBAR, this.wantsToggleSidebar);
         }
 
-        var dashboard = new DashboardView();
+        var dashboard = new DashboardView({
+            projects:this.sidebarView.projectListView.collection
+        });
         this.app.projectDetail.show(dashboard);
 
     },

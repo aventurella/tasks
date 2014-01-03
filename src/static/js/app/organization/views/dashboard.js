@@ -6,10 +6,12 @@ var Users = require('../collections/users').Users;
 
 var DashboardView = marionette.ItemView.extend({
     template: template,
-    initialize: function(){
+    initialize: function(options){
         this.collection = new Users();
         this.collection.fetch();
         this.listenTo(this.collection, 'sync', this.onCollectionSync);
+        this.projects = options.projects;
+
     },
     onCollectionSync: function(){
         //  console.log(this.collection.toJSON());
