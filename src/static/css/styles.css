@@ -1207,6 +1207,40 @@ body {
   background-color: #e1e3e6;
   height: 100%; }
 
+#section.dashboard .projects {
+  list-style-type: none;
+  margin: 0;
+  padding: 0; }
+  #section.dashboard .projects .project {
+    width: 300px;
+    background-color: #35414D;
+    color: #fff;
+    padding: 10px;
+    border-radius: 7px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 0 1px 1px;
+    margin: 4px; }
+    #section.dashboard .projects .project > label {
+      color: #fff;
+      font-weight: 100;
+      font-size: 16px;
+      margin-bottom: 8px;
+      display: block; }
+#section.dashboard .projects .project .tasks {
+  list-style-type: none;
+  margin: 0;
+  padding: 0; }
+  #section.dashboard .projects .project .tasks .task {
+    color: #000; }
+    #section.dashboard .projects .project .tasks .task .username {
+      font-size: 11px;
+      border-bottom: 1px dotted #ddd;
+      padding-bottom: 3px;
+      margin-left: 26px;
+      font-style: italic; }
+    #section.dashboard .projects .project .tasks .task label {
+      margin-left: 26px;
+      display: block; }
+
 #modal-new-project {
   list-style-type: none;
   margin: 0;

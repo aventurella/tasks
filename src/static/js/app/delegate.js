@@ -75,8 +75,9 @@ var ApplicationDelegate = marionette.Controller.extend({
         }
 
         var dashboard = new DashboardView({
-            projects:this.sidebarView.projectListView.collection
+            projects: this.sidebarView.projectListView.collection
         });
+
         this.app.projectDetail.show(dashboard);
 
     },
