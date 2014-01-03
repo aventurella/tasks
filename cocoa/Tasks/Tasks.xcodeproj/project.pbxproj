@@ -25,6 +25,7 @@
 		23033E211867711800742A4F /* src in Resources */ = {isa = PBXBuildFile; fileRef = 23033E201867711800742A4F /* src */; };
 		23033E251867CF9400742A4F /* TSKTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 23033E241867CF9400742A4F /* TSKTask.m */; };
 		23033E281867D75900742A4F /* TSKApplicationSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 23033E271867D75900742A4F /* TSKApplicationSettings.m */; };
+		231A32EF1877447000D08B30 /* TSKSettingsUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 231A32EE1877447000D08B30 /* TSKSettingsUser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,9 @@
 		23033E261867D75900742A4F /* TSKApplicationSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSKApplicationSettings.h; sourceTree = "<group>"; };
 		23033E271867D75900742A4F /* TSKApplicationSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSKApplicationSettings.m; sourceTree = "<group>"; };
 		23033E291867E41500742A4F /* TSKApplicationSettingsExport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSKApplicationSettingsExport.h; sourceTree = "<group>"; };
+		231A32ED1877447000D08B30 /* TSKSettingsUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSKSettingsUser.h; sourceTree = "<group>"; };
+		231A32EE1877447000D08B30 /* TSKSettingsUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSKSettingsUser.m; sourceTree = "<group>"; };
+		231A32F11877454600D08B30 /* TSKSettingsUserExport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSKSettingsUserExport.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +142,7 @@
 		23033DE51867691500742A4F /* Tasks */ = {
 			isa = PBXGroup;
 			children = (
+				231A32F01877452800D08B30 /* exports */,
 				23033E221867CED600742A4F /* Models */,
 				23033E1F1867710500742A4F /* HTML */,
 				23033DF11867691500742A4F /* TSKAppDelegate.h */,
@@ -149,8 +154,6 @@
 				23033E141867692800742A4F /* TSKWebView.m */,
 				23033E1818676A7700742A4F /* TSKWebViewController.h */,
 				23033E1918676A7700742A4F /* TSKWebViewController.m */,
-				23033E1B18676CFF00742A4F /* TSKBridgeExport.h */,
-				23033E291867E41500742A4F /* TSKApplicationSettingsExport.h */,
 				23033E1C18676D2700742A4F /* TSKBridge.h */,
 				23033E1D18676D2700742A4F /* TSKBridge.m */,
 			);
@@ -202,8 +205,20 @@
 				23033E241867CF9400742A4F /* TSKTask.m */,
 				23033E261867D75900742A4F /* TSKApplicationSettings.h */,
 				23033E271867D75900742A4F /* TSKApplicationSettings.m */,
+				231A32ED1877447000D08B30 /* TSKSettingsUser.h */,
+				231A32EE1877447000D08B30 /* TSKSettingsUser.m */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		231A32F01877452800D08B30 /* exports */ = {
+			isa = PBXGroup;
+			children = (
+				23033E1B18676CFF00742A4F /* TSKBridgeExport.h */,
+				23033E291867E41500742A4F /* TSKApplicationSettingsExport.h */,
+				231A32F11877454600D08B30 /* TSKSettingsUserExport.h */,
+			);
+			name = exports;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -312,6 +327,7 @@
 				23033DEC1867691500742A4F /* main.m in Sources */,
 				23033E151867692800742A4F /* TSKWebView.m in Sources */,
 				23033E281867D75900742A4F /* TSKApplicationSettings.m in Sources */,
+				231A32EF1877447000D08B30 /* TSKSettingsUser.m in Sources */,
 				23033DF31867691500742A4F /* TSKAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

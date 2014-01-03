@@ -10,6 +10,7 @@ var SocketConnectingView = require('app/modals/views/sockets').SocketConnectingV
 
 var TasksProtocol = require('./tasks').TasksProtocol;
 var events = require('./events');
+var SettingsUser = require('app/settings/models/user').SettingsUser;
 
 require('sockjs');
 
@@ -66,7 +67,9 @@ var SockController = marionette.Controller.extend({
             return;
         }
 
-        getSettings().setUser(data.data);
+        var user = new SettingsUser(data.data);
+        getSettings().setUser(user);
+
         this.trigger('login:success');
         this._login.resolve(data.data);
 

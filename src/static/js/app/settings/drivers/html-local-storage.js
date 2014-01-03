@@ -1,24 +1,6 @@
 define(function(require, exports, module) {
 
-var UserModel = require('../models/user').UserModel;
-
-var LSUserModel = UserModel.extend({
-    initialize: function(){
-        var userStr = localStorage.getItem('user');
-        if(userStr){
-            var user = JSON.parse(userStr);
-            this.set(user);
-        }
-        this.on('all', this.saveLocal);
-    },
-    saveLocal: function(){
-        localStorage.setItem('user', JSON.stringify(this.toJSON()));
-    }
-});
-
-
-var _user = new LSUserModel();
-
+var SettingsUser = require('../models/user').SettingsUser;
 
 function getToken(){
     var token = localStorage.getItem('token');
@@ -39,13 +21,12 @@ function getCurrentProjectId(){
 }
 
 function getUser(){
-    // console.log('LSUserModel1', _user.toJSON());
-    return _user;
+    var data = JSON.parse(localStorage.getItem('user'));
+    return new SettingsUser(data);
 }
 
 function setUser(user){
-    // console.log('LSUserModel2', user);
-    _user.set(user);
+    localStorage.setItem('user', JSON.stringify(user.toJSON()));
 }
 
 exports.getToken = getToken;

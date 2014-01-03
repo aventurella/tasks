@@ -8,6 +8,7 @@
 
 #import "TSKWebViewController.h"
 #import "TSKBridge.h"
+#import "TSKSettingsUser.h"
 
 @implementation TSKWebViewController
 
@@ -49,6 +50,7 @@
 - (void)webView:(WebView *)webView didCreateJavaScriptContext:(JSContext *)context forFrame:(WebFrame *)frame
 {
     context[@"Bridge"] = self.bridge;
+    context[@"TSKSettingsUser"] = [TSKSettingsUser class];
     
 }
 

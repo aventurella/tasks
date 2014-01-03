@@ -1,23 +1,6 @@
 define(function(require, exports, module) {
 
-var UserModel = require('../models/user').UserModel;
-
-var LSUserModel = UserModel.extend({
-    initialize: function(){
-        var userStr = localStorage.getItem('user');
-        if(userStr){
-            var user = JSON.parse(userStr);
-            this.set(user);
-        }
-        this.on('all', this.saveLocal);
-    },
-    saveLocal: function(){
-        localStorage.setItem('user', JSON.stringify(this.toJSON()));
-    }
-});
-
-
-var _user = new LSUserModel();
+var SettingsUser = require('../models/user').SettingsUser;
 
 
 function getToken(){
@@ -38,13 +21,21 @@ function getCurrentProjectId(){
 }
 
 function getUser(){
-    console.log('LSUserModel1', _user);
-    return _user;
+    var data = Bridge.settings.user;
+
+    var user = new SettingsUser({
+        first_name: data.first_name,
+        last_name: data.last_name,
+        organization: data.organization,
+        organization_id: data.organization_id});
+
+    return user;
 }
 
 function setUser(user){
-    console.log('LSUserModel2', user);
-    _user.set(user);
+    //$('#window').prepend('<pre>' + new TSKSettingsUser() + '</pre>');
+    obj = TSKSettingsUser.userWithDict(user.toJSON());
+    Bridge.settings.user = obj;
 }
 
 exports.getToken = getToken;

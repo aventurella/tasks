@@ -9,7 +9,7 @@
 #import "TSKApplicationSettings.h"
 
 @implementation TSKApplicationSettings
-@synthesize token, currentProjectId;
+@synthesize token, currentProjectId, user;
 
 - (id)init
 {
@@ -20,6 +20,19 @@
     }
     
     return self;
+}
+
+- (void)setUser:(TSKSettingsUser *)value{
+    NSData *encodedUser = [NSKeyedArchiver archivedDataWithRootObject:value];
+    [_defaults setObject:encodedUser forKey:@"user"];
+    [_defaults synchronize];
+    
+}
+
+- (TSKSettingsUser *)user{
+    NSData *encodedUser = [_defaults objectForKey:@"user"];
+    TSKSettingsUser *obj = (TSKSettingsUser *)[NSKeyedUnarchiver unarchiveObjectWithData: encodedUser];
+    return obj;
 }
 
 - (void)setToken:(NSString *)value{

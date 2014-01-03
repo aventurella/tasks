@@ -1,13 +1,16 @@
 define(function( require, exports, module ){
 
 var backbone = require('backbone');
-var UserModel = backbone.Model.extend({
-    defaults: {
-
+var SettingsUser = backbone.Model.extend({
+    defaults:{
+        first_name: null,
+        last_name: null,
+        organization: null,
+        organization_id: null
     }
 });
 
-exports.UserModel = UserModel;
+exports.SettingsUser = SettingsUser;
 
 });
 

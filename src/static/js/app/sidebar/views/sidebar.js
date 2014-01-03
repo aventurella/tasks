@@ -35,6 +35,10 @@ var SidebarView = marionette.ItemView.extend({
     initialize: function(options){
         this.user = options.settings.getUser();
         this.currentSettings = options.settings;
+
+        this.model = new backbone.Model({
+            organization: this.currentSettings.getUser().get('organization')
+        });
     },
 
     wantsOrgMenu: function(){
