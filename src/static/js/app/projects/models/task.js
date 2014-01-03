@@ -7,7 +7,7 @@ var domain = require('app/settings/defaults').getSettings().getApiDomain();
 var status = {
     BACKLOG: 0,
     TODO: 1,
-    ACCEPTED: 2,
+    ACCEPTED: 2, // unused
     IN_PROGRESS: 3,
     COMPLETED: 4,
     ARCHIVED: 5
