@@ -38,7 +38,7 @@ var NewProjectExistingView = InputSelectScrollableComposite.extend({
 
         this.collection.fetch({data:{all:1}}).then(function(){
             if(self.collection.length === 0 ){
-                self.doShowForNone()
+                self.doShowForNone();
             }
             self.projects = self.collection.toArray();
         });
