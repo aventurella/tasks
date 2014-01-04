@@ -66,6 +66,7 @@ var TaskView = marionette.Layout.extend({
     initialize: function(){
         // needed for when we reasign the assigned_to via server
         // this.listenTo(this.model, 'change:assigned_to', this.render);
+        _.bindAll(this, 'editTaskComplete');
         this.listenTo(this.model, 'change', this.render);
     },
 
@@ -162,7 +163,7 @@ var TaskView = marionette.Layout.extend({
         modals.dismissModal();
         var data = modalView.getData();
 
-        if(data.ok && data.model.changedAttributes()){
+        if(data.ok && !_.isEqual(this._prevModel, data.model.toJSON())){
             data.model.save();
         }
     },
@@ -193,6 +194,7 @@ var TaskView = marionette.Layout.extend({
         // it's here because comments etc may be added to
         // editing a task which would mean we need an alternate
         // view representation.
+        this._prevModel = this.model.toJSON();
         var taskForm = new EditTaskFormView({model: this.model});
         var modalView = modals.presentModal(taskForm);
         modalView.then(this.editTaskComplete);

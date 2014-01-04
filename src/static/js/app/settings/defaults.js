@@ -38,7 +38,6 @@ var ApplicationSettings = marionette.Controller.extend({
         return driver.setCurrentProjectId(value);
     },
 
-
     getCurrentProjectId: function(){
         return driver.getCurrentProjectId();
     }
