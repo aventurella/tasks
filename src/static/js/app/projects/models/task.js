@@ -43,7 +43,7 @@ var Task = backbone.Model.extend({
             label: obj.label,
             loe: obj.loe,
             status: obj.status,
-            assigned_email: obj.assigned_email,
+            assigned_to: obj.assigned_to,
             task_type: obj.task_type,
             backlog_order: obj.backlog_order,
             project: '/api/v1/project/' + obj.project + '/'
@@ -63,7 +63,7 @@ var Task = backbone.Model.extend({
     defaults: {
         label: null,
         description: null,
-        assigned_to: '',
+        assigned_to: null,
         status:status.BACKLOG,
         loe:loe.LOW,
         task_type:task_type.TASK
