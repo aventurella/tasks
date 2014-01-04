@@ -10,6 +10,7 @@ var KeyResponder = require('built/core/responders/keys').KeyResponder;
 var Task = require('app/projects/models/task').Task;
 var status = require('app/projects/models/task').status;
 var template = require('hbs!../templates/edit-task');
+var UserSearchInputSelect = require('./user-search-input-select').UserSearchInputSelect;
 
 // *IMPORTANT*
 // For now it's basically the same as TaskFormView
@@ -55,6 +56,11 @@ var EditTaskFormView = marionette.ItemView.extend({
         this.stickit();
         this.ui.label.focus();
 
+        this.userSearchInputSelect = new UserSearchInputSelect({
+            el:'.user-search-input-select',
+            model:this.model
+        });
+        this.userSearchInputSelect.render();
     },
 
     performKeyEquivalent: function(e){

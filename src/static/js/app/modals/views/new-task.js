@@ -60,7 +60,8 @@ var TaskFormView = marionette.ItemView.extend({
         this.ui.label.focus();
 
         this.userSearchInputSelect = new UserSearchInputSelect({
-            el:'.user-search-input-select'
+            el:'.user-search-input-select',
+            model:this.model
         });
         this.userSearchInputSelect.render();
     },

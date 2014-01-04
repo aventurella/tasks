@@ -1554,3 +1554,5 @@ body {
 
 .user-search-input-select .list-group .list-group-item {
   display: block; }
+  .user-search-input-select .list-group .list-group-item.active {
+    color: red; }

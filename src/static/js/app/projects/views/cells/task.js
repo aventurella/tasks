@@ -65,7 +65,8 @@ var TaskView = marionette.Layout.extend({
 
     initialize: function(){
         // needed for when we reasign the assigned_to via server
-        this.listenTo(this.model, 'change:assigned_to', this.render);
+        // this.listenTo(this.model, 'change:assigned_to', this.render);
+        this.listenTo(this.model, 'change', this.render);
     },
 
     onClose: function(){

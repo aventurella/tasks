@@ -11,49 +11,54 @@ var Assignees = require('../collections/assignees').Assignees;
 var UserSearchInputSelect = InputSelectScrollableComposite.extend({
     itemView: ResultItem,
     itemViewContainer: '.list-group',
+    minLength: 0,
+    debounceDelay: 0,
 
     ui : {
-        input:'input'
+        input:'input',
+        selectedUser:'.selected-user'
     },
 
     events: {
-        'keyup input': 'onInputKeypress'
+        'keyup input': 'onKeyup'
     },
 
     initialize: function(){
         this.master = new Assignees();
         this.master.fetch();
-        this.listenTo(this.master, 'sync', this.onMasterSync);
+        this.listenTo(this.master, 'sync', this.resetCollection);
         this.collection = new Backbone.Collection();
-
         this.once('render', this.onShow);
-
     },
 
-    onMasterSync: function(){
-        // this.collection.reset(this.master.toJSON());
+    onShow: function(){
+        InputSelectScrollableComposite.prototype.onShow.apply(this, arguments);
     },
 
-    onInputKeypress: function(evt){
-        // undo this and fix in component
-        if(this.ui.input.val() === ''){
-            this.collection.reset(this.master.toJSON());
+    onKeyup: function(){
+        var search = this.ui.input.val();
+        if(this._search !== '' && search === ''){
+            this.resetCollection();
+            return;
         }
     },
 
-    inputDidReceiveData: function(data){
-        console.log('Searching For: ', data);
+    resetCollection: function(){
+        this.collection.reset(this.master.toJSON());
+        this._search = '';
+    },
 
+    inputDidReceiveData: function(data){
+        var search = this.ui.input.val();
+        if(search == this._search)return;
         var filtered = this.master.filter(function(model){
             var email = model.get('email');
-            if(email.indexOf(data) != -1){
+            if(email.indexOf(search) != -1){
                 return true;
             }
-
         }, this);
-
         this.collection.reset(filtered);
-
+        this._search = search;
     },
 
     presentCollectionView: function(){
@@ -74,18 +79,9 @@ var UserSearchInputSelect = InputSelectScrollableComposite.extend({
     },
 
     collectionViewDidSelect: function(view){
-        this.ui.input.val(view.model.get('path'));
+        this.model.set('assigned_to', view.model.get('resource_uri'));
+        this.ui.selectedUser.html(view.model.get('email'));
 
-        // YOU MUST CALL CLEANUP WHEN YOU ARE DONE
-        // You may be animating the dismissal, or who knows
-        // what, so we don't know when to call it, only you do.
-        this.dismissCollectionView();
-        this.cleanup();
-
-        // At this point you should probably save a reference to
-        // view.model somewhere, since this is what the user selected.
-        // something like this.selectedModel = view.model
-        // so you can do something with it later.
     },
 });
 
