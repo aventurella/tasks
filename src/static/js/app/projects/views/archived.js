@@ -57,11 +57,6 @@ var ArchivedView = marionette.ItemView.extend({
     },
 
     showCollection: function(collection){
-        collection.comparator = function(task){
-            return task.get('completed_on');
-        };
-
-        collection.sort();
         this.archived = new marionette.CollectionView({
             el: this.ui.list,
             itemView: CellArchivedView,
