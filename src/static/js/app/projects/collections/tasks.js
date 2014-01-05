@@ -2,13 +2,14 @@ define(function( require, exports, module ){
 
 var backbone = require('backbone');
 var activity = require('built/app/activity');
-var Task = require('../models/task').Task;
+var task = require('../models/task');
 var domain = require('app/settings/defaults').getSettings().getApiDomain();
 
 var Tasks =  backbone.Collection.extend({
     url: domain+'/api/v1/task/',
-    model: Task,
+    model: task.Task,
     comparator: 'backlog_order',
+    projectId: null,
 
     initialize: function(){
         this.pending = {};
@@ -16,6 +17,38 @@ var Tasks =  backbone.Collection.extend({
 
     parse: function(response) {
         return response.objects;
+    },
+
+    loadBacklog: function(){
+        return this.tasksForStatus(task.status.BACKLOG);
+    },
+
+    loadTodo: function(){
+        return this.tasksForStatus(task.status.TODO);
+    },
+
+    loadInProgress: function(){
+        return this.tasksForStatus(task.status.IN_PROGRESS);
+    },
+
+    loadCompleted: function(){
+        return this.tasksForStatus(task.status.COMPLETED);
+    },
+
+    loadArchived: function(){
+        return this.tasksForStatus(task.status.ARCHIVED);
+    },
+
+    tasksForStatus: function(status){
+        var options = {
+            add: true,
+            remove: false,
+            data: {
+            project__id: this.projectId,
+            status: status}
+        };
+
+        return this.fetch(options);
     },
 
     fetch: function(){

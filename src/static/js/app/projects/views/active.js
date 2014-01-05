@@ -31,10 +31,12 @@ var ActiveView = marionette.ItemView.extend({
     initialize: function(options){
         _.bindAll(this, 'showSwimlanes');
         this.options = options;
+        this.tasks = options.tasks;
         this.swimlanes = {};
     },
 
     onShow: function(){
+
         this.options.tasks.then(this.showSwimlanes);
     },
 

@@ -58,7 +58,7 @@ var ArchivedView = marionette.ItemView.extend({
 
     showCollection: function(collection){
         collection.comparator = function(task){
-            return task.get('last_edited').datetime;
+            return task.get('completed_on');
         };
         collection.sort();
         this.archived = new marionette.CollectionView({

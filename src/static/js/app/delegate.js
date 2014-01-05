@@ -93,6 +93,7 @@ var ApplicationDelegate = marionette.Controller.extend({
     showProject: function(project){
         var tasks = this.tasks;
         tasks.reset();
+        tasks.projectId = project.get('id');
 
         var projectView = new ProjectDetailView({
             model: project,

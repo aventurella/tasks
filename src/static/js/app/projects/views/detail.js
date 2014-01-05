@@ -1,12 +1,13 @@
 define(function(require, exports, module) {
 
+var _ = require('underscore');
 var marionette = require('marionette');
 var keys = require('built/app/keys');
 var KeyResponder = require('built/core/responders/keys').KeyResponder;
 var IndexManager = require('built/core/managers/index').IndexManager;
 var cssFocus = require('built/ui/controls/x-css-focus-single');
 var Tasks = require('../collections/tasks').Tasks;
-var InProcessView = require('./active').ActiveView;
+var ActiveView = require('./active').ActiveView;
 var BacklogView = require('./backlog').BacklogView;
 var ArchivedView = require('./archived').ArchivedView;
 var events = require('../events');
@@ -46,7 +47,14 @@ var ProjectDetailView = marionette.Layout.extend({
             'showBacklog',
             'showActive',
             'showArchived');
+
         this.tasks = options.tasks;
+
+        this.manifest = {
+            backlog: false,
+            active: false,
+            archived: false
+        };
     },
 
     wantsToggleSidebar: function(){
@@ -68,25 +76,109 @@ var ProjectDetailView = marionette.Layout.extend({
     showBacklog: function(){
         this.indexManager.setIndex(0);
         this.focusManager.focus(this.ui.btnBacklog);
+
+        var data = this.loadBacklog();
+
         this.section.show(new BacklogView({
             model: this.model,
-            tasks: this.tasks}));
+            tasks: data}));
     },
 
     showActive: function(){
         this.indexManager.setIndex(1);
         this.focusManager.focus(this.ui.btnActive);
-        this.section.show(new InProcessView({
+
+        var data = this.loadActive();
+
+        this.section.show(new ActiveView({
             model: this.model,
-            tasks: this.tasks}));
+            tasks: data}));
     },
 
     showArchived: function(){
         this.indexManager.setIndex(2);
         this.focusManager.focus(this.ui.btnArchived);
+
+        var data = this.loadArchived();
+
         this.section.show(new ArchivedView({
             model: this.model,
-            tasks: this.tasks}));
+            tasks: data}));
+    },
+
+    loadBacklog: function(){
+        var deferred = $.Deferred();
+        var shouldLoad = this.manifest.backlog === false ? true : false;
+        var tasks = this.tasks;
+
+        function loadComplete(r1){
+            this.loadOperation = null;
+            this.manifest.backlog = true;
+            deferred.resolve(tasks);
+        }
+
+        if(shouldLoad){
+            if(this.loadOperation) this.loadOperation.reject();
+            this.loadOperation = deferred;
+
+            tasks.loadBacklog().then(_.bind(loadComplete, this));
+
+        } else {
+            deferred.resolve(tasks);
+        }
+
+        return deferred.promise();
+    },
+
+    loadActive: function(){
+        var deferred = $.Deferred();
+        var shouldLoad = this.manifest.active === false ? true : false;
+        var tasks = this.tasks;
+
+        function loadComplete(r1, r2, r3){
+            this.loadOperation = null;
+            this.manifest.active = true;
+            deferred.resolve(tasks);
+        }
+
+        if(shouldLoad){
+            if(this.loadOperation) this.loadOperation.reject();
+            this.loadOperation = deferred;
+
+            $.when(tasks.loadTodo(),
+                   tasks.loadInProgress(),
+                   tasks.loadCompleted())
+             .then(_.bind(loadComplete, this));
+        } else {
+            deferred.resolve(tasks);
+        }
+
+        return deferred.promise();
+    },
+
+    loadArchived: function(){
+        var deferred = $.Deferred();
+        var shouldLoad = this.manifest.archived === false ? true : false;
+        var tasks = this.tasks;
+
+        function loadComplete(r1){
+            this.loadOperation = null;
+            this.manifest.archived = true;
+            deferred.resolve(tasks);
+
+        }
+
+        if(shouldLoad){
+            if(this.loadOperation) this.loadOperation.reject();
+            this.loadOperation = deferred;
+
+            tasks.loadArchived().then(_.bind(loadComplete, this));
+
+        } else {
+            deferred.resolve(tasks);
+        }
+
+        return deferred.promise();
     },
 
     loadTasks: function(){
@@ -115,7 +207,7 @@ var ProjectDetailView = marionette.Layout.extend({
             this.ui.btnActive,
             this.ui.btnArchived], {focusClass: 'selected'});
 
-        this.tasks = this.loadTasks();
+        // this.tasks = this.loadTasks();
 
         this.stickit();
 
@@ -167,7 +259,8 @@ var ProjectDetailView = marionette.Layout.extend({
     },
 
     onClose: function(){
-        if(this.loadOperation.state() == 'pending'){
+        if(this.loadOperation &&
+           this.loadOperation.state() == 'pending'){
             this.loadOperation.reject();
         }
 
