@@ -23,6 +23,10 @@ var Tasks =  backbone.Collection.extend({
         return this.tasksForStatus(task.status.BACKLOG);
     },
 
+    loadInitialActiveTasks: function(){
+        return this.tasksForStatus();
+    },
+
     loadTodo: function(){
         return this.tasksForStatus(task.status.TODO);
     },
@@ -43,9 +47,9 @@ var Tasks =  backbone.Collection.extend({
 
         var data = {
             project__id: this.projectId,
-            status: status
         };
 
+        if(status) data.status = status;
         if(maxId) data.max_id = maxId;
 
         var options = {

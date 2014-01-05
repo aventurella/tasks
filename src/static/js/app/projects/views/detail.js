@@ -145,9 +145,11 @@ var ProjectDetailView = marionette.Layout.extend({
             if(this.loadOperation) this.loadOperation.reject();
             this.loadOperation = deferred;
 
-            $.when(tasks.loadTodo(),
-                   tasks.loadInProgress(),
-                   tasks.loadCompleted())
+
+            $.when(tasks.loadInitialActiveTasks())
+                    //tasks.loadTodo(),
+                   //tasks.loadInProgress(),
+                   //tasks.loadCompleted())
              .then(_.bind(loadComplete, this));
         } else {
             deferred.resolve(tasks);
