@@ -69,7 +69,6 @@ var BacklogView = marionette.ItemView.extend({
     },
 
     showCollection: function(collection){
-
         this.backlog = new Swimlane({
             el: this.ui.list,
             itemView: CellBacklogView,

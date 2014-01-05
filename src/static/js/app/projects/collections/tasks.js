@@ -1,5 +1,6 @@
 define(function( require, exports, module ){
 
+var _ = require('underscore');
 var backbone = require('backbone');
 var activity = require('built/app/activity');
 var task = require('../models/task');
@@ -49,7 +50,9 @@ var Tasks =  backbone.Collection.extend({
             project__id: this.projectId,
         };
 
-        if(status) data.status = status;
+        if(!_.isUndefined(status) && !_.isNull(status))
+            data.status = status;
+
         if(maxId) data.max_id = maxId;
 
         var options = {
