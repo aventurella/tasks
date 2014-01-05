@@ -9,6 +9,7 @@ var tasks = require('../models/task');
 var events = require('built/core/events/event');
 
 var Task = require('../models/task').Task;
+var status = require('../models/task').status;
 var task_type = require('../models/task').task_type;
 
 var Swimlane = DragAndDropCollectionView.extend({
@@ -19,16 +20,26 @@ var Swimlane = DragAndDropCollectionView.extend({
         DragAndDropCollectionView.prototype.initialize.apply(this, arguments);
 
         this.listenTo(this.masterList, 'add', this.onTaskAdded);
+
+
+        // all backlog items (up to 1000 are loaded)
+        if(this.options.status > status.BACKLOG){
+            this.initializeScrollManager();
+        }
+    },
+
+    initializeScrollManager: function(){
+        _.bindAll(this, 'wantsUpdateMaxScroll');
+
+        var updateMaxScrollHandler = _.debounce(this.wantsUpdateMaxScroll, 300);
         var scrollManager = new ScrollManager({el: this.$el});
+
         scrollManager.addMarkerPositions(0.8);
 
-        _.bindAll(this, 'wantsUpdateMaxScroll');
-        var updateMaxScrollHandler = _.debounce(this.wantsUpdateMaxScroll, 300);
         this.on('after:item:added', updateMaxScrollHandler);
 
         this.listenTo(scrollManager, events.MARKER, this.wantsLoadMoreTasks);
         this.scrollManager = scrollManager;
-
     },
 
     wantsUpdateMaxScroll: function(){
@@ -44,7 +55,6 @@ var Swimlane = DragAndDropCollectionView.extend({
             last.get('id'))
         .then(function(r){
             if(r.objects.length === 0){
-                console.log('closing scroll manager');
                 scrollManager.close();
                 scrollManager = null;
             }

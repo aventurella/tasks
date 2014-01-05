@@ -40,7 +40,7 @@ var Tasks =  backbone.Collection.extend({
     },
 
     tasksForStatus: function(status, maxId){
-        console.log(this, this.projectId);
+
         var data = {
             project__id: this.projectId,
             status: status
