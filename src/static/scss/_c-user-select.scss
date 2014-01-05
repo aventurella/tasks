@@ -1,12 +1,21 @@
 .user-search-input-select{
-    a{
 
+    .selected-user{
+        border-bottom: 1px dotted #ddd;
     }
+
     .list-group{
         .list-group-item{
             display: block;
+            border-bottom: 1px dotted #ddd;
+            padding: 7px;
+            color: #525252;
+            cursor: pointer;
+            width: 300px;
+            background-color: white;
             &.active{
-                color:red;
+                background-color: #4a87ee;
+                color:#fff;
             }
         }
     }
