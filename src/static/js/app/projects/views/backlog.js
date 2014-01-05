@@ -74,7 +74,7 @@ var BacklogView = marionette.ItemView.extend({
             el: this.ui.list,
             itemView: CellBacklogView,
             status: status.BACKLOG,
-            masterList:collection,
+            masterList: this.getTasks(),
             collection: new Tasks(collection.where({status:status.BACKLOG}))
         });
 

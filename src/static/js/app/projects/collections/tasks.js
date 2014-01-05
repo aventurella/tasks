@@ -8,7 +8,7 @@ var domain = require('app/settings/defaults').getSettings().getApiDomain();
 var Tasks =  backbone.Collection.extend({
     url: domain+'/api/v1/task/',
     model: task.Task,
-    comparator: 'backlog_order',
+    //comparator: 'backlog_order',
     projectId: null,
 
     initialize: function(){
@@ -39,26 +39,32 @@ var Tasks =  backbone.Collection.extend({
         return this.tasksForStatus(task.status.ARCHIVED);
     },
 
-    tasksForStatus: function(status){
+    tasksForStatus: function(status, maxId){
+        console.log(this, this.projectId);
+        var data = {
+            project__id: this.projectId,
+            status: status
+        };
+
+        if(maxId) data.max_id = maxId;
+
         var options = {
             add: true,
             remove: false,
-            data: {
-            project__id: this.projectId,
-            status: status}
+            data: data
         };
 
         return this.fetch(options);
     },
 
     fetch: function(){
-        activity.presentNetworkActivityIndicator();
+        //activity.presentNetworkActivityIndicator();
         this.once('sync', this.onFetchComplete);
         return backbone.Collection.prototype.fetch.apply(this, arguments);
     },
 
     onFetchComplete: function(){
-        activity.dismissNetworkActivityIndicator();
+        //activity.dismissNetworkActivityIndicator();
     },
 
     toJSON: function(options) {

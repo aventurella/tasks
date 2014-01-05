@@ -1,10 +1,12 @@
 define(function(require, exports, module) {
 
+var _ = require('underscore');
 var marionette = require('marionette');
 var backbone = require('backbone');
 var DragAndDropCollectionView = require('built/ui/views/collection/drag-and-drop').DragAndDropCollectionView;
+var ScrollManager = require('built/core/managers/scroll').ScrollManager;
 var tasks = require('../models/task');
-
+var events = require('built/core/events/event');
 
 var Task = require('../models/task').Task;
 var task_type = require('../models/task').task_type;
@@ -12,16 +14,47 @@ var task_type = require('../models/task').task_type;
 var Swimlane = DragAndDropCollectionView.extend({
 
     initialize: function(options){
+        this.options = options;
         this.masterList = options.masterList;
         DragAndDropCollectionView.prototype.initialize.apply(this, arguments);
+
         this.listenTo(this.masterList, 'add', this.onTaskAdded);
+        var scrollManager = new ScrollManager({el: this.$el});
+        scrollManager.addMarkerPositions(0.8);
+
+        _.bindAll(this, 'wantsUpdateMaxScroll');
+        var updateMaxScrollHandler = _.debounce(this.wantsUpdateMaxScroll, 300);
+        this.on('after:item:added', updateMaxScrollHandler);
+
+        this.listenTo(scrollManager, events.MARKER, this.wantsLoadMoreTasks);
+        this.scrollManager = scrollManager;
+
+    },
+
+    wantsUpdateMaxScroll: function(){
+        this.scrollManager.calculateMaxScroll();
+    },
+
+    wantsLoadMoreTasks: function(){
+        var last = this.collection.last();
+        var scrollManager = this.scrollManager;
+
+        this.masterList.tasksForStatus(
+            this.options.status,
+            last.get('id'))
+        .then(function(r){
+            if(r.objects.length === 0){
+                console.log('closing scroll manager');
+                scrollManager.close();
+                scrollManager = null;
+            }
+        });
     },
 
     onTaskAdded: function(model){
         if(model.get('status') == this.options.status){
             this.collection.add(model);
         }
-
     },
 
     getDragImage: function(){
