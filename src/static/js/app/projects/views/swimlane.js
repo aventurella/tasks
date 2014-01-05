@@ -46,9 +46,17 @@ var Swimlane = DragAndDropCollectionView.extend({
         this.scrollManager.calculateMaxScroll();
     },
 
-    wantsLoadMoreTasks: function(){
+    wantsLoadMoreTasks: function(sender, markers, direction){
         var last = this.collection.last();
         var scrollManager = this.scrollManager;
+
+        // when the list grows, it effectively
+        // scrolls us backwards, which means we will
+        // receive a decremental direction after the marker's
+        // incremental on the next scroll action.
+        // we only want to pay attention to forward only actions.
+
+        if(direction != 'incremental') return;
 
         this.masterList.tasksForStatus(
             this.options.status,
