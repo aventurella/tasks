@@ -1,19 +1,27 @@
 .user-search-input-select{
-    width:300px;
+    width:500px;
     margin: 15px;
+
+    >div{
+        display: inline-block;
+    }
     .assigned{
         font-weight: bold;
+        vertical-align: top;
+        line-height: 35px;
     }
     .selected-user{
         border-bottom: 1px dotted #ddd;
+        line-height: 35px;
     }
     input{
         border: 1px solid #ddd;
-        width: 300px;
-        margin-top: 10px;
+        display: inline-block;
+        min-width: 200px;
     }
 
     .list-group{
+        display: block;
         box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 9px -3px;
         .list-group-item{
             display: block;
@@ -21,7 +29,6 @@
             padding: 7px;
             color: #525252;
             cursor: pointer;
-            width: 300px;
             background-color: white;
             &.active{
                 background-color: #4a87ee;

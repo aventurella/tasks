@@ -21,7 +21,9 @@ var UserSearchInputSelect = InputSelectScrollableComposite.extend({
     },
 
     events: {
-        'keyup input': 'onKeyup'
+        'keyup input': 'onKeyup',
+        'click .selected-user': 'wantsToSelectUser',
+        'blur input':'wantsToBlurInput'
     },
 
     initialize: function(){
@@ -34,6 +36,19 @@ var UserSearchInputSelect = InputSelectScrollableComposite.extend({
 
     onShow: function(){
         InputSelectScrollableComposite.prototype.onShow.apply(this, arguments);
+        this.ui.input.hide();
+    },
+
+    wantsToSelectUser: function(){
+        this.ui.input.show();
+        this.ui.input.focus();
+        this.ui.selectedUser.hide();
+        return false;
+    },
+
+    wantsToBlurInput: function(){
+        this.ui.input.hide();
+        this.ui.selectedUser.show();
     },
 
     onKeyup: function(){
@@ -84,6 +99,8 @@ var UserSearchInputSelect = InputSelectScrollableComposite.extend({
         this.model.set('assigned_to', view.model.get('resource_uri'));
         this.ui.selectedUser.html(view.model.get('email'));
         this.resetCollection();
+        this.ui.input.hide();
+        this.ui.selectedUser.show();
     },
 });
 
