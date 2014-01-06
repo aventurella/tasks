@@ -1,4 +1,5 @@
 .user-search-input-select{
+    width:300px;
     margin: 15px;
     .assigned{
         font-weight: bold;
@@ -13,6 +14,7 @@
     }
 
     .list-group{
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 9px -3px;
         .list-group-item{
             display: block;
             border-bottom: 1px dotted #ddd;

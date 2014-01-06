@@ -1553,6 +1553,7 @@ body {
   border-color: #d43f3a; }
 
 .user-search-input-select {
+  width: 300px;
   margin: 15px; }
   .user-search-input-select .assigned {
     font-weight: bold; }
@@ -1562,14 +1563,16 @@ body {
     border: 1px solid #ddd;
     width: 300px;
     margin-top: 10px; }
-  .user-search-input-select .list-group .list-group-item {
-    display: block;
-    border-bottom: 1px dotted #ddd;
-    padding: 7px;
-    color: #525252;
-    cursor: pointer;
-    width: 300px;
-    background-color: white; }
-    .user-search-input-select .list-group .list-group-item.active {
-      background-color: #4a87ee;
-      color: #fff; }
+  .user-search-input-select .list-group {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 9px -3px; }
+    .user-search-input-select .list-group .list-group-item {
+      display: block;
+      border-bottom: 1px dotted #ddd;
+      padding: 7px;
+      color: #525252;
+      cursor: pointer;
+      width: 300px;
+      background-color: white; }
+      .user-search-input-select .list-group .list-group-item.active {
+        background-color: #4a87ee;
+        color: #fff; }
