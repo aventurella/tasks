@@ -16,7 +16,8 @@ var UserSearchInputSelect = InputSelectScrollableComposite.extend({
 
     ui : {
         input:'input',
-        selectedUser:'.selected-user'
+        selectedUser:'.selected-user',
+        listGroup:'.list-group'
     },
 
     events: {
@@ -46,6 +47,9 @@ var UserSearchInputSelect = InputSelectScrollableComposite.extend({
     resetCollection: function(){
         this.collection.reset(this.master.toJSON());
         this._search = '';
+        this.ui.input.val('');
+        this.ui.input.blur();
+        this.dismissCollectionView();
     },
 
     inputDidReceiveData: function(data){
@@ -59,21 +63,19 @@ var UserSearchInputSelect = InputSelectScrollableComposite.extend({
         }, this);
         this.collection.reset(filtered);
         this._search = search;
+        // this.presentCollectionView();
     },
 
     presentCollectionView: function(){
-
+        this.ui.listGroup.show();
     },
 
     dismissCollectionView: function(){
+        this.ui.listGroup.hide();
 
     },
 
     collectionViewDidCancel: function(){
-
-        // YOU MUST CALL CLEANUP WHEN YOU ARE DONE
-        // You may be animating the dismissal, or who knows
-        // what, so we don't know when to call it, only you do.
         this.dismissCollectionView();
         this.cleanup();
     },
@@ -81,7 +83,7 @@ var UserSearchInputSelect = InputSelectScrollableComposite.extend({
     collectionViewDidSelect: function(view){
         this.model.set('assigned_to', view.model.get('resource_uri'));
         this.ui.selectedUser.html(view.model.get('email'));
-
+        this.resetCollection();
     },
 });
 
