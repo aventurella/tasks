@@ -10,6 +10,49 @@ var Tasks =  backbone.Collection.extend({
     url: domain+'/api/v1/task/',
     model: task.Task,
     //comparator: 'backlog_order',
+
+    /*
+    sort = function(a, b){
+        console.log(a.id, '==', b.id);
+        if (a.next == b.id) return -1;
+        if(a.prev == b.id) return 1;
+        return 1;}
+
+    sort = function(a, b){
+    if (a.next == b.id){ return -1 }
+    if(a.prev == b.id){return 1;}
+    return 1;}
+
+    -- select * from task_taskorder where task_id in (76, 16, 73)
+explain analyze WITH RECURSIVE tree (task_id, previous_id, next_id )AS
+(
+    SELECT
+    task_taskorder.task_id,
+    task_taskorder.previous_id,
+    task_taskorder.next_id
+    FROM task_taskorder
+    --WHERE task_taskorder.project_id = 3
+    --AND task_taskorder.status = 3
+    --AND task_taskorder.previous_id = 0
+    WHERE task_taskorder.task_id = 161114
+
+    UNION ALL
+
+    SELECT tto.task_id, tto.previous_id, tto.next_id
+    FROM task_taskorder AS tto
+    JOIN tree as t
+    ON (t.next_id = tto.task_id)
+)
+SELECT
+tree.task_id,
+task_task.label,
+task_task.description,
+task_task.status
+FROM tree
+INNER JOIN task_task on tree.task_id = task_task.id
+LIMIT 15
+    */
+
     projectId: null,
 
     initialize: function(){
