@@ -59,7 +59,14 @@
     </div>
     <div class="user-search-input-select">
         <span class="assigned">Assigned To:</span>
-        <span class="selected-user">{{assigned_to.email}}</span>
+        <a href='#' class="selected-user">
+            {{# if assigned_to.email }}
+                {{assigned_to.email}}
+            {{ else }}
+                no one
+            {{/ if }}
+            </a>
+        <a href='#' class="clear-selected-user">x</a>
         <div>
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search Users">

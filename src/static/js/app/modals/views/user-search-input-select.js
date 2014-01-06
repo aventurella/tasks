@@ -17,13 +17,15 @@ var UserSearchInputSelect = InputSelectScrollableComposite.extend({
     ui : {
         input:'input',
         selectedUser:'.selected-user',
-        listGroup:'.list-group'
+        listGroup:'.list-group',
+        clearSelectedUser: '.clear-selected-user'
     },
 
     events: {
         'keyup input': 'onKeyup',
         'click .selected-user': 'wantsToSelectUser',
-        'blur input':'wantsToBlurInput'
+        'blur input':'wantsToBlurInput',
+        'click .clear-selected-user':'wantsToClearUser'
     },
 
     initialize: function(){
@@ -37,6 +39,9 @@ var UserSearchInputSelect = InputSelectScrollableComposite.extend({
     onShow: function(){
         InputSelectScrollableComposite.prototype.onShow.apply(this, arguments);
         this.ui.input.hide();
+        if(!this.model.get('assigned_to')){
+            this.ui.clearSelectedUser.hide();
+        }
     },
 
     wantsToSelectUser: function(){
@@ -49,6 +54,11 @@ var UserSearchInputSelect = InputSelectScrollableComposite.extend({
     wantsToBlurInput: function(){
         this.ui.input.hide();
         this.ui.selectedUser.show();
+    },
+
+    wantsToClearUser: function(){
+        this.clearSelectedUser();
+        return false;
     },
 
     onKeyup: function(){
@@ -101,6 +111,13 @@ var UserSearchInputSelect = InputSelectScrollableComposite.extend({
         this.resetCollection();
         this.ui.input.hide();
         this.ui.selectedUser.show();
+        this.ui.clearSelectedUser.show();
+    },
+
+    clearSelectedUser: function(){
+        this.model.set('assigned_to', null);
+        this.ui.selectedUser.html('no one');
+        this.ui.clearSelectedUser.hide();
     },
 });
 
