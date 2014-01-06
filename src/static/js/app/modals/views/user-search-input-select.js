@@ -93,11 +93,16 @@ var UserSearchInputSelect = InputSelectScrollableComposite.extend({
 
     presentCollectionView: function(){
         this.ui.listGroup.show();
+        this.ui.clearSelectedUser.hide();
     },
 
     dismissCollectionView: function(){
         this.ui.listGroup.hide();
-
+        if(this.model.get('assigned_to')){
+            this.ui.clearSelectedUser.show();
+        }else{
+            this.ui.clearSelectedUser.hide();
+        }
     },
 
     collectionViewDidCancel: function(){
