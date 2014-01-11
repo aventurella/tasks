@@ -41,16 +41,26 @@ watch:
 	@-mkdir -p src/static/css
 	sass --watch $(RESOURCE_PATH_SRC)/scss:$(RESOURCE_PATH_SRC)/css
 
-.PHONE: count-js
+.PHONY: count-js
 count-js:
 	@echo 'JavaScript Files:'
 	@find . -name '*.js' -not -path "./src/static/js/vendor/*" | wc -l
 	@echo 'JavaScript LOC:'
 	@find . -name '*.js' -not -path "./src/static/js/vendor/*" | xargs cat | wc -l
 
-.PHONE: count-html
+.PHONY: count-html
 count-html:
 	@echo 'HTML Files:'
 	@find . -name '*.html' -not -path "./src/static/js/vendor/*" | wc -l
 	@echo 'HTML LOC:'
 	@find . -name '*.html' -not -path "./src/static/js/vendor/*" | xargs cat | wc -l
+
+
+.PHONY: clean-cocoa
+clean-cocoa:
+	@echo 'deleting com.happygravity.*'
+	@rm -rf ~/Library/Saved\ Application\ State/com.happygravity.*
+	@echo 'deleting NotifictionCenter DB'
+	@rm -rf ~/Library/Application\ Support/NotificationCenter/*.db
+	@echo 'restarting NotifictionCenter Process'
+	@ps ax | grep [N]otificationCenter | awk '{print $$1}' | xargs kill -9
