@@ -16,21 +16,25 @@ require('sockjs');
 
 var SockController = marionette.Controller.extend({
 
-   initialize : function(options){
+    initialize : function(options){
         _.bindAll(this, 'onopen', 'onAuthComplete', 'onclose', 'handleMessage');
         this._connection = $.Deferred();
         this._login = $.Deferred();
 
         this.tasks = options.tasks;
         this.taskProtocol = new TasksProtocol({tasks: this.tasks});
-   },
+    },
 
-   onopen: function(){
+    onopen: function(){
         this._connection.resolve();
         this.trigger(events.CONNECT);
-   },
 
-   connect: function(){
+        if(!_.isUndefined(this._project_id)){
+            this.login(this.token);
+        }
+    },
+
+    connect: function(){
         if(!this.sock){
             this.sock = new SockJS(socketDomain);
             this.sock.onopen = this.onopen;
@@ -38,9 +42,9 @@ var SockController = marionette.Controller.extend({
             this.sock.onclose = this.onclose;
         }
         return this._connection.promise();
-   },
+    },
 
-   login: function(token){
+    login: function(token){
         var connectionData = {
             action:'authorize',
             data:{
@@ -51,14 +55,14 @@ var SockController = marionette.Controller.extend({
         this.send(connectionData);
         this._login = $.Deferred();
         return this._login.promise();
-   },
+    },
 
     send: function(data){
         var payload = JSON.stringify(data);
         this.sock.send(payload);
     },
 
-   onAuthComplete: function(e){
+    onAuthComplete: function(e){
         var data = JSON.parse(e.data);
         var currentSettings;
         if(!data.ok){
@@ -74,17 +78,20 @@ var SockController = marionette.Controller.extend({
         this._login.resolve(data.data);
 
         this.sock.onmessage = this.handleMessage;
-   },
+        if(!_.isUndefined(this._project_id)){
+            this.setActiveProjectId(this._project_id);
+        }
+    },
 
-   handleMessage: function(e){
+    handleMessage: function(e){
        var data = JSON.parse(e.data);
        if(data.token == this.token) return;
        this.taskProtocol.handleMessage(data);
-   },
+    },
 
 
 
-   setActiveProjectId: function(id){
+    setActiveProjectId: function(id){
        var connectionData = {
             action:'set_project',
             data:{
@@ -94,9 +101,10 @@ var SockController = marionette.Controller.extend({
         this._project_id = id;
         if(Bridge) Bridge.currentProjectId = id;
         this.send(connectionData);
-   },
+    },
 
-   onclose: function(){
+    onclose: function(){
+       console.log('closed connection');
        this.trigger(events.DISCONNECT);
        // SocketConnectingView
        this.showModal();
@@ -108,8 +116,8 @@ var SockController = marionette.Controller.extend({
        setTimeout(function(){
         self.connect();
        }, 5000);
-   },
-   showModal: function(){
+    },
+    showModal: function(){
        modals.presentModal(new SocketConnectingView());
 
        this.once(events.CONNECT, function(){
@@ -117,7 +125,7 @@ var SockController = marionette.Controller.extend({
             this.tasks.fetch({data: {project__id: this._project_id}});
        });
 
-   },
+    },
 });
 
 exports.SockController = SockController;
