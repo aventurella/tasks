@@ -128,7 +128,7 @@ var SidebarView = marionette.ItemView.extend({
     },
 
     addProject: function(project){
-        this.projectListView.collection.create(project, {wait: true});
+        this.projectListView.collection.create(project);
     },
 
     initializeProjectList: function(){

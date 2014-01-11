@@ -8,6 +8,10 @@ var Projects =  backbone.Collection.extend({
     url: domain + '/api/v1/project/',
     model: Project,
 
+    comparator:function(project){
+        return project.get('label').toLowerCase();
+    },
+
     parse: function(response) {
         return response.objects;
     }

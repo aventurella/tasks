@@ -10,12 +10,12 @@ var ApplicationSettings = marionette.Controller.extend({
 
     getApiDomain: function(){
         return 'http://54.242.250.233';
-        // return 'http://localhost:8000';
+        //return 'http://localhost:8000';
     },
 
     getSocketDomain: function(){
         return 'http://54.242.250.233:8888';
-        // return 'http://localhost:8888';
+        //return 'http://localhost:8888';
     },
 
     getToken: function(){

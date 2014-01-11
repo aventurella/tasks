@@ -1,22 +1,23 @@
 define(function(require, exports, module) {
 
 var marionette = require('marionette');
+var CompositeViewSorted = require('app/shared/compositeview-sorted').CompositeViewSorted;
 var backbone = require('backbone');
 var ProjectCell = require('./cells/project-cell').ProjectCell;
 var Projects = require('../collections/projects').Projects;
 var events = require('../events');
 
-var ProjectListView = marionette.CompositeView.extend({
+var ProjectListView = CompositeViewSorted.extend({
     itemView : ProjectCell,
     itemViewContainer : '.projects',
 
     initialize: function(options){
         this.collection = new Projects();
-        this.collection.fetch();
         this.settings = options.settings;
     },
 
     onShow: function(){
+        this.collection.fetch();
         this.on('itemview:select', this.projectWantsSelect);
         this.listenToOnce(this.collection, 'sync', this.onProjectsSynced);
     },

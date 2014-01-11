@@ -1102,7 +1102,7 @@ body {
         background-color: #b83b3b; }
 
 #project-detail .task.bug {
-  background: -webkit-linear-gradient(top, white 0%, snow 100%);
+  background: -webkit-linear-gradient(top, white 0%, #fccfcf 100%);
   border: 1px solid #e79191; }
 
 #backlog-list {
