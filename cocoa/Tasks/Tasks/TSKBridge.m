@@ -78,7 +78,7 @@
     }
     
 
-    notification.title = [NSString stringWithFormat:@"Task %@", target];
+    notification.title = [NSString stringWithFormat:@"Task | %@", target];
     notification.informativeText = message;
     notification.subtitle = subtitle;
     notification.soundName = NSUserNotificationDefaultSoundName;

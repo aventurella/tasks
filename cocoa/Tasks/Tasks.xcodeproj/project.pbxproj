@@ -13,7 +13,6 @@
 		23033DF01867691500742A4F /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 23033DEE1867691500742A4F /* Credits.rtf */; };
 		23033DF31867691500742A4F /* TSKAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 23033DF21867691500742A4F /* TSKAppDelegate.m */; };
 		23033DF61867691500742A4F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23033DF41867691500742A4F /* MainMenu.xib */; };
-		23033DF81867691500742A4F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23033DF71867691500742A4F /* Images.xcassets */; };
 		23033DFF1867691500742A4F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23033DFE1867691500742A4F /* XCTest.framework */; };
 		23033E001867691500742A4F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23033DDF1867691500742A4F /* Cocoa.framework */; };
 		23033E081867691500742A4F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 23033E061867691500742A4F /* InfoPlist.strings */; };
@@ -26,7 +25,8 @@
 		23033E251867CF9400742A4F /* TSKTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 23033E241867CF9400742A4F /* TSKTask.m */; };
 		23033E281867D75900742A4F /* TSKApplicationSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 23033E271867D75900742A4F /* TSKApplicationSettings.m */; };
 		231A32EF1877447000D08B30 /* TSKSettingsUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 231A32EE1877447000D08B30 /* TSKSettingsUser.m */; };
-		231A32F3187B372D00D08B30 /* App-Alpha.icns in Resources */ = {isa = PBXBuildFile; fileRef = 231A32F2187B372D00D08B30 /* App-Alpha.icns */; };
+		23209D431881872F007DD6B1 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23209D421881872F007DD6B1 /* Media.xcassets */; };
+		23209D57188191D2007DD6B1 /* App-Alpha.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 23209D56188191D2007DD6B1 /* App-Alpha.iconset */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,7 +53,6 @@
 		23033DF11867691500742A4F /* TSKAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSKAppDelegate.h; sourceTree = "<group>"; };
 		23033DF21867691500742A4F /* TSKAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TSKAppDelegate.m; sourceTree = "<group>"; };
 		23033DF51867691500742A4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		23033DF71867691500742A4F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		23033DFD1867691500742A4F /* TasksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TasksTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		23033DFE1867691500742A4F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		23033E051867691500742A4F /* TasksTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TasksTests-Info.plist"; sourceTree = "<group>"; };
@@ -76,7 +75,8 @@
 		231A32ED1877447000D08B30 /* TSKSettingsUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSKSettingsUser.h; sourceTree = "<group>"; };
 		231A32EE1877447000D08B30 /* TSKSettingsUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSKSettingsUser.m; sourceTree = "<group>"; };
 		231A32F11877454600D08B30 /* TSKSettingsUserExport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSKSettingsUserExport.h; sourceTree = "<group>"; };
-		231A32F2187B372D00D08B30 /* App-Alpha.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "App-Alpha.icns"; sourceTree = "<group>"; };
+		23209D421881872F007DD6B1 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		23209D56188191D2007DD6B1 /* App-Alpha.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = "App-Alpha.iconset"; path = "../App-Alpha.iconset"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,7 +150,6 @@
 				23033DF11867691500742A4F /* TSKAppDelegate.h */,
 				23033DF21867691500742A4F /* TSKAppDelegate.m */,
 				23033DF41867691500742A4F /* MainMenu.xib */,
-				23033DF71867691500742A4F /* Images.xcassets */,
 				23033DE61867691500742A4F /* Supporting Files */,
 				23033E131867692800742A4F /* TSKWebView.h */,
 				23033E141867692800742A4F /* TSKWebView.m */,
@@ -165,7 +164,8 @@
 		23033DE61867691500742A4F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				231A32F2187B372D00D08B30 /* App-Alpha.icns */,
+				23209D56188191D2007DD6B1 /* App-Alpha.iconset */,
+				23209D421881872F007DD6B1 /* Media.xcassets */,
 				23033DE71867691500742A4F /* Tasks-Info.plist */,
 				23033DE81867691500742A4F /* InfoPlist.strings */,
 				23033DEB1867691500742A4F /* main.m */,
@@ -272,6 +272,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = HappyGravity;
 				TargetAttributes = {
+					23033DDB1867691500742A4F = {
+						DevelopmentTeam = SKY2AWYNCD;
+					};
 					23033DFC1867691500742A4F = {
 						TestTargetID = 23033DDB1867691500742A4F;
 					};
@@ -301,11 +304,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23209D57188191D2007DD6B1 /* App-Alpha.iconset in Resources */,
 				23033DEA1867691500742A4F /* InfoPlist.strings in Resources */,
-				231A32F3187B372D00D08B30 /* App-Alpha.icns in Resources */,
-				23033DF81867691500742A4F /* Images.xcassets in Resources */,
 				23033DF01867691500742A4F /* Credits.rtf in Resources */,
 				23033DF61867691500742A4F /* MainMenu.xib in Resources */,
+				23209D431881872F007DD6B1 /* Media.xcassets in Resources */,
 				23033E211867711800742A4F /* src in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -462,11 +465,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tasks/Tasks-Prefix.pch";
 				INFOPLIST_FILE = "Tasks/Tasks-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -475,11 +481,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tasks/Tasks-Prefix.pch";
 				INFOPLIST_FILE = "Tasks/Tasks-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
