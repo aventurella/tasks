@@ -191,10 +191,10 @@ var ApplicationDelegate = marionette.Controller.extend({
     keyDown: function(e){
         var key = keys.getKeyFromEvent(e);
 
+        if(typeof window.Bridge != 'undefined')
+            return;
+
         if(key == 'n'){
-
-            //activity.presentNetworkActivityIndicator();
-
             this.createTask();
             return true;
         }
