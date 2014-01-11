@@ -30,11 +30,12 @@
 
 - (void)taskDidChange:(NSDictionary *)data
 {
+    
     NSUserNotification *notification = [[NSUserNotification alloc] init];
     NSString *label = data[@"label"];
     NSString *project_label = data[@"project_label"];
     NSString *target;
-    NSString *assigned_email = data[@"assigned_email"];
+    NSString *assigned_to = data[@"assigned_to"][@"email"];
 
     // http://stackoverflow.com/questions/5684157/how-to-detect-if-nsstring-is-null
     NSString *token = data[@"token"] == [NSNull null] ? @"" : data[@"token"];
@@ -68,11 +69,11 @@
             break;
     }
 
-    NSString *message = [NSString stringWithFormat:@"'%@' moved to '%@'", label, target];
+    NSString *message = [NSString stringWithFormat:@"%@", label];
     NSString *subtitle;
     
-    if([assigned_email length] > 0){
-        subtitle = [NSString stringWithFormat:@"Project: '%@' (%@)", project_label, assigned_email];
+    if([assigned_to length] > 0){
+        subtitle = [NSString stringWithFormat:@"Project: '%@' (%@)", project_label, assigned_to];
     } else {
         subtitle = [NSString stringWithFormat:@"Project: '%@'", project_label];
     }

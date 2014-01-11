@@ -26,7 +26,6 @@
 		23033E281867D75900742A4F /* TSKApplicationSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 23033E271867D75900742A4F /* TSKApplicationSettings.m */; };
 		231A32EF1877447000D08B30 /* TSKSettingsUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 231A32EE1877447000D08B30 /* TSKSettingsUser.m */; };
 		23209D431881872F007DD6B1 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23209D421881872F007DD6B1 /* Media.xcassets */; };
-		23209D57188191D2007DD6B1 /* App-Alpha.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 23209D56188191D2007DD6B1 /* App-Alpha.iconset */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,7 +75,6 @@
 		231A32EE1877447000D08B30 /* TSKSettingsUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSKSettingsUser.m; sourceTree = "<group>"; };
 		231A32F11877454600D08B30 /* TSKSettingsUserExport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSKSettingsUserExport.h; sourceTree = "<group>"; };
 		23209D421881872F007DD6B1 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
-		23209D56188191D2007DD6B1 /* App-Alpha.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = "App-Alpha.iconset"; path = "../App-Alpha.iconset"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,7 +162,6 @@
 		23033DE61867691500742A4F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				23209D56188191D2007DD6B1 /* App-Alpha.iconset */,
 				23209D421881872F007DD6B1 /* Media.xcassets */,
 				23033DE71867691500742A4F /* Tasks-Info.plist */,
 				23033DE81867691500742A4F /* InfoPlist.strings */,
@@ -304,7 +301,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23209D57188191D2007DD6B1 /* App-Alpha.iconset in Resources */,
 				23033DEA1867691500742A4F /* InfoPlist.strings in Resources */,
 				23033DF01867691500742A4F /* Credits.rtf in Resources */,
 				23033DF61867691500742A4F /* MainMenu.xib in Resources */,
@@ -465,7 +461,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -481,7 +477,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
