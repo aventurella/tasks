@@ -68,7 +68,7 @@
             break;
     }
 
-    NSString *message = [NSString stringWithFormat:@"'%@' has moved to '%@'", label, target];
+    NSString *message = [NSString stringWithFormat:@"'%@' moved to '%@'", label, target];
     NSString *subtitle;
     
     if([assigned_email length] > 0){
@@ -78,7 +78,7 @@
     }
     
 
-    notification.title = @"Task Update";
+    notification.title = [NSString stringWithFormat:@"Task %@", target];
     notification.informativeText = message;
     notification.subtitle = subtitle;
     notification.soundName = NSUserNotificationDefaultSoundName;

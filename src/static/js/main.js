@@ -6,7 +6,7 @@ var marionette = require('marionette');
 var renderer = require('app/renderer');
 var main = require('app/main');
 
-require('./mock/init');
+//require('./mock/init');
 
 var app = new marionette.Application();
 app.addInitializer(main.main);
