@@ -22,16 +22,16 @@ require.config({
 
     config: {
         'cond': {
-            // Prod App
+            // PRODUCTION_APP
             // state: STATE.PROD|STATE.COCOA
 
-            // Prod Browser:
+            // PRODUCTION_BROWSER
             // state: STATE.PROD|STATE.BROWSER
 
-            // Local Dev
+            // LOCAL_DEV
             state: STATE.DEV|STATE.BROWSER
 
-            //Local CSS DEV
+            // LOCAL_DEV_MOCKS
             // state: STATE.DEV|STATE.BROWSER|STATE.MOCK
         }
     },
