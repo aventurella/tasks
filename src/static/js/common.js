@@ -23,7 +23,17 @@ require.config({
 
     config: {
         'cond': {
-            state: STATE.DEV|STATE.BROWSER//|STATE.MOCK
+            // Prod App
+            // state: STATE.PROD|STATE.COCOA
+
+            // Prod Browser:
+            // state: STATE.PROD|STATE.BROWSER
+
+            // Local Dev
+            state: STATE.DEV|STATE.BROWSER
+
+            //Local CSS DEV
+            // state: STATE.DEV|STATE.BROWSER|STATE.MOCK
         }
     },
 
