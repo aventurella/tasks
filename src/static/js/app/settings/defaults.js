@@ -2,20 +2,22 @@ define(function(require, exports, module) {
 
 var marionette = require('marionette');
 
-// see common.js -> maps for this defination
-var driver = require('driver');
+// This is handled by the cond! plugin.
+// See vendor/require/cond/cond.js for where this generic name
+// for both app/settings/driver and app/settings/urls
+// is converted to a module name or data.
+var driver = require('cond!app/settings/driver');
+var urls = require('cond!app/settings/urls');
 var settings = null;
 
 var ApplicationSettings = marionette.Controller.extend({
 
     getApiDomain: function(){
-        // return 'http://54.242.250.233';
-        return 'http://localhost:8000';
+        return urls.api;
     },
 
     getSocketDomain: function(){
-        // return 'http://54.242.250.233:8888';
-        return 'http://localhost:8888';
+        return urls.socket;
     },
 
     getToken: function(){

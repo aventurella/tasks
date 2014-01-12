@@ -1,9 +1,15 @@
+// common.js loads first
+var Bridge = window.Bridge || undefined;
+var STATE = {DEV: 1 << 0 , PROD: 1 << 1, MOCK: 1 << 2, BROWSER: 1 << 3, COCOA: 1 << 4};
+
+
 require.config({
   baseUrl: 'static/js',
 
   paths : {
     'marionette': 'vendor/backbone/marionette',
     'hbs': 'vendor/require/hbs/hbs',
+    'cond': 'vendor/require/cond/cond',
 
     // used for hbs plugin, name is remapped to
     // lowercase as well for convenience. The optimizer
@@ -14,6 +20,12 @@ require.config({
     // https://github.com/SlexAxton/require-handlebars-plugin/issues/144
     'Handlebars': 'vendor/handlebars/handlebars'
   },
+
+    config: {
+        'cond': {
+            state: STATE.DEV|STATE.BROWSER//|STATE.MOCK
+        }
+    },
 
    packages: [
 
@@ -50,11 +62,6 @@ require.config({
         '*': {
             'underscore': 'vendor/underscore/lodash',
             'handlebars': 'Handlebars',
-        },
-
-        'app/settings/defaults':{
-            'driver': 'app/settings/drivers/html-local-storage'
-            // 'driver': 'app/settings/drivers/cocoa'
         },
 
         'app/session/session':{
