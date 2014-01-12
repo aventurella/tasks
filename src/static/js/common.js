@@ -2,7 +2,6 @@
 var Bridge = window.Bridge || undefined;
 var STATE = {DEV: 1 << 0 , PROD: 1 << 1, MOCK: 1 << 2, BROWSER: 1 << 3, COCOA: 1 << 4};
 
-
 require.config({
   baseUrl: 'static/js',
 
