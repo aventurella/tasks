@@ -269,9 +269,6 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = HappyGravity;
 				TargetAttributes = {
-					23033DDB1867691500742A4F = {
-						DevelopmentTeam = SKY2AWYNCD;
-					};
 					23033DFC1867691500742A4F = {
 						TestTargetID = 23033DDB1867691500742A4F;
 					};

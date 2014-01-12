@@ -51,7 +51,8 @@ var TaskView = marionette.Layout.extend({
 
     events:{
         'click .actions':'wantsShowActions',
-        'dblclick':'onDoubleClick'
+        'dblclick':'onDoubleClick',
+        'contextmenu':'onRightClick'
     },
 
     ui: {
@@ -68,6 +69,12 @@ var TaskView = marionette.Layout.extend({
         // this.listenTo(this.model, 'change:assigned_to', this.render);
         _.bindAll(this, 'editTaskComplete');
         this.listenTo(this.model, 'change', this.render);
+    },
+
+    onRightClick: function(evt){
+        this.wantsShowActions();
+        $(window).trigger(evt);
+        return false;
     },
 
     onClose: function(){
@@ -134,6 +141,7 @@ var TaskView = marionette.Layout.extend({
 
         // handle a click
         menu.once('select', _.bind(function(){
+
             pop.close();
 
             if(!menu.selectedTag) return;
