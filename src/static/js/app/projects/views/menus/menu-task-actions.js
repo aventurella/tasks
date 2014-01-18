@@ -30,7 +30,7 @@ var TaskActionsMenu = marionette.CompositeView.extend({
         this.trigger('select', tag);
     },
 
-    onShow: function(){
+    onRender: function(){
         this.collection.reset(this.choices);
     }
 });

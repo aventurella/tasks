@@ -14,7 +14,12 @@ var PopView = require('built/app/popovers').PopView;
 
 var TaskView = marionette.Layout.extend({
     tagName: 'li',
-
+    contextMenu:TaskActionsMenu,
+    contextMenuOptions:function(){
+        return {
+            choices:this.getChoices()
+        };
+    },
     bindings:{
         '.lbl':'label',
         '.description':'description',
@@ -52,7 +57,6 @@ var TaskView = marionette.Layout.extend({
     events:{
         'click .actions':'wantsShowActions',
         'dblclick':'onDoubleClick',
-        'contextmenu':'onRightClick'
     },
 
     ui: {
@@ -67,14 +71,9 @@ var TaskView = marionette.Layout.extend({
     initialize: function(){
         // needed for when we reasign the assigned_to via server
         // this.listenTo(this.model, 'change:assigned_to', this.render);
-        _.bindAll(this, 'editTaskComplete');
+        _.bindAll(this, 'editTaskComplete', 'handleContextMenuResponse');
         this.listenTo(this.model, 'change', this.render);
-    },
-
-    onRightClick: function(evt){
-        this.wantsShowActions();
-        $(window).trigger(evt);
-        return false;
+        this.contextMenus().then(this.handleContextMenuResponse);
     },
 
     onClose: function(){
@@ -91,7 +90,7 @@ var TaskView = marionette.Layout.extend({
         this.wantsEdit();
     },
 
-    wantsShowActions: function(){
+    getChoices: function(){
         var choices = {
             'backlog': [
             {label: 'Move To Todo', tag: 'todo'},
@@ -121,46 +120,25 @@ var TaskView = marionette.Layout.extend({
             ]
         };
 
-        this.showActions(choices[this.tag] || []);
+        return choices[this.tag] || [];
+        // this.showActions(choices[this.tag] || []);
     },
 
-    showActions: function(choices){
-        var actions = this.actions;
+    handleContextMenuResponse: function(selection){
+        var options = {
+            'todo': 'wantsSetTodo',
+            'in-progress': 'wantsSetInProgress',
+            'completed': 'wantsSetCompleted',
+            'archive': 'wantsSetArchived',
+            'backlog': 'wantsSetBacklog',
+            'edit': 'wantsEdit',
+            'delete': 'wantsDelete'
+        };
 
-        var menu = new TaskActionsMenu({
-            choices: choices
-        });
+        var actionKey = options[selection] || null;
+        if(!actionKey) return;
+        this[actionKey]();
 
-        function layout(anchorRect, $anchorElement, viewRect, css){
-            css.top = -3; // drop shadow - 3
-            css.right = viewRect.width - 3; // drop shadow + 3
-        }
-
-        var pop = new PopView();
-        pop.show(menu, {rect: this.ui.actions.parent(), anchor: layout});
-
-        // handle a click
-        menu.once('select', _.bind(function(){
-
-            pop.close();
-
-            if(!menu.selectedTag) return;
-
-            var options = {
-                'todo': 'wantsSetTodo',
-                'in-progress': 'wantsSetInProgress',
-                'completed': 'wantsSetCompleted',
-                'archive': 'wantsSetArchived',
-                'backlog': 'wantsSetBacklog',
-                'edit': 'wantsEdit',
-                'delete': 'wantsDelete'
-            };
-
-            var actionKey = options[menu.selectedTag] || null;
-            if(!actionKey) return;
-            this[actionKey]();
-
-        }, this));
     },
 
     onRender: function(){

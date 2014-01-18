@@ -23,13 +23,13 @@ require.config({
     config: {
         'cond': {
             // PRODUCTION_APP
-            state: STATE.PROD|STATE.COCOA
+            // state: STATE.PROD|STATE.COCOA
 
             // PRODUCTION_BROWSER
             // state: STATE.PROD|STATE.BROWSER
 
             // LOCAL_DEV
-            //state: STATE.DEV|STATE.BROWSER
+            state: STATE.DEV|STATE.BROWSER
 
             // LOCAL_DEV_MOCKS
             // state: STATE.DEV|STATE.BROWSER|STATE.MOCK

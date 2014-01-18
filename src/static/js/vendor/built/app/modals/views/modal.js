@@ -8,6 +8,7 @@ var events = require('../events');
 
 require('built/app/patches/render');
 
+
 var ModalView = marionette.ItemView.extend({
     className: 'view',
     itemView: null,

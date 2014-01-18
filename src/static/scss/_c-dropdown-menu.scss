@@ -1,5 +1,7 @@
 .dropdown-menu{
-    position: absolute;
+    position: fixed;
+    top:100px;
+    left:100px;
     z-index: 1;
     float: left;
     min-width: 160px;
