@@ -4,39 +4,56 @@ define(function (require, exports, module) {
 
     _.extend(marionette.View.prototype, {
         contextMenus: function(){
-            this.events['contextmenu'] = '_onRightClick';
-            this._deferred = new $.Deferred();
-            return this._deferred;
+            this.events['contextmenu'] = '_contextMenuOnRightClick';
         },
-        _onRightClick: function(evt){
-            var contextMenuOptions = this._getContextMenuOptions();
-            this._contextView = new this.contextMenu(contextMenuOptions);
-            this._contextView.render();
-            this.listenTo(this._contextView, 'complete', this._onContextSelect);
-            $('body').append(this._contextView.$el);
-            this._contextView.$el.css({
-                position:'fixed',
-                top:evt.clientY,
-                left:evt.clientX
+
+        _contextMenuOnRightClick: function(evt){
+            var contextMenuOptions = _.result(this, 'contextMenuOptions');
+            var completeHandler = contextMenuOptions.complete;
+
+            if(!completeHandler && this.contextMenuComplete){
+                completeHandler = _.bind(this.contextMenuComplete, this);
+            } else {
+                throw new Error(
+                    '[ContextMenuError] You must define a ' +
+                    '\'complete\' handler in contextMenuOptions ' +
+                    'or provide the default \'contextMenuComplete\' '+
+                    'method in this view');
+            }
+
+            var options = _.omit(contextMenuOptions, 'complete');
+            var view = new this.contextMenu(options);
+
+            this._contextMenuShow(view, evt.clientX, evt.clientY)
+            .then(function(view){
+                completeHandler(view);
+                view.close();
             });
 
+
+            evt.preventDefault();
             $(window).trigger(evt);
-            return false;
         },
-        _onContextSelect: function(){
-            this.contextMenuClose(this._contextView);
-            this._contextView.close();
+
+        _contextMenuShow: function(view, x, y){
+            var deferred = $.Deferred();
+
+            view.render();
+            view.once('complete', function(){
+                deferred.resolve(view);
+            });
+
+            $('body').append(view.$el);
+
+            view.$el.css({
+                position:'fixed',
+                left: x,
+                top: y
+            });
+
+            return deferred.promise();
         },
-        _getContextMenuOptions: function(){
-            var isFunction = _.isFunction(this.contextMenuOptions);
-            if(!this.contextMenuOptions){
-                return {};
-            }else if(isFunction){
-                return this.contextMenuOptions();
-            }else{
-                return this.contextMenuOptions;
-            }
-        },
+
     });
 
 

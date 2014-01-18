@@ -29,10 +29,10 @@ require.config({
             // state: STATE.PROD|STATE.BROWSER
 
             // LOCAL_DEV
-            state: STATE.DEV|STATE.BROWSER
+            //state: STATE.DEV|STATE.BROWSER
 
             // LOCAL_DEV_MOCKS
-            // state: STATE.DEV|STATE.BROWSER|STATE.MOCK
+            state: STATE.DEV|STATE.BROWSER|STATE.MOCK
         }
     },
 
