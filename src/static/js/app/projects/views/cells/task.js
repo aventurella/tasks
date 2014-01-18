@@ -71,9 +71,9 @@ var TaskView = marionette.Layout.extend({
     initialize: function(){
         // needed for when we reasign the assigned_to via server
         // this.listenTo(this.model, 'change:assigned_to', this.render);
-        _.bindAll(this, 'editTaskComplete', 'handleContextMenuResponse');
+        _.bindAll(this, 'editTaskComplete', 'contextMenuClose');
         this.listenTo(this.model, 'change', this.render);
-        this.contextMenus().then(this.handleContextMenuResponse);
+        this.contextMenus();
     },
 
     onClose: function(){
@@ -124,7 +124,8 @@ var TaskView = marionette.Layout.extend({
         // this.showActions(choices[this.tag] || []);
     },
 
-    handleContextMenuResponse: function(selection){
+    contextMenuClose: function(view){
+        selection = view.selectedTag;
         var options = {
             'todo': 'wantsSetTodo',
             'in-progress': 'wantsSetInProgress',
