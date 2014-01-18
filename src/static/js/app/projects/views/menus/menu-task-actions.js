@@ -27,7 +27,7 @@ var TaskActionsMenu = marionette.CompositeView.extend({
     wantsSelection: function(e){
         var tag = $(e.currentTarget).data('tag');
         this.selectedTag = tag;
-        this.trigger('select', tag);
+        this.trigger('complete');
     },
 
     onRender: function(){

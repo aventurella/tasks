@@ -12,7 +12,7 @@ define(function (require, exports, module) {
             var contextMenuOptions = this._getContextMenuOptions();
             this._contextView = new this.contextMenu(contextMenuOptions);
             this._contextView.render();
-            this.listenTo(this._contextView, 'select', this._onContextSelect);
+            this.listenTo(this._contextView, 'complete', this._onContextSelect);
             $('body').append(this._contextView.$el);
             this._contextView.$el.css({
                 position:'fixed',
@@ -23,9 +23,9 @@ define(function (require, exports, module) {
             $(window).trigger(evt);
             return false;
         },
-        _onContextSelect: function(event){
+        _onContextSelect: function(){
+            this.contextMenuClose(this._contextView);
             this._contextView.close();
-            this._deferred.resolve(event);
         },
         _getContextMenuOptions: function(){
             var isFunction = _.isFunction(this.contextMenuOptions);
