@@ -31,6 +31,10 @@ define(function (require, exports, module) {
             var view = new this.contextMenu(options);
 
             var menu = new PopView();
+            menu.anchorTop = this._contextMenuAnchorAction;
+            menu.anchorBottom = this._contextMenuAnchorAction;
+            menu.anchorLeft = this._contextMenuAnchorAction;
+            menu.anchorRight = this._contextMenuAnchorAction;
 
             var windowResponder = new WindowResponder({
                 acceptsResize: true,
@@ -50,7 +54,32 @@ define(function (require, exports, module) {
             });
 
             evt.preventDefault();
-        }
+        },
+
+        _contextMenuAnchorAction: function(anchorRect, $anchorElement, viewRect, css){
+            var document = $(document);
+            var height = document.height();
+            var width = document.width();
+            var expandedX = anchorRect.x + viewRect.width;
+            var expandedY = anchorRect.y + viewRect.height;
+
+
+            if(expandedX > $(window).width()){
+                css.left = $(window).width() - viewRect.width;
+            } else {
+                css.left = anchorRect.x;
+            }
+
+
+            if(expandedY > $(window).height()){
+                css.top = $(window).height() - viewRect.height;
+            } else {
+                css.top = anchorRect.y;
+            }
+
+        },
+
+
 
     });
 
