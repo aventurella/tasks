@@ -57,9 +57,6 @@ define(function (require, exports, module) {
         },
 
         _contextMenuAnchorAction: function(anchorRect, $anchorElement, viewRect, css){
-            var document = $(document);
-            var height = document.height();
-            var width = document.width();
             var expandedX = anchorRect.x + viewRect.width;
             var expandedY = anchorRect.y + viewRect.height;
 
