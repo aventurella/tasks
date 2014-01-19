@@ -1,13 +1,19 @@
 define(function (require, exports, module) {
     var _ = require('underscore');
     var marionette = require('marionette');
+    var PopView = require('built/app/popovers').PopView;
+    var WindowResponder = require('built/core/responders/window').WindowResponder;
 
     _.extend(marionette.View.prototype, {
+
         contextMenus: function(){
-            this.events['contextmenu'] = '_contextMenuOnRightClick';
+            if(this.contextMenu){
+                this.events['contextmenu'] = '_contextMenuOnRightClick';
+            }
         },
 
         _contextMenuOnRightClick: function(evt){
+
             var contextMenuOptions = _.result(this, 'contextMenuOptions');
             var completeHandler = contextMenuOptions.complete;
 
@@ -24,35 +30,27 @@ define(function (require, exports, module) {
             var options = _.omit(contextMenuOptions, 'complete');
             var view = new this.contextMenu(options);
 
-            this._contextMenuShow(view, evt.clientX, evt.clientY)
-            .then(function(view){
-                completeHandler(view);
-                view.close();
+            var menu = new PopView();
+
+            var windowResponder = new WindowResponder({
+                acceptsResize: true,
+                resizeDebounce: 0,
+                resize: function(){
+                    menu.close();
+                }
             });
 
+            menu.show(view, {
+                rect: {x: evt.clientX,  y: evt.clientY},
+                anchor: 'top'})
+
+            .then(function(view){
+                windowResponder.close();
+                completeHandler(view);
+            });
 
             evt.preventDefault();
-            $(window).trigger(evt);
-        },
-
-        _contextMenuShow: function(view, x, y){
-            var deferred = $.Deferred();
-
-            view.render();
-            view.once('complete', function(){
-                deferred.resolve(view);
-            });
-
-            $('body').append(view.$el);
-
-            view.$el.css({
-                position:'fixed',
-                left: x,
-                top: y
-            });
-
-            return deferred.promise();
-        },
+        }
 
     });
 

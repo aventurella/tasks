@@ -1496,17 +1496,13 @@ body {
     font-weight: 200; }
 
 .dropdown-menu {
-  position: fixed;
-  top: 100px;
-  left: 100px;
   z-index: 1;
-  float: left;
   min-width: 160px;
   padding: 5px 0;
   margin: 2px 0 0;
   font-size: 14px;
   list-style: none;
-  background-color: #fff;
+  background-color: white;
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 4px;
