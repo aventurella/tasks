@@ -7,6 +7,19 @@ define(function (require, exports, module) {
     _.extend(marionette.View.prototype, {
 
         contextMenus: function(){
+            // If you are calling this method in your classes
+            // constructor() be sure to call it BEFORE you call
+            // super.constructor(). The events must be in place
+            // before this.delegateEvents() is called.
+            //
+            // Marionette.View.constructor() calls
+            // Backbone.View.constructor() which calls
+            // Backbone.View.initialize() after which
+            // Backbone.View.delegateEvents() is called.
+            //
+            // So This call can be safely done in initialize() or in
+            // constructor(). But again, if done in constructor()
+            // you must call it prior to calling super.constructor().
             if(this.contextMenu){
                 this.events['contextmenu'] = '_contextMenuOnRightClick';
             }
@@ -15,7 +28,9 @@ define(function (require, exports, module) {
         _contextMenuOnRightClick: function(evt){
 
             var contextMenuOptions = _.result(this, 'contextMenuOptions');
-            var completeHandler = contextMenuOptions.complete;
+            contextMenuOptions = contextMenuOptions || {};
+
+            var completeHandler = contextMenuOptions.complete ;
 
             if(!completeHandler && this.contextMenuComplete){
                 completeHandler = _.bind(this.contextMenuComplete, this);
@@ -53,6 +68,17 @@ define(function (require, exports, module) {
                 completeHandler(view);
             });
 
+            // let window know about this event.
+            // When a context menu is displayed it uses the PopView
+            // and a ClickTestResponder. Clicking anywhere not on the
+            // will trigger it to close, but we also count a 'contextmenu'
+            // event as a 'click'. ClickTestResponder monitors both
+            // 'click' and 'contextmenu' events on window. So lets be
+            // sure to let it know.
+            $(window).trigger(evt);
+
+            // We don't want the browsers context menu to appear, so
+            // block it.
             evt.preventDefault();
         },
 
@@ -73,12 +99,6 @@ define(function (require, exports, module) {
             } else {
                 css.top = anchorRect.y;
             }
-
-        },
-
-
-
+        }
     });
-
-
 });
