@@ -20,6 +20,7 @@
         border-right: 1px dotted #191e24;
         font-weight: bold;
         font-size: 16px;
+        &:hover { background: tint($light-gray, 10%); }
     }
 
 }

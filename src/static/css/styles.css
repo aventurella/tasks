@@ -888,6 +888,8 @@ body {
     border-right: 1px dotted #191e24;
     font-weight: bold;
     font-size: 16px; }
+    #sidebar .view .footer .action:hover {
+      background: #383f45; }
 
 #sidebar {
   color: #fff;
