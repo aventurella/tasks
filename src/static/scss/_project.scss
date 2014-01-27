@@ -6,7 +6,7 @@
 @import "project-archived";
 @import "project-swimlanes";
 
-#project-detail{
+#project-detail {
 	@extend %flex-grow-1;
     background-color: $middle-white;
     height: 100%;

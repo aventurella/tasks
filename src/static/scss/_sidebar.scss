@@ -9,6 +9,7 @@
     @include transition-duration(0.2s);
     @include transition-timing-function(ease-out);
     &.hide { margin-left: -200px; }
+
     .view {
         @extend %flex-column;
         @extend %flex-grow-0;
@@ -21,6 +22,7 @@
         }
         .menu { @extend %flex-grow-1; }
     }
+
     .project-cell {
         margin-bottom: 1px;
         background-color: $light-gray;
@@ -35,6 +37,7 @@
             width: 90%;
         }
     }
+    
     .footer {
         @extend %flex-grow-0;
         height: 40px;

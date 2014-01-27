@@ -10,7 +10,7 @@
             box-shadow: rgba(0, 0, 0, 0.1) 0 0 1px 1px;
             margin: 4px;
 
-            >label {
+            > label {
                 color: #fff;
                 font-weight: 100;
                 font-size: 16px;
@@ -34,26 +34,17 @@
                 }
             }
         }
-    }
+        
+        .task { 
+            color: $black; 
+            label { display: block; }
+        }
 
-    .users .user .tasks {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-
-        .task {
-            color: #000;
-
-            .username {
-                font-size: 11px;
-                border-bottom: 1px dotted #ddd;
-                padding-bottom: 3px;
-                font-style: italic;
-            }
-
-            label {
-                display: block;
-            }
+        .username {
+            font-size: 11px;
+            border-bottom: 1px dotted #ddd;
+            padding-bottom: 3px;
+            font-style: italic;
         }
     }
 }

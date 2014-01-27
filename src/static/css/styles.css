@@ -1425,19 +1425,15 @@ input[type="color"] {
     #section.dashboard .users .user .icon img {
       width: inherit;
       height: inherit; }
-#section.dashboard .users .user .tasks {
-  list-style-type: none;
-  margin: 0;
-  padding: 0; }
-  #section.dashboard .users .user .tasks .task {
-    color: #000; }
-    #section.dashboard .users .user .tasks .task .username {
-      font-size: 11px;
-      border-bottom: 1px dotted #ddd;
-      padding-bottom: 3px;
-      font-style: italic; }
-    #section.dashboard .users .user .tasks .task label {
-      display: block; }
+#section.dashboard .users .task {
+  color: #111111; }
+  #section.dashboard .users .task label {
+    display: block; }
+#section.dashboard .users .username {
+  font-size: 11px;
+  border-bottom: 1px dotted #ddd;
+  padding-bottom: 3px;
+  font-style: italic; }
 
 #project-detail .tabbar.dashboard {
   width: 207px; }
