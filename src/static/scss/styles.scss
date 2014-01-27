@@ -2,6 +2,7 @@
 @import "neat/neat";
 @import "extends";
 @import "colors";
+@import "reset";
 @import "helpers";
 @import "forms";
 @import "forms-radio";
@@ -12,7 +13,6 @@
 @import "project";
 @import "dashboard";
 @import "modals/styles";
-
 @import "c-dropdown-menu";
 @import "c-task-cell";
 @import "c-user-select";
