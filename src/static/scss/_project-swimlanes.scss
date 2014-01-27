@@ -1,8 +1,5 @@
 #project-detail .details .project-name {
-
-    -webkit-flex-grow: 0;
-    flex-grow: 0;
-
+    @extend %flex-grow-0;
     label{
         font-weight: normal;
         font-size: 16px;
@@ -11,10 +8,8 @@
 }
 
 #project-detail .details .swimlanes{
-
-
-    -webkit-flex-grow: 1;
-    flex-grow: 1;
+    @extend %flex-row;
+    @extend %flex-grow-1;
     position: absolute;
     top: 65px;
     left: 10px; // match padding-left on #project-detail
@@ -30,20 +25,9 @@
         top: 65px;
     }
 
-    display: flex;
-    display: -webkit-flex;
-    flex-direction: row;
-    -webkit-flex-direction: row;
-
     .lane{
-        -webkit-flex-grow: 1;
-        flex-grow: 1;
-        display: flex;
-        display: -webkit-flex;
-        flex-direction: column;
-        -webkit-flex-direction: column;
-
-
+        @extend %flex-column;
+        @extend %flex-grow-1;
         padding-right: 30px;
         width: 300px;
         position: relative;

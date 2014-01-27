@@ -7,10 +7,7 @@
 
 #section.dashboard{
     .container{
-        display: -webkit-flex;
-        flex-flow: row wrap;
-        -webkit-flex-flow: row wrap;
-
+    	@extend %flex-row-wrap;
         list-style-type: none;
         margin: 0;
         padding: 0;

@@ -11,8 +11,7 @@ body{
 }
 
 #window{
-    display: -webkit-flex;
-    -webkit-flex-flow: row;
+    @extend %flex-row;
     -webkit-align-items: stretch;
     height: 100%;
 }

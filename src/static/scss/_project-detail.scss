@@ -1,13 +1,10 @@
 
 
 #project-detail {
+    @extend %flex-column;
     height: 100%;
     padding-left: 10px;
     padding-top: 5px;
-    display: flex;
-    display: -webkit-flex;
-    flex-direction: column;
-    -webkit-flex-direction: column;
     position: relative;
     .loading &{
         &:before{

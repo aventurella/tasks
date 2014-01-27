@@ -3,14 +3,9 @@
 
 
 #sidebar{
+    @extend %flex-row;
+    @extend %flex-grow-0;
     color: #fff;
-
-    -webkit-flex-grow: 0;
-    flex-grow: 0;
-    display: -webkit-flex;
-    flex-direction: row;
-    -webkit-flex-direction: row;
-
     margin-left: 0px;
 
     @include transform(translateZ(0));
@@ -24,6 +19,8 @@
     }
 
     .view{
+        @extend %flex-column;
+        @extend %flex-grow-0;
         -webkit-flex-grow: 0;
         flex-grow: 0;
         width: 200px;

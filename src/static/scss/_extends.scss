@@ -36,9 +36,10 @@
     -webkit-flex-direction: row;
 }
 %flex-row-wrap {
+    display: flex;
     display: -webkit-flex;
     flex-flow: row wrap;
-   -webkit-flex-flow: row wrap;
+    -webkit-flex-flow: row wrap;
 }
 %flex-column {
     display: flex;

@@ -10,9 +10,7 @@
 }
 
 #project-detail .task{
-
-    -webkit-flex-grow: 1;
-    flex-grow: 1;
+    @extend %flex-grow-1;
     font-size: 13px;
     padding: 10px 0 10px 10px;
     margin-bottom: 3px;

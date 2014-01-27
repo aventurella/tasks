@@ -7,8 +7,7 @@
 @import "project-swimlanes";
 
 #project-detail{
-    -webkit-flex-grow: 1;
-    flex-grow: 1;
+	@extend %flex-grow-1;
     background-color: $middle-white;
     height: 100%;
 }
