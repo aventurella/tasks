@@ -3,11 +3,11 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
 
-#sidebar, #sidebar .view, #project-detail .details .project-name {
+#sidebar, #sidebar .view, #sidebar .view .footer, #project-detail .details .project-name {
   -webkit-flex-grow: 0;
   flex-grow: 0; }
 
-#project-detail .task, #project-detail .details .swimlanes, #project-detail .details .swimlanes .lane, #project-detail {
+#sidebar .view .menu, #project-detail .task, #project-detail .details .swimlanes, #project-detail .details .swimlanes .lane, #project-detail {
   -webkit-flex-grow: 1;
   flex-grow: 1; }
 
@@ -1133,23 +1133,12 @@ input[type="color"] {
   #sidebar.hide {
     margin-left: -200px; }
   #sidebar .view {
-    -webkit-flex-grow: 0;
-    flex-grow: 0;
     width: 200px;
-    background-color: #191e24;
-    display: -webkit-flex;
-    flex-direction: column;
-    -webkit-flex-direction: column; }
+    background-color: #191e24; }
     #sidebar .view h2 {
       font-weight: normal;
       padding-left: 10px;
       font-size: 16px; }
-    #sidebar .view .menu {
-      -webkit-flex-grow: 1;
-      flex-grow: 1; }
-    #sidebar .view .footer {
-      -webkit-flex-grow: 0;
-      flex-grow: 0; }
 
 #project-detail {
   height: 100%;

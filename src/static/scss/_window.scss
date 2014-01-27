@@ -1,11 +1,11 @@
-#window{
+#window {
     @extend %flex-row;
     -webkit-align-items: stretch;
     height: 100%;
 }
 
 
-#modal{
+#modal {
     background-color: rgba(255, 255, 255, 0);
     position: fixed;
     z-index: 999;
@@ -13,7 +13,7 @@
     height: 100%;
     display: none;
 
-    .view{
+    .view {
         @include outer-container;
         background-color: white;
         border-radius: 0 0 5px 5px;
