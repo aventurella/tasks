@@ -1,11 +1,7 @@
-@import "sidebar-projects";
-@import "sidebar-footer";
-
-
 #sidebar {
     @extend %flex-row;
     @extend %flex-grow-0;
-    color: #fff;
+    color: $white;
     margin-left: 0px;
     @include transform(translateZ(0));
     @include backface-visibility(visible);
@@ -24,6 +20,37 @@
             font-size: 16px;
         }
         .menu { @extend %flex-grow-1; }
-        .footer { @extend %flex-grow-0; }
+    }
+    .project-cell {
+        margin-bottom: 1px;
+        background-color: $light-gray;
+        padding: 15px 0 15px 10px;
+        &.selected { background-color: $selected-project; }
+        .input-projectName { display: none; }
+        input[type="text"] {
+            line-height: 13px;
+            color: #cacaca;
+            font-size: 13px;
+            display: none;
+            width: 90%;
+        }
+    }
+    .footer {
+        @extend %flex-grow-0;
+        height: 40px;
+        background-color: $light-gray;
+        ul { height: 100%; }
+        .action{
+            float: left;
+            cursor: pointer;
+            width: 40px;
+            height: 100%;
+            text-align: center;
+            line-height: 40px;
+            border-right: 1px dotted #191e24;
+            font-weight: bold;
+            font-size: 16px;
+            &:hover { background: tint($light-gray, 10%); }
+        }
     }
 }

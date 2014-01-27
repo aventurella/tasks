@@ -3,7 +3,7 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
 
-#sidebar, #sidebar .view, #sidebar .view .footer, #project-detail .details .project-name {
+#sidebar, #sidebar .view, #sidebar .footer, #project-detail .details .project-name {
   -webkit-flex-grow: 0;
   flex-grow: 0; }
 
@@ -1071,41 +1071,8 @@ input[type="color"] {
     #modal .view .task {
       height: 300px; }
 
-#sidebar .view .menu .projects .project-cell {
-  margin-bottom: 1px;
-  background-color: #232a31;
-  padding: 15px 0 15px 10px; }
-  #sidebar .view .menu .projects .project-cell.selected {
-    background-color: #3e4752; }
-  #sidebar .view .menu .projects .project-cell .input-projectName {
-    display: none; }
-  #sidebar .view .menu .projects .project-cell input[type="text"] {
-    line-height: 13px;
-    color: #cacaca;
-    font-size: 13px;
-    display: none;
-    width: 90%; }
-
-#sidebar .view .footer {
-  height: 40px;
-  background-color: #232a31; }
-  #sidebar .view .footer ul {
-    height: 100%; }
-  #sidebar .view .footer .action {
-    float: left;
-    cursor: pointer;
-    width: 40px;
-    height: 100%;
-    text-align: center;
-    line-height: 40px;
-    border-right: 1px dotted #191e24;
-    font-weight: bold;
-    font-size: 16px; }
-    #sidebar .view .footer .action:hover {
-      background: #383f45; }
-
 #sidebar {
-  color: #fff;
+  color: white;
   margin-left: 0px;
   -webkit-transform: translateZ(0);
   -moz-transform: translateZ(0);
@@ -1132,6 +1099,37 @@ input[type="color"] {
       font-weight: normal;
       padding-left: 10px;
       font-size: 16px; }
+  #sidebar .project-cell {
+    margin-bottom: 1px;
+    background-color: #232a31;
+    padding: 15px 0 15px 10px; }
+    #sidebar .project-cell.selected {
+      background-color: #3e4752; }
+    #sidebar .project-cell .input-projectName {
+      display: none; }
+    #sidebar .project-cell input[type="text"] {
+      line-height: 13px;
+      color: #cacaca;
+      font-size: 13px;
+      display: none;
+      width: 90%; }
+  #sidebar .footer {
+    height: 40px;
+    background-color: #232a31; }
+    #sidebar .footer ul {
+      height: 100%; }
+    #sidebar .footer .action {
+      float: left;
+      cursor: pointer;
+      width: 40px;
+      height: 100%;
+      text-align: center;
+      line-height: 40px;
+      border-right: 1px dotted #191e24;
+      font-weight: bold;
+      font-size: 16px; }
+      #sidebar .footer .action:hover {
+        background: #383f45; }
 
 #project-detail {
   height: 100%;
