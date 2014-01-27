@@ -1090,10 +1090,7 @@ input[type="color"] {
   height: 40px;
   background-color: #232a31; }
   #sidebar .view .footer ul {
-    list-style-type: none;
-    height: 100%;
-    margin: 0;
-    padding: 0; }
+    height: 100%; }
   #sidebar .view .footer .action {
     float: left;
     cursor: pointer;

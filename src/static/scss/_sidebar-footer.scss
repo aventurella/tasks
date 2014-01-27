@@ -1,15 +1,7 @@
-#sidebar .view .footer{
-
+#sidebar .view .footer {
     height: 40px;
     background-color: $light-gray;
-
-    ul{
-        list-style-type: none;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
-
+    ul { height: 100%; }
     .action{
         float: left;
         cursor: pointer;
@@ -22,5 +14,4 @@
         font-size: 16px;
         &:hover { background: tint($light-gray, 10%); }
     }
-
 }
