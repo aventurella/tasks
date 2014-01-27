@@ -27,6 +27,10 @@
         margin-bottom: 1px;
         background-color: $light-gray;
         padding: 15px 0 15px 10px;
+        &:hover {
+            background-color: tint($light-gray, 5%);
+            cursor: pointer;
+        }
         &.selected { background-color: $selected-project; }
         .input-projectName { display: none; }
         input[type="text"] {
@@ -37,7 +41,7 @@
             width: 90%;
         }
     }
-    
+
     .footer {
         @extend %flex-grow-0;
         height: 40px;

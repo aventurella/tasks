@@ -1103,6 +1103,9 @@ input[type="color"] {
     margin-bottom: 1px;
     background-color: #232a31;
     padding: 15px 0 15px 10px; }
+    #sidebar .project-cell:hover {
+      background-color: #2e343b;
+      cursor: pointer; }
     #sidebar .project-cell.selected {
       background-color: #3e4752; }
     #sidebar .project-cell .input-projectName {
