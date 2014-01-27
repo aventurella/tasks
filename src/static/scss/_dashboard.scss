@@ -1,15 +1,6 @@
 @import "dashboard-projects";
 @import "dashboard-users";
 
-#project-detail .tabbar.dashboard{
-    width: 207px;
-}
+#project-detail .tabbar.dashboard { width: 207px; }
 
-#section.dashboard{
-    .container{
-    	@extend %flex-row-wrap;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-    }
-}
+#section.dashboard .container { @extend %flex-row-wrap; }

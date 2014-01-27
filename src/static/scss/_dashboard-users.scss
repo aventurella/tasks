@@ -1,7 +1,7 @@
-#section.dashboard{
-    .users{
+#section.dashboard {
+    .users {
 
-        .user{
+        .user {
             width: 300px;
             background-color: #35414D;
             color: #fff;
@@ -10,7 +10,7 @@
             box-shadow: rgba(0, 0, 0, 0.1) 0 0 1px 1px;
             margin: 4px;
 
-            >label{
+            >label {
                 color: #fff;
                 font-weight: 100;
                 font-size: 16px;
@@ -18,7 +18,7 @@
                 display: block;
             }
 
-            .icon{
+            .icon {
                 width: 20px;
                 height: 20px;
                 background-color: #ddd;
@@ -28,7 +28,7 @@
                 margin-right: 5px;
                 overflow: hidden;
 
-                img{
+                img {
                     width: inherit;
                     height: inherit;
                 }
@@ -36,22 +36,22 @@
         }
     }
 
-    .users .user .tasks{
+    .users .user .tasks {
         list-style-type: none;
         margin: 0;
         padding: 0;
 
-        .task{
+        .task {
             color: #000;
 
-            .username{
+            .username {
                 font-size: 11px;
                 border-bottom: 1px dotted #ddd;
                 padding-bottom: 3px;
                 font-style: italic;
             }
 
-            label{
+            label {
                 display: block;
             }
         }

@@ -1,5 +1,5 @@
-.task{
-    .id{
+.task {
+    .id {
         display: inline-block;
         padding: 5px;
         height: 20px;
@@ -9,18 +9,14 @@
         line-height: 10px;
         margin-right:10px;
     }
-    >.label{
-        @extend .clearfix;
-    }
-    >.lbl{
-        float:left;
-    }
-    .btn-group{
+    >.label { @extend .clearfix; }
+    >.lbl { float:left; }
+    .btn-group {
         float:right;
         position: relative;
         margin-right:15px;
     }
-    .delete:hover{
+    .delete:hover {
         color: #fff;
         background-color: #d9534f;
         border-color: #d43f3a;

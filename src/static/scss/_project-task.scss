@@ -1,29 +1,27 @@
-#project-detail .task-placeholder{
+#project-detail .task-placeholder {
     height: 25px;
     background-color: $task-light-gray-background;
     color: #fff;
     border: 2px dashed $task-light-gray-border;
     margin-bottom: 3px;
-
     box-shadow:
     rgba(0, 0, 0, 0.1) 0 0 1px 1px;
 }
 
-#project-detail .task{
+#project-detail .task {
     @extend %flex-grow-1;
     font-size: 13px;
     padding: 10px 0 10px 10px;
     margin-bottom: 3px;
     position: relative;
     background: -webkit-linear-gradient(top, rgba(255,255,255,1) 42%,rgba(252,252,252,1) 100%);
-
     box-shadow:
     rgba(255, 255, 255, 0.1) 0 1px 1px 1px inset,
     rgba(255, 255, 255, 0.2) 0 1px inset,
     rgba(40, 98, 122, 0.1) 0 0px 0px inset,
     rgba(0, 0, 0, 0.1) 0 0 1px 1px;
 
-    .icon{
+    .icon {
         width: 20px;
         height: 20px;
         background-color: #ddd;
@@ -32,17 +30,15 @@
         float: left;
         margin-right: 5px;
         overflow: hidden;
-
-        img{
+        img {
             width: inherit;
             height: inherit;
         }
     }
 
-    .icon +.label{
-    }
-
-    .label{
+    .icon +.label{}
+    
+    .label {
         font-size: 13px;
         padding-bottom: 5px;
         border-bottom: 1px #ddd dotted;
@@ -50,75 +46,53 @@
         line-height: 20px;
     }
 
-    .description{
-        font-size: 11px;
-    }
+    .description { font-size: 11px; }
 
-    .loe{
+    .loe {
         position: absolute;
         width: 5px;
         left: 1px;
         top: 1px;
         bottom: 1px;
-
-
-        &.easy{
+        &.easy {
             border: 1px solid $green-border;
             background-color: $green-fill;
-            //border: 1px solid $task-blue-border;
-            //background-color: $task-blue-background;
         }
 
-        &.medium{
+        &.medium {
             border: 1px solid $yellow-border;
             background-color: $yellow-fill;
         }
 
-        &.hard{
+        &.hard {
             border: 1px solid $red-border;
             background-color: $red-fill;
         }
     }
 
-    // &:hover{
-    //     .action{
-    //         visibility: visible;
-    //     }
-    // }
-
-    .action{
+    .action {
         font-size: 11px;
         margin-left: 10px;
         visibility: hidden;
         border-left: 1px dotted #b8b8b8;
         padding-left: 10px;
 
-        .btn{
+        .btn {
             border-radius: 3px;
             background-color: #3e4752;
             color: white;
             padding: 2px 5px;
             cursor: pointer;
 
-            &.backlog{
-                background-color: #3e4752;
-            }
+            &.backlog { background-color: #3e4752; }
 
-            &.todo{
-                background-color: #3e4752;
-            }
+            &.todo { background-color: #3e4752; }
 
-            &.in-progress{
-                background-color: #3e4752;
-            }
+            &.in-progress { background-color: #3e4752; }
 
-            &.completed{
-                background-color: #428037;
-            }
+            &.completed { background-color: #428037; }
 
-            &.archive{
-                background-color: #b83b3b;
-            }
+            &.archive { background-color: #b83b3b; }
         }
     }
 }

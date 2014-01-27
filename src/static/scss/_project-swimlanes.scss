@@ -1,13 +1,13 @@
 #project-detail .details .project-name {
     @extend %flex-grow-0;
-    label{
+    label {
         font-weight: normal;
         font-size: 16px;
         color: $dark-gray;
     }
 }
 
-#project-detail .details .swimlanes{
+#project-detail .details .swimlanes {
     @extend %flex-row;
     @extend %flex-grow-1;
     position: absolute;
@@ -17,22 +17,22 @@
     bottom: 0;
     z-index: 0; // for scroll bar
 
-    &.backlog{
+    &.backlog {
         top: 115px;
     }
 
-    &.archived{
+    &.archived {
         top: 65px;
     }
 
-    .lane{
+    .lane {
         @extend %flex-column;
         @extend %flex-grow-1;
         padding-right: 30px;
         width: 300px;
         position: relative;
 
-        .heading{
+        .heading {
             padding: 10px 0;
             margin-bottom: 5px;
             text-align: center;
@@ -48,18 +48,16 @@
             rgba(40, 98, 122, 0.1) 0 0px 0px inset,
             rgba(0, 0, 0, 0.1) 0 0 1px 1px;
 
-            label{
-                font-size: 14px;
-            }
+            label { font-size: 14px; }
 
-            .action{
+            .action {
                 float: right;
                 width: 30px;
                 cursor: pointer;
             }
         }
 
-        >ul{
+        >ul {
             margin: 0;
             padding: 0;
             list-style-type: none;
@@ -77,7 +75,7 @@
             background-color: rgba(0, 0, 0, 0);
             border: 1px dotted #e1e3e6;
 
-            &.reveal{
+            &.reveal {
                 background-color: rgba(0, 0, 0, 0.03);
                 border: 1px dotted #c2c2c2;
                 box-sizing: border-box;
