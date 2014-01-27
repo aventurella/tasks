@@ -1,30 +1,11 @@
-#sidebar .view .menu .projects{
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-
-    .project-cell{
+#sidebar .view .menu .projects {
+    .project-cell {
         margin-bottom: 1px;
         background-color: $light-gray;
         padding: 15px 0 15px 10px;
-
-        &.selected{
-            background-color: $selected-project;
-        }
-
-        .input-projectName{
-            display: none;
-        }
-
-        input:focus{
-            outline: none
-        }
-
+        &.selected { background-color: $selected-project; }
+        .input-projectName { display: none; }
         input[type="text"] {
-            background-color: transparent;
-            padding: 0;
-            margin: 0;
-            border: none;
             line-height: 13px;
             color: #cacaca;
             font-size: 13px;

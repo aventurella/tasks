@@ -157,6 +157,12 @@ input[type="radio"],
 input[type="checkbox"] {
     cursor: pointer; // Improves usability and consistency of cursor style between image-type `input` and others.
 }
+input[type="text"] {
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
 button {
     border:0;
     padding:0;

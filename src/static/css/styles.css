@@ -147,6 +147,12 @@ input[type="radio"],
 input[type="checkbox"] {
   cursor: pointer; }
 
+input[type="text"] {
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  border: none; }
+
 button {
   border: 0;
   padding: 0;
@@ -1065,30 +1071,20 @@ input[type="color"] {
     #modal .view .task {
       height: 300px; }
 
-#sidebar .view .menu .projects {
-  margin: 0;
-  padding: 0;
-  list-style-type: none; }
-  #sidebar .view .menu .projects .project-cell {
-    margin-bottom: 1px;
-    background-color: #232a31;
-    padding: 15px 0 15px 10px; }
-    #sidebar .view .menu .projects .project-cell.selected {
-      background-color: #3e4752; }
-    #sidebar .view .menu .projects .project-cell .input-projectName {
-      display: none; }
-    #sidebar .view .menu .projects .project-cell input:focus {
-      outline: none; }
-    #sidebar .view .menu .projects .project-cell input[type="text"] {
-      background-color: transparent;
-      padding: 0;
-      margin: 0;
-      border: none;
-      line-height: 13px;
-      color: #cacaca;
-      font-size: 13px;
-      display: none;
-      width: 90%; }
+#sidebar .view .menu .projects .project-cell {
+  margin-bottom: 1px;
+  background-color: #232a31;
+  padding: 15px 0 15px 10px; }
+  #sidebar .view .menu .projects .project-cell.selected {
+    background-color: #3e4752; }
+  #sidebar .view .menu .projects .project-cell .input-projectName {
+    display: none; }
+  #sidebar .view .menu .projects .project-cell input[type="text"] {
+    line-height: 13px;
+    color: #cacaca;
+    font-size: 13px;
+    display: none;
+    width: 90%; }
 
 #sidebar .view .footer {
   height: 40px;
